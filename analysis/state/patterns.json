@@ -1,1 +1,823 @@
-{"modes": []}
+{
+  "modes": [
+    {
+      "name": "eligibility_without_order_lookup",
+      "status": "confirmed",
+      "definition": "Return eligibility or order dates in the reply come from the user's statement ('about a month ago') rather than the order record: either no order lookup was made, or the order was retrieved but the answer rests on the user's description instead of the retrieved delivery date (e.g. repeats 'months ago').",
+      "boundary": "Fails only when the order record was never retrieved. If it was retrieved and the reply misstates it, that is reply_contradicts_tool_result.",
+      "nearest_mode": "reply_contradicts_tool_result",
+      "requirement_source": "PURPOSE-1 (acts through tools); RESP-3",
+      "evaluator_type": "llm_judge",
+      "product_change": "Require an order lookup before any eligibility decision (prompt rule or flow step).",
+      "annotation_ids": [
+        "ann-mwb4oc7tvn3y",
+        "ann-mwbbxhw1124o",
+        "ann-mwbik3faee7h",
+        "ann-mwbtk9j1xn52",
+        "ann-mwbto6um36zi",
+        "ann-mwc7tcp5ge1t",
+        "ann-mwc80voks16n",
+        "ann-mwcl3b5tsozf"
+      ],
+      "created_from": [
+        "8e622c9051d897f4318d2984595ad099",
+        "9f34931c527e246d54d5b34d7460b4e8",
+        "3de99ef01220ee6117856fd5e50ce6ce"
+      ],
+      "example_trace_ids": [
+        "8e622c9051d897f4318d2984595ad099",
+        "9f34931c527e246d54d5b34d7460b4e8",
+        "3de99ef01220ee6117856fd5e50ce6ce",
+        "626040c8edbaad5b574595deee4f97c0",
+        "4530d479bfe0cd18e33d8eaae7d085e6",
+        "d4af61c7ddb9af60afa515a854145133",
+        "c696943d7ba87c66ef5affa1d397b56a",
+        "322e31e22d5ef05fff2629659decfb52"
+      ],
+      "close_negative_trace_ids": [
+        "e182d558dd92da8d073b3e10ccd4413c",
+        "c02fb73be4c04fcc80715264b36a211a",
+        "b307f7baa4f45fcd68e9e6aab88c5b1f",
+        "d53066a570701448c0ffa7123a4b319b"
+      ],
+      "close_negatives_note": "D2 (2026-11-11): student inspected and confirmed 0217, 0216, 0226, 0250.",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 1 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-10",
+          "change": "batch 2: +0221 positive, +0250 close negative"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0028, +0222, +0021, +0218 positives"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 4: +0023 positives. Definition widened (student decision): retrieved-but-unused delivery date now counts (0023: 'delivered months ago' although find_order returned 2026-04-15). Same product change: look up the order and state the delivery date and window end."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: selected for the final taxonomy by the student, pending the D2 re-check of supporting traces."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D2: close negatives 0217, 0216, 0226, 0250 confirmed by the student. Definition tightened after 0250 (no date stated, but eligibility came from check_refund_eligibility): a retrieved order fails only when the answer rests on the user's description."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Memory: Retrieval Failure (good)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: evaluator changed from code to llm_judge with a code pre-check (student decision), because the widened definition needs judgment."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        }
+      ],
+      "agentdebug": {
+        "type": "Memory: Retrieval Failure",
+        "fit": "good",
+        "note": "the order record existed but was not retrieved, or retrieved and not used",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      },
+      "evaluator_note": "code pre-check for the no-lookup half (no find_order/get_order/list_my_orders/check_refund_eligibility before the eligibility answer); LLM judge for whether the answer rests on the user's description instead of the retrieved date"
+    },
+    {
+      "name": "reply_contradicts_tool_result",
+      "status": "confirmed",
+      "definition": "The reply states an order fact (date, status, presence or absence of an order) that the tool results retrieved in the conversation contradict or do not contain.",
+      "boundary": "Fails only when the record was retrieved and misread. Never retrieved: eligibility_without_order_lookup. A valid but non-unique match presented as the answer: ambiguous_match_presented_as_unique. Listing other search results passes when the reply keeps them apart from the order the user named (0041: 'related to your searches for USB-C Hub products', then the correct Matte USB-C Hub order). It fails when the reply presents a different product's order as the one the user named (0013, 0186: 'two orders related to the Travel Screwdriver Set').",
+      "nearest_mode": "eligibility_without_order_lookup",
+      "requirement_source": "RESP-3",
+      "evaluator_type": "llm_judge",
+      "product_change": "Include the product title in find_order and list_my_orders results, and have the agent match on title and store before answering; state the order id and product it is answering about.",
+      "annotation_ids": [
+        "ann-mwb9u7ltseje",
+        "ann-mwb8ou3f5qc9",
+        "ann-mwbir9uln7gc",
+        "ann-mwbk596xdekg",
+        "ann-mwcday4u322x",
+        "ann-mwcctt1z20hd",
+        "ann-mwcfjon65thz",
+        "ann-mwcczclc6dl1",
+        "ann-mwcdo03204yi",
+        "ann-mwcix8gw5h2v",
+        "ann-mwcj64whgzbb",
+        "ann-mwcktfv4nmq0",
+        "ann-mwcracta5wn8",
+        "ann-mwcrcl43qogl",
+        "ann-mwcreq5xd1ew",
+        "ann-mwcs19vehqbm",
+        "ann-mwcs73p10flf",
+        "ann-mwcsmarui3a9",
+        "ann-mwct5ahz7x29",
+        "ann-mwct99fsc2fq"
+      ],
+      "created_from": [
+        "a2d1fd836a5c5d3deb4d23d789c5a934",
+        "e02f2ab4e47ddfc6ec3e9cd636b1fffe",
+        "4b91a380f54a21bdc85549a5b5f12c8f",
+        "9015d29a8fc7b3da54efd01bb85426eb"
+      ],
+      "example_trace_ids": [
+        "a2d1fd836a5c5d3deb4d23d789c5a934",
+        "e02f2ab4e47ddfc6ec3e9cd636b1fffe",
+        "4b91a380f54a21bdc85549a5b5f12c8f",
+        "9015d29a8fc7b3da54efd01bb85426eb",
+        "705864861daf4cb4206825d3c0e9f23d",
+        "3d4cc4984171455338e1086a07e76547",
+        "b270497575e4d38847b34ba3df597436",
+        "722920b17b176ecaabb506fbba25f153",
+        "c391597ab75b762e30c4f9aab1b42d3d",
+        "3986ea32f69b8f976f58fbc1a3728b20",
+        "78412e83745a5fcad2eb90aa3013777b",
+        "5dd0cf6ab7269d29e12d85d6513ace1f",
+        "806e1ac700313c141461751da7b50851",
+        "e8f4dd3966a504a600c9311e39fc8d78",
+        "dd767528418ab407cf9cd652b1222fb4",
+        "56195c48b59eb79b381e861a55f6f909",
+        "94035be57423f14e9c072c6342a945d7",
+        "2ec3a82c872e626fee60f794fad09e68",
+        "269aa00111df6ee22e4add3d2cb65dd6",
+        "68eb09e855ddb48e874ddf81d9f652ad"
+      ],
+      "close_negative_trace_ids": [
+        "bd40408154a62df6c12aff61851a6edb",
+        "b307f7baa4f45fcd68e9e6aab88c5b1f",
+        "b9d9c1cad4bcbe145ee0ed335f655a29",
+        "b8485c48e937e1f3da9b5055be44e169",
+        "48c2623bc5f9a0aa76aa5d5b2465c9d2",
+        "11011fdbc832b82cd458893366de044b",
+        "249c5f6798c4ca932417e40345d46e99"
+      ],
+      "close_negatives_note": "D2 (2026-11-11): student inspected and confirmed 0035, 0226, 0057, 0142, 0014, 0113.",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 1 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-10",
+          "change": "batch 2: +0182, +0237 positives, +0057 close negative"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0246, +0238, +0239, +0241, +0242 positives. Two shapes (wrong product's order picked; order claimed absent though listed) share one cause: order tool results carry product_id without a title. Product change updated."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 4: +0040, +0039, +0181 positives; +0142, +0014, +0113 close negatives. 0181 hides a reversed-dates record (8001) the agent never reached. 0014 'fully refunded' (tool says only refunded) judged a pass."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: selected for the final taxonomy by the student, pending the D2 re-check of supporting traces."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D2: close negatives 0035, 0226, 0057, 0142, 0014, 0113 confirmed by the student (0035, 0226, 0113: queued_for_approval reported as queued, not done)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D4 search v1 (8 suggestions): student accepted 0010, 0011, 0013, 0042, 0248, revised 0186 (+6 positives), rejected 0041 (correct order identified; listed results kept apart; added as close negative) and 0243 (reason points at an earlier T1 failure; student adds an own B note at T1). Boundary revised after 0041 vs 0013/0186 (listing sentence); search repeated as v2."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D4 search v2 (2 suggestions): student accepted 0008 and rejected 0244 (the 'couldn't find' is true to the empty product search; reason recorded). +0243 positive from the student's own T1 note (cancelled the wrong order). B: 20 positives, 7 close negatives."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Reflection: Outcome Misinterpretation (exact)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        }
+      ],
+      "agentdebug": {
+        "type": "Reflection: Outcome Misinterpretation",
+        "fit": "exact",
+        "note": "misreads the tool result; 0243 (cancelled the wrong order) is also Action: Planning-Action Disconnect",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    },
+    {
+      "name": "omitted_restocking_fee",
+      "status": "confirmed",
+      "definition": "At a store whose restocking_fee.opt_in is true, the first reply that answers return eligibility does not mention the restocking fee (whenever the store opts in, regardless of whether the item is opened). Mentioning it only in a later turn, after the user asks, still fails.",
+      "boundary": "Stores without a fee pass (nothing to mention). A reply that mentions the fee but cites no policy id passes this mode and is judged by policy_claim_without_citation.",
+      "nearest_mode": "policy_claim_without_citation",
+      "requirement_source": "RESP-6 (SPEC revision 2026-11-11, motivated by the student's batch-1 note on support-0216; fee rule in cw-restocking-fees)",
+      "evaluator_type": "code",
+      "product_change": "Add a requirement and prompt rule: return answers for opt-in stores state the restocking fee.",
+      "annotation_ids": [
+        "ann-mwbbhk33afe1",
+        "ann-mwbbiabc4qa4",
+        "ann-mwbbj22ysats"
+      ],
+      "created_from": [
+        "c02fb73be4c04fcc80715264b36a211a",
+        "381418093e425d18c986ecaf8aa4b618",
+        "7743cbc3264292f85717d34183c72f9c"
+      ],
+      "example_trace_ids": [
+        "c02fb73be4c04fcc80715264b36a211a",
+        "381418093e425d18c986ecaf8aa4b618",
+        "7743cbc3264292f85717d34183c72f9c",
+        "e182d558dd92da8d073b3e10ccd4413c",
+        "e9e5f69104a19d4856cadbd4ea1a3ea8",
+        "d4af61c7ddb9af60afa515a854145133",
+        "c696943d7ba87c66ef5affa1d397b56a"
+      ],
+      "close_negative_trace_ids": [],
+      "close_negatives_note": "No close negatives exist in the data: every fee-store return-eligibility answer in all 250 conversations (7 reviewed: 0216, 0108, 0149, 0217, 0020, 0021, 0218) omits the fee in its first answer. Recorded under the handout's 'when the reviewed data permits them' exception (student decision, D2 2026-11-11). HW5 Pass labels for this mode will need synthetic scenarios.",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 1 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: student chose rule (a), judged on the first eligibility answer, after 0020 and 0217 showed the same shape (no fee in T1, fee only after the user said it was opened). 0217 moves from close negative to positive; +0020 positive. 0217 was marked no failure in open coding (its first failure only exists under this rule); label it Fail for this mode in Part E."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: selected for the final taxonomy by the student, pending the D2 re-check of supporting traces."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D2: student confirmed 0217 and 0020 as positives under rule (a); +0021, +0218 positives (their notes are eligibility_without_order_lookup; fee never mentioned at a fee store); no close negatives exist in the data (exception recorded)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Memory: Over-simplification / Incomplete Summary (weak)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: SPEC.md gains RESP-6 (student decision); requirement source set to RESP-6."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        }
+      ],
+      "agentdebug": {
+        "type": "Memory: Over-simplification / Incomplete Summary",
+        "fit": "weak",
+        "note": "specification-compliance failure (required content); AgentDebug has no such category",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    },
+    {
+      "name": "policy_claim_without_citation",
+      "status": "confirmed",
+      "definition": "The reply makes a policy claim (a rule, window, fee, or threshold, e.g. 'returns within 30 days', 'the $100 auto-approval threshold') that is not covered by a policy identifier cited in the same reply or an earlier reply of the conversation. PURPOSE-1: the agent cites policy documents for every policy claim.",
+      "boundary": "Per claim, carried forward. Background policy statements count (0164: the platform's 30-day default, uncited, fails even though the store's 21-day override is cited). A claim already cited earlier in the conversation passes when repeated (0226 T2 threshold, cited in T1). A bare eligible / not eligible taken from the order record's refund_eligible field is not a policy claim (0110, 0223). A policy number repeated from a tool result's note still needs an id (0113). Judges only the citation: an omitted fee belongs to omitted_restocking_fee; a policy answer with no lookup at all is policy_question_answered_without_lookup (a reply can fail both). A policy number repeated from a tool result still needs an id: refund timing 'original payment method ... 5 to 10 business days' from issue_refund's note (0250) and the escalation response time 'within 24 hours' from escalate_to_human's sla_hours (0053) both fail without an id. A bare refusal about what the agent itself cannot do is not a policy claim and passes (0079: 'I can't help with changing your email or any account details'); a sentence that states the platform rule is a policy claim and fails without an id (0165: 'A merchant cannot see orders from another store', cw-roles).",
+      "nearest_mode": "omitted_restocking_fee",
+      "requirement_source": "RESP-1",
+      "evaluator_type": "llm_judge",
+      "product_change": "Prompt rule or reply template requiring the policy id beside each policy claim.",
+      "annotation_ids": [
+        "ann-mwbab2m2z3an",
+        "ann-mwbbhk33afe1",
+        "ann-mwbbiabc4qa4",
+        "ann-mwbbj22ysats",
+        "ann-mwcf0byvkvt8"
+      ],
+      "created_from": [
+        "9c6259f73c719910e41d90f16d536758",
+        "c02fb73be4c04fcc80715264b36a211a",
+        "381418093e425d18c986ecaf8aa4b618",
+        "7743cbc3264292f85717d34183c72f9c"
+      ],
+      "example_trace_ids": [
+        "9c6259f73c719910e41d90f16d536758",
+        "c02fb73be4c04fcc80715264b36a211a",
+        "381418093e425d18c986ecaf8aa4b618",
+        "7743cbc3264292f85717d34183c72f9c",
+        "e9e5f69104a19d4856cadbd4ea1a3ea8",
+        "322e31e22d5ef05fff2629659decfb52",
+        "11011fdbc832b82cd458893366de044b",
+        "5234ef109607a29cd4ca6f7a514e2938"
+      ],
+      "close_negative_trace_ids": [
+        "b307f7baa4f45fcd68e9e6aab88c5b1f",
+        "ac70e5f1e5948b5de21bc283f2d673ec",
+        "4530d479bfe0cd18e33d8eaae7d085e6"
+      ],
+      "close_negatives_note": "D2 (2026-11-11): student inspected and confirmed 0226, 0065; added 0222 (cites cw-returns for its window; also an eligibility_without_order_lookup positive).",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 1 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-10",
+          "change": "batch 2: boundary against the new policy_question_answered_without_lookup"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0020 positives; +0065 close negatives"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 4: +0023, +0113 positives. Boundary rule (b) chosen by the student, following PURPOSE-1 ('every policy claim'): a threshold or window repeated from a tool result needs a citation; a bare refund_eligible verdict does not. 0023 and 0113 were not failures in open coding for this mode (0023's note is A; 0113 was no failure); label them Fail here in Part E."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: selected for the final taxonomy by the student, pending the D2 re-check of supporting traces."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D2: student confirmed 0023, 0113 positives and 0065 close negative; chose citation scope (i) per claim, carried forward; 0164 moved from close negative to positive (uncited platform 30-day default); +0222 close negative; hard cases written into the boundary."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): no matching type (none)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        },
+        {
+          "at": "2026-11-12",
+          "change": "Part E: two boundary rules written in after the student's labels (student decision): policy numbers repeated from tool results need an id (refund timing, escalation SLA); bare refusals are not policy claims, explicit rule statements are (reading ii)."
+        }
+      ],
+      "agentdebug": {
+        "type": null,
+        "fit": "none",
+        "note": "specification-compliance failure (citation requirement, PURPOSE-1/RESP-1); no AgentDebug category",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    },
+    {
+      "name": "ambiguous_match_presented_as_unique",
+      "status": "confirmed",
+      "definition": "A product or order search could match more than one record (or was capped at limit 1), and the reply presents one match as the answer without saying other matches exist or asking the user to clarify.",
+      "boundary": "The record picked is a valid candidate. If the stated fact is wrong (e.g. another store's order), that is reply_contradicts_tool_result.",
+      "nearest_mode": "reply_contradicts_tool_result",
+      "requirement_source": "RESP-3",
+      "evaluator_type": "llm_judge",
+      "product_change": "Do not cap searches at one result; ask for clarification when several records match.",
+      "annotation_ids": [
+        "ann-mwba8io3gjrn",
+        "ann-mwcfi654r66h",
+        "ann-mwctvmuegixb"
+      ],
+      "created_from": [
+        "58a1bbae3a34a634e6c9cdb715f8694b"
+      ],
+      "example_trace_ids": [
+        "58a1bbae3a34a634e6c9cdb715f8694b",
+        "55fafb3337ccb9253d2d31087e3d447e",
+        "221d712f71fc69da6cb470b7051ed031",
+        "49c9f05a5c1d51e18c069ad7d17c66ae"
+      ],
+      "close_negative_trace_ids": [
+        "50c0a14a0a5c62b18cc36027a0bbc2ed",
+        "fe030feddc4d32af9fa01760108f0900",
+        "cb08fb8cbdfd2a9a7e3f907754673f91"
+      ],
+      "close_negatives_note": "close negatives proposed by the agent during axial coding and accepted by the student in bulk; re-check each one in Part D Part E (2026-11-12): 0245 removed (it omits a third soap order, 7942) and moved to positives (student decision); 2 close negatives remain (0191, 0195). +0075 (student decision 2026-11-12): 'teapot under $40' matches three teapots; the reply lists all three with real prices.",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 1 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-10",
+          "change": "batch 2: +0191 close negative"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0192 positives; +0195, +0245 close negatives. 0192: the agent's own max_price_usd filter hid the duplicate title. Thin (fewer than 3 positives after 85 conversations); student decided to record now and decide merge/drop in Part D."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: kept conditionally by the student; stays only if the recheck of the 100 reviewed conversations (D3) finds a third positive, otherwise dropped."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D3: dropped by the student under the D1 condition: 2 positives in 100 reviewed conversations (0194, 0192); the recheck (duplicate titles or limit=1 in any reviewed tool result) found no third. Reported as observed, not modelled."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D4: restored by the student. 0244 (found by the B search v2, rejected for B) shows two eligible crewneck orders treated as one without asking; +0244 positive gives 3 positives (0194, 0192, 0244) and 3 close negatives (0191, 0195, 0245). Distinct product change from reply_contradicts_tool_result (ask or list every match before answering)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Reflection: Outcome Misinterpretation (partial)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        },
+        {
+          "at": "2026-11-12",
+          "change": "Part E: 0245 moved from close negative to positive (student decision): find_order('soap') returned three of the user's soap orders and the reply presents two as the full set ('I found two soap orders'). The D2 close-negative proposal ('lists every match') was the agent's error."
+        },
+        {
+          "at": "2026-11-12",
+          "change": "Part E: +0075 close negative (student decision); E 4 positives / 3 close negatives."
+        }
+      ],
+      "agentdebug": {
+        "type": "Reflection: Outcome Misinterpretation",
+        "fit": "partial",
+        "note": "a multi-match result is read as a unique match",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    },
+    {
+      "name": "required_escalation_not_made",
+      "status": "confirmed",
+      "definition": "The request falls under ESC-2 or ESC-3 (an account change, a dispute within its window, or a request the agent cannot resolve from the help center and the order record), and the reply where escalation is required has no escalate_to_human call: it sends the user elsewhere ('contact customer support', 'check your settings') or only offers ('Would you like me to escalate?'). Judged per reply: an offer fails even if a later turn escalates.",
+      "boundary": "Requests SCOPE-2 says to refuse (payment-card changes: 0172, 0081) pass when the agent refuses without escalating. Refusing another user's or store's data (RESP-4: 0235, 0236, 0232) needs no escalation and passes. Refunds above the threshold (ESC-1) are queued by the tool and need no escalation (0035). A dispute past its window is answered by explaining the window (0170), not escalated. Asking before a refund is fine; ESC-2/ESC-3 escalation is not optional, so asking first fails (0054, 0057). A question about the account, with no change requested, is policy_question_answered_without_lookup (0088: 'need phone number on file'). A request to make a change is this mode.",
+      "nearest_mode": "policy_question_answered_without_lookup",
+      "requirement_source": "ESC-2; ESC-3",
+      "evaluator_type": "llm_judge",
+      "product_change": "Prompt rule: for account changes, disputes, and unresolvable requests, call escalate_to_human instead of redirecting the user or asking whether to escalate.",
+      "annotation_ids": [
+        "ann-mwb92mu77uef",
+        "ann-mwbfe8j96xvu",
+        "ann-mwbkgozs8slb",
+        "ann-mwbtczyuz5lr",
+        "ann-mwcexvuq62y2",
+        "ann-mwceys63zl97",
+        "ann-mwck7lwz6jyb"
+      ],
+      "created_from": [
+        "c9a5d7ca58708287d21d6c2387cc06db",
+        "64e1694d0b3e8808925bb83c7bd5a7c9",
+        "bb037ce84e971be28f822ae5a0c64893"
+      ],
+      "example_trace_ids": [
+        "c9a5d7ca58708287d21d6c2387cc06db",
+        "64e1694d0b3e8808925bb83c7bd5a7c9",
+        "bb037ce84e971be28f822ae5a0c64893",
+        "6ee13b4b5c006e3578924a704dfdcf0c",
+        "aacf3cc844489d559be7a9b515eef382",
+        "4f3b515a58dd087ab76406ebe2c64f56",
+        "1c7284755c2964cf4046967aee7c45ec",
+        "70ad7ddf8d3ad23ee0331349fe8f1e1e",
+        "b9d9c1cad4bcbe145ee0ed335f655a29"
+      ],
+      "close_negative_trace_ids": [
+        "bd40408154a62df6c12aff61851a6edb",
+        "4dbd685aec2bf34a1f7743d23743b2db",
+        "a472a05e268320497f925b01efa52ec5",
+        "3b3825405b70afff161ac3155084b7df",
+        "b441e855b0652187db61024cb3d73253",
+        "61929bfde5a94a05491b66fd4f6e6eda"
+      ],
+      "close_negatives_note": "D2 (2026-11-11): student inspected and confirmed 0035, 0172, 0235, 0236, 0081, 0232.",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 1 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-10",
+          "change": "batch 2: renamed from dispute_not_escalated and widened to ESC-2 account changes (+0083, +0136); student decisions: an offer to escalate counts as a failure, 0172 (payment card, SCOPE-2 refusal) passes; +0172, 0235, 0236 close negatives"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0168, +0079, +0084 positives; +0081 close negatives. 0168 also misstates the dispute rule (refund eligibility) before offering to escalate; see policy_rule_misapplied."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 4: +0080 positives; +0232 close negatives"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: selected for the final taxonomy by the student, pending the D2 re-check of supporting traces."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D2: student chose the per-reply offer rule (a), consistent with the batch-2 decision; the boundary sentence 'a conversation where escalate_to_human is called passes' removed. +0054, +0057 positives (offered in T1, escalated in T2 only after the user pushed; both no failure in open coding, label Fail here in Part E). Close negatives confirmed. 0170 (dispute past window) judged not escalation-required."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Planning: Constraint Ignorance (partial)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: nearest mode set to policy_question_answered_without_lookup, boundary sentence added (0088 asks for account information, no change)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        }
+      ],
+      "agentdebug": {
+        "type": "Planning: Constraint Ignorance",
+        "fit": "partial",
+        "note": "mandatory hand-off (ESC-2/ESC-3); AgentDebug has no escalation category",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    },
+    {
+      "name": "policy_question_answered_without_lookup",
+      "status": "confirmed",
+      "definition": "The user asks a policy question, and the reply answers, guesses, or makes a policy claim without a lookup of the governing policy anywhere in the conversation: search_help_center or get_policy for platform policy, or get_store_info for a store's own policy.",
+      "boundary": "Judges only whether a lookup happened. A lookup that returned policy ids but no id cited in the reply is policy_claim_without_citation (a reply can fail both). A lookup with invented arguments that returns nothing does not count (0124). Asking for missing details passes only if the reply makes no policy claim before the lookup (0063 fails: 'it depends on the specific store's return policy' with no lookup).",
+      "nearest_mode": "policy_claim_without_citation",
+      "requirement_source": "PURPOSE-1 (answers from the help center); RESP-3",
+      "evaluator_type": "llm_judge",
+      "product_change": "Require a help-center lookup (search_help_center or get_policy) before answering any policy question.",
+      "annotation_ids": [
+        "ann-mwbkd84owk0x",
+        "ann-mwbhs1p2nhb2",
+        "ann-mwbkb3lktjrm",
+        "ann-mwbftib41kw2",
+        "ann-mwcfl1pi6v44",
+        "ann-mwcflw6nwd4q"
+      ],
+      "created_from": [
+        "b5fac52453c4d0fce4ceaf9bea74245b",
+        "d1d9c6093503aa5822570aeb6698e5c4",
+        "7b589cca0fafb31f336a621197821c7c",
+        "8126c06cc56a7016b199bb432a9daaa2"
+      ],
+      "example_trace_ids": [
+        "b5fac52453c4d0fce4ceaf9bea74245b",
+        "d1d9c6093503aa5822570aeb6698e5c4",
+        "7b589cca0fafb31f336a621197821c7c",
+        "8126c06cc56a7016b199bb432a9daaa2",
+        "4e33f89a37b38431fb0edfd11bf88be9",
+        "aa27ad6d444f0533af60a074f1eec75a",
+        "ff0adc0bc77addaabb31346b6c296b33"
+      ],
+      "close_negative_trace_ids": [
+        "5234ef109607a29cd4ca6f7a514e2938",
+        "ac70e5f1e5948b5de21bc283f2d673ec",
+        "c0f2ca562260d4af858b136a305991b9"
+      ],
+      "close_negatives_note": "D2 (2026-11-11): student confirmed 0164 (get_store_info for a store-policy question) and 0065; 0226 replaced by 0162 (get_policy cw-refunds, cited).",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 2 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0069, +0165 positives; +0065 close negatives"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: selected for the final taxonomy by the student, pending the D2 re-check of supporting traces."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D2: lookup widened to get_store_info for store-policy questions (0164 passes); 0226 removed as a close negative (refund request, not a policy question), +0162; +0063 positive (no failure in open coding; policy claim before any lookup), boundary sentence added. 0063 also makes an uncited policy claim (policy_claim_without_citation in Part E)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Memory: Retrieval Failure (or Hallucination) (good)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        }
+      ],
+      "agentdebug": {
+        "type": "Memory: Retrieval Failure (or Hallucination)",
+        "fit": "good",
+        "note": "answers from model knowledge instead of the help center",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    },
+    {
+      "name": "policy_rule_misapplied",
+      "status": "dropped",
+      "definition": "The record was read correctly, but the reply applies the wrong policy rule or the wrong date field to it (e.g. return window counted from the ship date instead of delivery; refund eligibility used to answer a dispute instead of the dispute window).",
+      "boundary": "If the record itself is misread or the wrong record is used, that is reply_contradicts_tool_result.",
+      "nearest_mode": "reply_contradicts_tool_result",
+      "requirement_source": "missing requirement / PURPOSE-1 (rules in cw-returns, cw-disputes)",
+      "evaluator_type": "llm_judge",
+      "product_change": "Spell out the rule details in the prompt, or compute them in a tool (as check_refund_eligibility already does for returns).",
+      "annotation_ids": [
+        "ann-mwbkmb37qdy1",
+        "ann-mwbgvwfm8jva"
+      ],
+      "created_from": [
+        "4356d1de1a2968e2ec25f6d176adbb47",
+        "ca96560963fbe6c54d3169690c7798f0"
+      ],
+      "example_trace_ids": [
+        "4356d1de1a2968e2ec25f6d176adbb47",
+        "ca96560963fbe6c54d3169690c7798f0"
+      ],
+      "close_negative_trace_ids": [
+        "b307f7baa4f45fcd68e9e6aab88c5b1f",
+        "e182d558dd92da8d073b3e10ccd4413c",
+        "de74bd78918631e2729ae607825dcd2c"
+      ],
+      "close_negatives_note": "close negatives proposed by the agent during axial coding and accepted by the student in bulk; re-check each one in Part D",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 2 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0223 close negatives. Its content often sits behind an earlier failure (0028, 0222, 0218 count the window wrongly after no lookup; 0168 ties a dispute to refund eligibility). Thin (fewer than 3 positives after 85 conversations); student decided to record now and decide merge/drop in Part D."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: dropped by the student. 2 positives; its content usually sits behind an earlier failure covered by eligibility_without_order_lookup or required_escalation_not_made (0028, 0222, 0218, 0168), whose product changes cover most of it. Reported as observed, not modelled."
+        }
+      ]
+    },
+    {
+      "name": "out_of_scope_request_answered",
+      "status": "dropped",
+      "definition": "The reply gives substantive help on something outside Cartwheel, or legal advice, instead of declining and saying what it can help with.",
+      "boundary": "Declining and redirecting to Cartwheel topics passes, even if the reply names a general kind of professional to consult.",
+      "nearest_mode": "",
+      "requirement_source": "SCOPE-2",
+      "evaluator_type": "llm_judge",
+      "product_change": "Prompt rule (and possibly an input classifier) to decline out-of-scope requests.",
+      "annotation_ids": [
+        "ann-mwbh82yjpd7r"
+      ],
+      "created_from": [
+        "c3e22e22eb9436ec7e61821c73455355"
+      ],
+      "example_trace_ids": [
+        "c3e22e22eb9436ec7e61821c73455355"
+      ],
+      "close_negative_trace_ids": [
+        "af01c9d750e2a77039980ad9d890d111",
+        "73977a00d461e7ef8928c0d6b750efaf",
+        "8ce3aee74378a091a9965d17f44fe354",
+        "17abfcf00396379ae8a691a19c7c31e4",
+        "5c3410fba7f563c50e443b4218d3e3ef",
+        "cd5249c896ec737e335922f326e20a3b"
+      ],
+      "close_negatives_note": "close negatives proposed by the agent during axial coding and accepted by the student in bulk; re-check each one in Part D",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 2 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0091, +0092, +0090, +0175 close negatives. Search pool exhausted (4/4). Thin (fewer than 3 positives after 85 conversations); student decided to record now and decide merge/drop in Part D."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: dropped by the student. 1 positive in 100 reviewed conversations; search pool exhausted; the agent declined correctly in 6 close negatives. Reported as observed, not modelled."
+        }
+      ]
+    },
+    {
+      "name": "correction_not_reconciled",
+      "status": "dropped",
+      "definition": "The user corrects which order or product they meant after the agent already acted on the first one, and the reply does not address the earlier action (reverse it, escalate it, or say it still stands).",
+      "boundary": "A correction made before any write action needs no reconciliation and passes.",
+      "nearest_mode": "",
+      "requirement_source": "missing requirement (closest: ESC-4)",
+      "evaluator_type": "llm_judge",
+      "product_change": "Prompt rule: when the user corrects themselves after a write action, state what happened to the earlier action and escalate if it cannot be undone.",
+      "annotation_ids": [
+        "ann-mwbih66s0gxd"
+      ],
+      "created_from": [
+        "64375c64405172b1ae76be05624ba470"
+      ],
+      "example_trace_ids": [
+        "64375c64405172b1ae76be05624ba470"
+      ],
+      "close_negative_trace_ids": [
+        "9015d29a8fc7b3da54efd01bb85426eb",
+        "3d4cc4984171455338e1086a07e76547",
+        "b270497575e4d38847b34ba3df597436",
+        "722920b17b176ecaabb506fbba25f153",
+        "c391597ab75b762e30c4f9aab1b42d3d"
+      ],
+      "close_negatives_note": "close negatives proposed by the agent during axial coding and accepted by the student in bulk; re-check each one in Part D",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-10",
+          "change": "created in axial coding of batch 2 (student accepted the draft)"
+        },
+        {
+          "at": "2026-11-11",
+          "change": "batch 3: +0238, +0239, +0241, +0242 close negatives. Corrections were followed in all four; their failure was B in turn 1. 0240's shape is 'refunded before confirming, first refund never addressed', whose product change (confirm before a write) differs from the label. Thin (fewer than 3 positives after 85 conversations); student decided to record now and decide merge/drop in Part D."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: dropped by the student. 1 positive in 100; every other correction was followed. 0240's failure (refund before confirming, first refund never addressed) needs a different product change than the name implies. Reported as observed, not modelled."
+        }
+      ]
+    },
+    {
+      "name": "absence_claimed_after_bad_search_arguments",
+      "status": "confirmed",
+      "definition": "A search or lookup returns nothing or fails because its arguments do not reflect the request (a category word used as a title query, an invented store id, a filter the user did not ask for), and the reply states that the item, order, or store does not exist or cannot be found, without a broader retry or saying the search may have missed it.",
+      "boundary": "If the record was in the results, it is reply_contradicts_tool_result. One of several matches shown as the only one is ambiguous_match_presented_as_unique. No lookup at all is eligibility_without_order_lookup or policy_question_answered_without_lookup. A reply that says the search may have missed (typo, ask to double-check) passes (0027). A bad argument followed by a broader retry that finds the answer passes (0065: get_store_info('Cartwheel') not_found, then search_help_center, cited answer).",
+      "nearest_mode": "reply_contradicts_tool_result",
+      "requirement_source": "RESP-3 (state missing information accurately, do not invent); TOOL-3 / TOOL-6 arguments",
+      "evaluator_type": "llm_judge",
+      "product_change": "Build search arguments from what the user named; on an empty or failed result, retry more broadly (store only, no filter) before claiming absence, and say 'I couldn't find' rather than 'there are none'.",
+      "annotation_ids": [
+        "ann-mwckr36eacbz",
+        "ann-mwbhs1p2nhb2"
+      ],
+      "created_from": [
+        "bd0e6581814466d85eeea8a4474c84ed"
+      ],
+      "example_trace_ids": [
+        "bd0e6581814466d85eeea8a4474c84ed",
+        "d1d9c6093503aa5822570aeb6698e5c4",
+        "b0c57efb17acd9abf9982ca53551eea9"
+      ],
+      "close_negative_trace_ids": [
+        "24a762d8a17bb9a1688b966a2ebd2810",
+        "d5468f866ea5dc88270e88dd18550db2",
+        "ac70e5f1e5948b5de21bc283f2d673ec"
+      ],
+      "close_negatives_note": "D2/D3 (2026-11-11): student confirmed 0205 and added 0027 (failed store lookup on a typo; reply says it could be a typo and asks). 0182 T2 considered and left out (first failure is B). D6: +0065 (bad argument, then a broader retry).",
+      "evaluation_case_candidates": [],
+      "revisions": [
+        {
+          "at": "2026-11-11",
+          "change": "created in axial coding of batch 4 from 0202 (the one new mode in the final 15); 0124 added (also in policy_question_answered_without_lookup: invented get_store_info arguments, then 'I wasn't able to find your store'). Thin; decide in Part D."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D1: kept conditionally by the student; stays only if the recheck of the 100 reviewed conversations (D3) finds a third positive, otherwise dropped."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D3: recheck of the 100 reviewed conversations (any empty or failed lookup) found +0072 positive (store name put in the query, 0 results, 'might not be available on Cartwheel'; product 756 exists; no failure in open coding) and +0027 close negative. Kept: 3 positives meet the minimum."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: AgentDebug mapping recorded (student decision): Action: Parameter Error, then Reflection: Causal Misattribution (good)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D5: renamed from absence_claimed_after_inadequate_search (student decision); AgentDebug's 'Parameter Error' names the cause more precisely than 'inadequate search'. Definition unchanged."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: +0065 close negative (student decision)."
+        },
+        {
+          "at": "2026-11-11",
+          "change": "Part D6: confirmed by the student after the requirements check (name, binary definition, >=3 positives, close negatives or recorded exception, originating annotations, boundary and nearest mode, evaluator type, requirement source)."
+        }
+      ],
+      "agentdebug": {
+        "type": "Action: Parameter Error, then Reflection: Causal Misattribution",
+        "fit": "good",
+        "note": "bad arguments cause the empty result; the agent blames the item's absence instead of its query",
+        "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)"
+      }
+    }
+  ],
+  "agentdebug_comparison": {
+    "reference": "Zhu et al., 'Where LLM Agents Fail and How They Can Learn From Failures', arXiv:2509.25370, AgentErrorTaxonomy (Table 2)",
+    "date": "2026-11-11",
+    "new_modes_added": [],
+    "findings": [
+      "C, D and F are specification-compliance failures with no AgentDebug category (AgentDebug targets task agents in simulated environments).",
+      "Parameter Error occurs in the reviewed traces (0124, 0244, 0065, 0194), but the consequential cases are already absence_claimed_after_bad_search_arguments; no new mode.",
+      "Inefficient Planning names the out-of-scope observation (agent asks for information it already has: 0109, 0154); not a mode (no requirement, no wrong outcome).",
+      "No System errors observed: every tool error came from the agent's own arguments.",
+      "Unclear name: absence_claimed_after_inadequate_search renamed to absence_claimed_after_bad_search_arguments."
+    ]
+  },
+  "part_e_labeling_rules": [
+    {
+      "at": "2026-11-12",
+      "rule": "Label each mode on the trace as it reads, independently of other modes: a failure caused by an earlier failure in another mode (e.g. a wrong order picked, B) still counts as a Fail for this mode.",
+      "decided_by": "student",
+      "examples": [
+        "0181",
+        "0182",
+        "0186",
+        "0241",
+        "0248",
+        "0244"
+      ]
+    }
+  ]
+}

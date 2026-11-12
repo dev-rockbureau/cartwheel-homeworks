@@ -1,1 +1,2379 @@
-{"annotations": []}
+{
+  "annotations": [
+    {
+      "id": "ann-mwaw62jqj3bz",
+      "trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "session_id": "2a60bad0fc5a421a84b59e58e834439d",
+      "trace_ids": [
+        "6262f58f9dc6ff16ebb69365eb5f6b8f",
+        "19658f31cc0b14666f3aa84d598296c6"
+      ],
+      "scenario_id": "support-0029",
+      "turn_trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "practice",
+      "created_at": "2026-11-10T16:15:37Z",
+      "updated_at": "2026-11-10T16:15:37Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.s1.i0",
+      "quote": "",
+      "note": "this should be shown to the user"
+    },
+    {
+      "id": "ann-mwaw7b1sw2k2",
+      "trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "session_id": "2a60bad0fc5a421a84b59e58e834439d",
+      "trace_ids": [
+        "6262f58f9dc6ff16ebb69365eb5f6b8f",
+        "19658f31cc0b14666f3aa84d598296c6"
+      ],
+      "scenario_id": "support-0029",
+      "turn_trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "practice",
+      "created_at": "2026-11-10T16:16:35Z",
+      "updated_at": "2026-11-10T16:16:35Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.s2.i0",
+      "quote": "",
+      "note": "this should have been shown to the user"
+    },
+    {
+      "id": "ann-mwaw93yjhek9",
+      "trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "session_id": "2a60bad0fc5a421a84b59e58e834439d",
+      "trace_ids": [
+        "6262f58f9dc6ff16ebb69365eb5f6b8f",
+        "19658f31cc0b14666f3aa84d598296c6"
+      ],
+      "scenario_id": "support-0029",
+      "turn_trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "practice",
+      "created_at": "2026-11-10T16:17:59Z",
+      "updated_at": "2026-11-10T16:17:59Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.s3.i0",
+      "quote": "Since the refund does not require human approval,",
+      "note": "this exposes the policy and a possibly a security concern"
+    },
+    {
+      "id": "ann-mwawc0sbafu4",
+      "trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "session_id": "2a60bad0fc5a421a84b59e58e834439d",
+      "trace_ids": [
+        "6262f58f9dc6ff16ebb69365eb5f6b8f",
+        "19658f31cc0b14666f3aa84d598296c6"
+      ],
+      "scenario_id": "support-0029",
+      "turn_trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "practice",
+      "created_at": "2026-11-10T16:20:15Z",
+      "updated_at": "2026-11-10T16:20:15Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "The refund of **$52.50** for your Signature Planner has been successfully processed",
+      "note": "we don't have proof that the refund was successful since this is from issue_refund result not a get order result that will show the actual order status as refunded."
+    },
+    {
+      "id": "ann-mwawdua88trk",
+      "trace_id": "6262f58f9dc6ff16ebb69365eb5f6b8f",
+      "session_id": "2a60bad0fc5a421a84b59e58e834439d",
+      "trace_ids": [
+        "6262f58f9dc6ff16ebb69365eb5f6b8f",
+        "19658f31cc0b14666f3aa84d598296c6"
+      ],
+      "scenario_id": "support-0029",
+      "turn_trace_id": "19658f31cc0b14666f3aa84d598296c6",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "practice",
+      "created_at": "2026-11-10T16:21:40Z",
+      "updated_at": "2026-11-10T16:21:40Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t2.reply",
+      "quote": "Your refund for the broken Signature Planner has already been processed",
+      "note": "we don't have proof of this since there was no tool call to confirm in the order status"
+    },
+    {
+      "id": "ann-mwb4oc7tvn3y",
+      "trace_id": "8e622c9051d897f4318d2984595ad099",
+      "session_id": "66b9fcf3119745eb89356e82fe11cde5",
+      "trace_ids": [
+        "8e622c9051d897f4318d2984595ad099"
+      ],
+      "scenario_id": "support-0208",
+      "turn_trace_id": "8e622c9051d897f4318d2984595ad099",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T20:13:46Z",
+      "updated_at": "2026-11-10T20:13:46Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "missing the get order info tool call to verify when the order was delivered. agent assumed the user statement as fact"
+    },
+    {
+      "id": "ann-mwb81yzfg5ac",
+      "trace_id": "567abe5b448338d192dd31588b3a91ef",
+      "session_id": "c2a7c4da533547dda7b1d8868e938f5a",
+      "trace_ids": [
+        "567abe5b448338d192dd31588b3a91ef"
+      ],
+      "scenario_id": "support-0144",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:48:21Z",
+      "updated_at": "2026-11-10T21:48:21Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb82bre0r6m",
+      "trace_id": "afad408b632ae13f6405768015c8dc09",
+      "session_id": "75284b93609c43f0abce3156e6ad2ebb",
+      "trace_ids": [
+        "afad408b632ae13f6405768015c8dc09"
+      ],
+      "scenario_id": "support-0140",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:48:38Z",
+      "updated_at": "2026-11-10T21:48:38Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb82j6yvcat",
+      "trace_id": "38533af3e677145ee64f1c82f81990ae",
+      "session_id": "f51991ff140046f69a0102df108431cd",
+      "trace_ids": [
+        "38533af3e677145ee64f1c82f81990ae",
+        "2851087e0b844dc9a42fd9cca660d6b0"
+      ],
+      "scenario_id": "support-0053",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:48:47Z",
+      "updated_at": "2026-11-10T21:48:47Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb82sis6nr8",
+      "trace_id": "9e959c67c887d9f37754590dfc6a8a4a",
+      "session_id": "2463df4cafea457984a77f3fa226ef4f",
+      "trace_ids": [
+        "9e959c67c887d9f37754590dfc6a8a4a"
+      ],
+      "scenario_id": "support-0093",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:49:00Z",
+      "updated_at": "2026-11-10T21:49:00Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb83e4pz60k",
+      "trace_id": "d5468f866ea5dc88270e88dd18550db2",
+      "session_id": "fbfb0a2bf4d647ff895ed38ad1cc262f",
+      "trace_ids": [
+        "d5468f866ea5dc88270e88dd18550db2"
+      ],
+      "scenario_id": "support-0027",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:49:28Z",
+      "updated_at": "2026-11-10T21:49:28Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb849wifdpi",
+      "trace_id": "7f677823e4a0157a229af994519897f7",
+      "session_id": "bbe4270d782443aeb123efe5cf42dcc8",
+      "trace_ids": [
+        "7f677823e4a0157a229af994519897f7"
+      ],
+      "scenario_id": "support-0002",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:50:09Z",
+      "updated_at": "2026-11-10T21:50:09Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb84j9z4z4c",
+      "trace_id": "c0f2ca562260d4af858b136a305991b9",
+      "session_id": "98a95bdccf8348159305bbf974aa5cd6",
+      "trace_ids": [
+        "c0f2ca562260d4af858b136a305991b9"
+      ],
+      "scenario_id": "support-0162",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:50:21Z",
+      "updated_at": "2026-11-10T21:50:21Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb852er038d",
+      "trace_id": "627f628d57b9f9a5ba564346aa5fa4da",
+      "session_id": "df746027eec7412ab5c7af02b3355965",
+      "trace_ids": [
+        "627f628d57b9f9a5ba564346aa5fa4da"
+      ],
+      "scenario_id": "support-0087",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:50:46Z",
+      "updated_at": "2026-11-10T21:50:46Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb86l10n4wp",
+      "trace_id": "3b1d03b4378b62a2144bef58d6c48a4d",
+      "session_id": "edda67b6b0f044fab11772b38f554594",
+      "trace_ids": [
+        "3b1d03b4378b62a2144bef58d6c48a4d"
+      ],
+      "scenario_id": "support-0174",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:51:56Z",
+      "updated_at": "2026-11-10T21:51:56Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb87f3xae3b",
+      "trace_id": "5a04ce7e16b5abce1eda3ecd74b8172e",
+      "session_id": "f6b07d8417a4407ca27d8710b8ad6880",
+      "trace_ids": [
+        "5a04ce7e16b5abce1eda3ecd74b8172e"
+      ],
+      "scenario_id": "support-0071",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T21:52:35Z",
+      "updated_at": "2026-11-10T21:52:35Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb885qaxgc7",
+      "trace_id": "e182d558dd92da8d073b3e10ccd4413c",
+      "session_id": "3d6697c0ae17475aaeef511584f50464",
+      "trace_ids": [
+        "e182d558dd92da8d073b3e10ccd4413c",
+        "e7396ba994615f60b96b774aab087ef2"
+      ],
+      "scenario_id": "support-0217",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:53:10Z",
+      "updated_at": "2026-11-10T21:53:10Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb88ex4rz8h",
+      "trace_id": "2858531a2ffa75bb27a35d588352a581",
+      "session_id": "9c20e0bbe8704e719abf01271d4afb70",
+      "trace_ids": [
+        "2858531a2ffa75bb27a35d588352a581"
+      ],
+      "scenario_id": "support-0135",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:53:22Z",
+      "updated_at": "2026-11-10T21:53:22Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb899r79ypy",
+      "trace_id": "f7dd89219c7eb9b55c964244d0b853aa",
+      "session_id": "505900f61c73479b9dd3eb6657b6d995",
+      "trace_ids": [
+        "f7dd89219c7eb9b55c964244d0b853aa",
+        "5b7a543ad8973accd84abfcb5555e1cd"
+      ],
+      "scenario_id": "support-0033",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:54:02Z",
+      "updated_at": "2026-11-10T21:54:02Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb8a9u27lno",
+      "trace_id": "bb9f1c2c99d5e11c17d24d390f270af5",
+      "session_id": "a3962ede976b4db4b14f00e03b9ef24d",
+      "trace_ids": [
+        "bb9f1c2c99d5e11c17d24d390f270af5"
+      ],
+      "scenario_id": "support-0005",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:54:49Z",
+      "updated_at": "2026-11-10T21:54:49Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb8amfixrvp",
+      "trace_id": "fb38af49e13a6a03485c14090d676cef",
+      "session_id": "1acb36f8c5e3465eb07f8d38a43d9fc7",
+      "trace_ids": [
+        "fb38af49e13a6a03485c14090d676cef",
+        "d1c986a313eb372c08964afefa362c32"
+      ],
+      "scenario_id": "support-0043",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:55:05Z",
+      "updated_at": "2026-11-10T21:55:05Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb8av3aiirn",
+      "trace_id": "ff0adc0bc77addaabb31346b6c296b33",
+      "session_id": "6a3ffd24a4624d81ba8851628eafeaf1",
+      "trace_ids": [
+        "ff0adc0bc77addaabb31346b6c296b33"
+      ],
+      "scenario_id": "support-0063",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:55:16Z",
+      "updated_at": "2026-11-10T21:55:16Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb8b7d1sugm",
+      "trace_id": "b0c57efb17acd9abf9982ca53551eea9",
+      "session_id": "15c64f72908a4d62bab260c82f63a857",
+      "trace_ids": [
+        "b0c57efb17acd9abf9982ca53551eea9"
+      ],
+      "scenario_id": "support-0072",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T21:55:32Z",
+      "updated_at": "2026-11-10T21:55:32Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb8ou3f5qc9",
+      "trace_id": "e02f2ab4e47ddfc6ec3e9cd636b1fffe",
+      "session_id": "4de7a4e25a6341a481f48acc9ef51df1",
+      "trace_ids": [
+        "e02f2ab4e47ddfc6ec3e9cd636b1fffe",
+        "82dc6692377cf6a80df81d4dadd49ac7"
+      ],
+      "scenario_id": "support-0046",
+      "turn_trace_id": "e02f2ab4e47ddfc6ec3e9cd636b1fffe",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T22:06:08Z",
+      "updated_at": "2026-11-10T22:06:08Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "false claim about the knife not being found in the order history when it was the first in the orders list"
+    },
+    {
+      "id": "ann-mwb92mu77uef",
+      "trace_id": "c9a5d7ca58708287d21d6c2387cc06db",
+      "session_id": "cd5e657155444a05a15f18b088637003",
+      "trace_ids": [
+        "c9a5d7ca58708287d21d6c2387cc06db",
+        "d9ba7c64b2166f66ac5dd73ef8169769"
+      ],
+      "scenario_id": "support-0189",
+      "turn_trace_id": "d9ba7c64b2166f66ac5dd73ef8169769",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T22:16:52Z",
+      "updated_at": "2026-11-10T22:16:52Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t2.reply",
+      "quote": "",
+      "note": "should escalate here as per ESC-3"
+    },
+    {
+      "id": "ann-mwb9d5qqndqv",
+      "trace_id": "5234ef109607a29cd4ca6f7a514e2938",
+      "session_id": "69bec5898e37443e8fd0528dd33c476d",
+      "trace_ids": [
+        "5234ef109607a29cd4ca6f7a514e2938"
+      ],
+      "scenario_id": "support-0164",
+      "turn_trace_id": "5234ef109607a29cd4ca6f7a514e2938",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T22:25:03Z",
+      "updated_at": "2026-11-10T22:25:03Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "which is an override of the platform's standard return window of 30 days",
+      "note": "RESP-5, \"which is...\" is not necessary"
+    },
+    {
+      "id": "ann-mwb9moxc9tkp",
+      "trace_id": "b307f7baa4f45fcd68e9e6aab88c5b1f",
+      "session_id": "d9d26b2074b14173a6f4588a7c85fee3",
+      "trace_ids": [
+        "b307f7baa4f45fcd68e9e6aab88c5b1f",
+        "a67ed9c58bfed9a08dd8bc72e5658a12"
+      ],
+      "scenario_id": "support-0226",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T22:32:28Z",
+      "updated_at": "2026-11-10T22:32:28Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb9p2aueyy5",
+      "trace_id": "bd40408154a62df6c12aff61851a6edb",
+      "session_id": "c63b2f1f4c9b4329ad467db5200d34c0",
+      "trace_ids": [
+        "bd40408154a62df6c12aff61851a6edb",
+        "83015e236853fb203e090c61a42222c6"
+      ],
+      "scenario_id": "support-0035",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T22:34:18Z",
+      "updated_at": "2026-11-10T22:34:18Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwb9u7ltseje",
+      "trace_id": "a2d1fd836a5c5d3deb4d23d789c5a934",
+      "session_id": "a0ffc92d7daf4a5f93bf3a0edd26e0ae",
+      "trace_ids": [
+        "a2d1fd836a5c5d3deb4d23d789c5a934"
+      ],
+      "scenario_id": "support-0178",
+      "turn_trace_id": "a2d1fd836a5c5d3deb4d23d789c5a934",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T22:38:18Z",
+      "updated_at": "2026-11-10T22:38:18Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "delivered on **April 13, 2026**",
+      "note": "RESP-3, this date is invented since delivery date for the order is still null"
+    },
+    {
+      "id": "ann-mwba8io3gjrn",
+      "trace_id": "58a1bbae3a34a634e6c9cdb715f8694b",
+      "session_id": "1bf9fdff3b974cf2960052a67daaf490",
+      "trace_ids": [
+        "58a1bbae3a34a634e6c9cdb715f8694b"
+      ],
+      "scenario_id": "support-0194",
+      "turn_trace_id": "58a1bbae3a34a634e6c9cdb715f8694b",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T22:49:26Z",
+      "updated_at": "2026-11-10T22:49:26Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.s2.call",
+      "quote": "limit=1",
+      "note": "unable to disambiguate due to limit=1"
+    },
+    {
+      "id": "ann-mwbab2m2z3an",
+      "trace_id": "9c6259f73c719910e41d90f16d536758",
+      "session_id": "d256534616dd4a80b9b139ff1535dda0",
+      "trace_ids": [
+        "9c6259f73c719910e41d90f16d536758"
+      ],
+      "scenario_id": "support-0128",
+      "turn_trace_id": "9c6259f73c719910e41d90f16d536758",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T22:51:25Z",
+      "updated_at": "2026-11-10T22:51:25Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I'm unable to provide access to data on customers' purchases from other stores on the platform.",
+      "note": "RESP-1, no policy id citation"
+    },
+    {
+      "id": "ann-mwbbhk33afe1",
+      "trace_id": "c02fb73be4c04fcc80715264b36a211a",
+      "session_id": "c81d017073174651b46173d3d47efebd",
+      "trace_ids": [
+        "c02fb73be4c04fcc80715264b36a211a",
+        "4ee05515fb3a5b5acf5464fc32068bea"
+      ],
+      "scenario_id": "support-0216",
+      "turn_trace_id": "c02fb73be4c04fcc80715264b36a211a",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-1",
+      "created_at": "2026-11-10T23:24:27Z",
+      "updated_at": "2026-11-10T23:24:27Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "the restocking fee should have been mentioned here since it is part of the store's return policy, missing citation"
+    },
+    {
+      "id": "ann-mwbbiabc4qa4",
+      "trace_id": "381418093e425d18c986ecaf8aa4b618",
+      "session_id": "2dda4ba7ca824e3cbeda1e53bbf97852",
+      "trace_ids": [
+        "381418093e425d18c986ecaf8aa4b618"
+      ],
+      "scenario_id": "support-0108",
+      "turn_trace_id": "381418093e425d18c986ecaf8aa4b618",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T23:25:01Z",
+      "updated_at": "2026-11-10T23:25:01Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "the restocking fee should have been mentioned here since it is part of the store's return policy, missing citation"
+    },
+    {
+      "id": "ann-mwbbj22ysats",
+      "trace_id": "7743cbc3264292f85717d34183c72f9c",
+      "session_id": "e67e95de45c24c9e96badb2255bda005",
+      "trace_ids": [
+        "7743cbc3264292f85717d34183c72f9c"
+      ],
+      "scenario_id": "support-0149",
+      "turn_trace_id": "7743cbc3264292f85717d34183c72f9c",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T23:25:37Z",
+      "updated_at": "2026-11-10T23:25:37Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "the restocking fee should have been mentioned here since it is part of the store's return policy, missing citation"
+    },
+    {
+      "id": "ann-mwbbxhw1124o",
+      "trace_id": "9f34931c527e246d54d5b34d7460b4e8",
+      "session_id": "f4b1f59ca8d940d4926ce9bd60f2d932",
+      "trace_ids": [
+        "9f34931c527e246d54d5b34d7460b4e8",
+        "ad0eef8c53a267793d1d6d7f3011ccbe"
+      ],
+      "scenario_id": "support-0017",
+      "turn_trace_id": "ad0eef8c53a267793d1d6d7f3011ccbe",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "cluster-1",
+      "created_at": "2026-11-10T23:36:51Z",
+      "updated_at": "2026-11-10T23:36:51Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t2.reply",
+      "quote": "",
+      "note": "didn't give a specific date answer which was being asked"
+    },
+    {
+      "id": "ann-mwbfe8j96xvu",
+      "trace_id": "64e1694d0b3e8808925bb83c7bd5a7c9",
+      "session_id": "3a1e235cd11d4360b9baca9cb3541a11",
+      "trace_ids": [
+        "64e1694d0b3e8808925bb83c7bd5a7c9"
+      ],
+      "scenario_id": "support-0083",
+      "turn_trace_id": "64e1694d0b3e8808925bb83c7bd5a7c9",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:13:51Z",
+      "updated_at": "2026-11-11T01:13:51Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "should have escalated as per ESC-2 instead of suggesting to contact customer support"
+    },
+    {
+      "id": "ann-mwbftib41kw2",
+      "trace_id": "8126c06cc56a7016b199bb432a9daaa2",
+      "session_id": "37ff06e23fa74727882a3a2e9c5418cf",
+      "trace_ids": [
+        "8126c06cc56a7016b199bb432a9daaa2"
+      ],
+      "scenario_id": "support-0088",
+      "turn_trace_id": "8126c06cc56a7016b199bb432a9daaa2",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:25:43Z",
+      "updated_at": "2026-11-11T03:12:51Z",
+      "history": [
+        {
+          "note": "should have escalated as per ESC-2",
+          "at": "2026-11-11T01:25:43Z"
+        }
+      ],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "agent should point to account settings (cw-account-security)"
+    },
+    {
+      "id": "ann-mwbfwjdtxgen",
+      "trace_id": "29fa46f29c1bdbea0b951baa9e7b2276",
+      "session_id": "72f872a3bbaf409aba544784b01badff",
+      "trace_ids": [
+        "29fa46f29c1bdbea0b951baa9e7b2276"
+      ],
+      "scenario_id": "support-0050",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:28:05Z",
+      "updated_at": "2026-11-11T01:28:05Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbg1umi4dha",
+      "trace_id": "c44b836d249071a80ff4e0369ff08537",
+      "session_id": "181f08fd43024d5db0936db8f8bc0908",
+      "trace_ids": [
+        "c44b836d249071a80ff4e0369ff08537",
+        "0038c720a2df3449f02269d8358cfa3f"
+      ],
+      "scenario_id": "support-0118",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:32:13Z",
+      "updated_at": "2026-11-11T01:32:13Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbgiu9ys02u",
+      "trace_id": "70ad7ddf8d3ad23ee0331349fe8f1e1e",
+      "session_id": "d1bc924e0de34f7b9644409492467e2c",
+      "trace_ids": [
+        "70ad7ddf8d3ad23ee0331349fe8f1e1e",
+        "93206f45a320933b63ae136098c56585"
+      ],
+      "scenario_id": "support-0054",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:45:25Z",
+      "updated_at": "2026-11-11T01:45:25Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbgnge2p7tj",
+      "trace_id": "b9d9c1cad4bcbe145ee0ed335f655a29",
+      "session_id": "1568b0b785884a05bff08db823891945",
+      "trace_ids": [
+        "b9d9c1cad4bcbe145ee0ed335f655a29",
+        "4529fec7b5ff3d72477c2936dcb1648d"
+      ],
+      "scenario_id": "support-0057",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:49:00Z",
+      "updated_at": "2026-11-11T01:49:00Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbgvwfm8jva",
+      "trace_id": "ca96560963fbe6c54d3169690c7798f0",
+      "session_id": "d96367f0a026472f85c82db82d9f75d4",
+      "trace_ids": [
+        "ca96560963fbe6c54d3169690c7798f0"
+      ],
+      "scenario_id": "support-0170",
+      "turn_trace_id": "ca96560963fbe6c54d3169690c7798f0",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T01:55:35Z",
+      "updated_at": "2026-11-11T01:55:35Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "did not mention the dispute window has passed"
+    },
+    {
+      "id": "ann-mwbh48ljpobj",
+      "trace_id": "3bd409a56141a79459204d80ea1b2d82",
+      "session_id": "a29ddb9df9fc4576a63b24145c528f66",
+      "trace_ids": [
+        "3bd409a56141a79459204d80ea1b2d82"
+      ],
+      "scenario_id": "support-0098",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:02:04Z",
+      "updated_at": "2026-11-11T02:02:04Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbh5bxescw6",
+      "trace_id": "73977a00d461e7ef8928c0d6b750efaf",
+      "session_id": "df559ee0a1ec4caf95e535fc0de617a6",
+      "trace_ids": [
+        "73977a00d461e7ef8928c0d6b750efaf"
+      ],
+      "scenario_id": "support-0139",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:02:55Z",
+      "updated_at": "2026-11-11T02:02:55Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbh82yjpd7r",
+      "trace_id": "c3e22e22eb9436ec7e61821c73455355",
+      "session_id": "7f1598b6201d4d06a12c7878d3053e54",
+      "trace_ids": [
+        "c3e22e22eb9436ec7e61821c73455355"
+      ],
+      "scenario_id": "support-0095",
+      "turn_trace_id": "c3e22e22eb9436ec7e61821c73455355",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:05:03Z",
+      "updated_at": "2026-11-11T02:05:03Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "failed SCOPE-2"
+    },
+    {
+      "id": "ann-mwbh8spb05lq",
+      "trace_id": "af01c9d750e2a77039980ad9d890d111",
+      "session_id": "68572702d14742eba625659105af70af",
+      "trace_ids": [
+        "af01c9d750e2a77039980ad9d890d111"
+      ],
+      "scenario_id": "support-0094",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:05:36Z",
+      "updated_at": "2026-11-11T02:05:36Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbhs1p2nhb2",
+      "trace_id": "d1d9c6093503aa5822570aeb6698e5c4",
+      "session_id": "08141a99edde40ebb5033b2700434f19",
+      "trace_ids": [
+        "d1d9c6093503aa5822570aeb6698e5c4"
+      ],
+      "scenario_id": "support-0124",
+      "turn_trace_id": "d1d9c6093503aa5822570aeb6698e5c4",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:20:34Z",
+      "updated_at": "2026-11-11T03:22:19Z",
+      "history": [
+        {
+          "note": "not found is doubtful",
+          "at": "2026-11-11T02:20:34Z"
+        }
+      ],
+      "kind": "failure",
+      "msg_key": "t1.s1.call",
+      "quote": "",
+      "note": "The failure is that the agent made up those arguments, then answered nothing. It should have looked up cw-restocking-fees (up to 15%, opened items, store opt-in)."
+    },
+    {
+      "id": "ann-mwbhyvcw364f",
+      "trace_id": "50c0a14a0a5c62b18cc36027a0bbc2ed",
+      "session_id": "4f9c0711e9f649a3842e4afc15b5725a",
+      "trace_ids": [
+        "50c0a14a0a5c62b18cc36027a0bbc2ed"
+      ],
+      "scenario_id": "support-0191",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:25:53Z",
+      "updated_at": "2026-11-11T02:25:53Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbhzo4bkb9h",
+      "trace_id": "cb08fb8cbdfd2a9a7e3f907754673f91",
+      "session_id": "2f4143de80dc4467b11056f9979a39ba",
+      "trace_ids": [
+        "cb08fb8cbdfd2a9a7e3f907754673f91"
+      ],
+      "scenario_id": "support-0075",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:26:30Z",
+      "updated_at": "2026-11-11T02:26:30Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbi14hrnnpg",
+      "trace_id": "d456486df3dce06fca57f5a7c5b07be3",
+      "session_id": "02cbedcb97ae430e898aa68c1bdcefcc",
+      "trace_ids": [
+        "d456486df3dce06fca57f5a7c5b07be3"
+      ],
+      "scenario_id": "support-0131",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:27:38Z",
+      "updated_at": "2026-11-11T02:27:38Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbi3axvn1hj",
+      "trace_id": "ca96e33b90157153ec0c3c217ce9668d",
+      "session_id": "beec19763816413697fb06572e7eb271",
+      "trace_ids": [
+        "ca96e33b90157153ec0c3c217ce9668d",
+        "76d368bfed4d1ed8ee02f41c5f0e8339"
+      ],
+      "scenario_id": "support-0156",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:29:20Z",
+      "updated_at": "2026-11-11T02:29:20Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbi7i4ls3mt",
+      "trace_id": "d53066a570701448c0ffa7123a4b319b",
+      "session_id": "6ae0adcc4331436e9867a2bb4cb61a0c",
+      "trace_ids": [
+        "d53066a570701448c0ffa7123a4b319b",
+        "4f6afc15a6fccd0491d0e75eb08a5da7",
+        "5e0e8e210eb58b1457d2a6fdf32b86b5"
+      ],
+      "scenario_id": "support-0250",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:32:35Z",
+      "updated_at": "2026-11-11T02:32:35Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbih66s0gxd",
+      "trace_id": "64375c64405172b1ae76be05624ba470",
+      "session_id": "a091418836fc4b10bf476a6e408be3b8",
+      "trace_ids": [
+        "64375c64405172b1ae76be05624ba470",
+        "5be672baf2cdf53488dac4b1d504fc8c",
+        "ef65106f873af683e1a197560ce845b0"
+      ],
+      "scenario_id": "support-0240",
+      "turn_trace_id": "5be672baf2cdf53488dac4b1d504fc8c",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:40:07Z",
+      "updated_at": "2026-11-11T02:40:07Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t2.reply",
+      "quote": "",
+      "note": "did not acknowledge user mistakenly asked to refund Portable Field Guide"
+    },
+    {
+      "id": "ann-mwbik3faee7h",
+      "trace_id": "3de99ef01220ee6117856fd5e50ce6ce",
+      "session_id": "e348caaacb17448eae7bfa9246dbc058",
+      "trace_ids": [
+        "3de99ef01220ee6117856fd5e50ce6ce"
+      ],
+      "scenario_id": "support-0221",
+      "turn_trace_id": "3de99ef01220ee6117856fd5e50ce6ce",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:42:23Z",
+      "updated_at": "2026-11-11T02:42:23Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "the return window has just closed",
+      "note": "we do not know what the order is and when it was delivered so this is out of place"
+    },
+    {
+      "id": "ann-mwbir9uln7gc",
+      "trace_id": "4b91a380f54a21bdc85549a5b5f12c8f",
+      "session_id": "dbe96ebf73fb498bb87fd95532533c74",
+      "trace_ids": [
+        "4b91a380f54a21bdc85549a5b5f12c8f",
+        "b3d8dd6c440eca2f673e2de26ffc3ba9"
+      ],
+      "scenario_id": "support-0182",
+      "turn_trace_id": "4b91a380f54a21bdc85549a5b5f12c8f",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T02:47:58Z",
+      "updated_at": "2026-11-11T02:47:58Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "it is eligible for a refund.",
+      "note": "this contradicts order data that shows \"refund_eligible\": false"
+    },
+    {
+      "id": "ann-mwbjp4y9ihy2",
+      "trace_id": "a472a05e268320497f925b01efa52ec5",
+      "session_id": "579f80c5790e424eabe67970fcc0afd3",
+      "trace_ids": [
+        "a472a05e268320497f925b01efa52ec5",
+        "427c2333adbbafeaf6d11bfd2a95a8d5"
+      ],
+      "scenario_id": "support-0235",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:14:18Z",
+      "updated_at": "2026-11-11T03:14:18Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbjptsvlvtq",
+      "trace_id": "3b3825405b70afff161ac3155084b7df",
+      "session_id": "7bd62b62e28c44d3ba2c5a382b83c005",
+      "trace_ids": [
+        "3b3825405b70afff161ac3155084b7df",
+        "56d9fc2d08310b3073ab94446798a72d"
+      ],
+      "scenario_id": "support-0236",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:14:50Z",
+      "updated_at": "2026-11-11T03:14:50Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbk1qzyac6b",
+      "trace_id": "899c60646608cf6be9b3a78d543f9911",
+      "session_id": "804414d8bf2d46e1b199672acc5010ae",
+      "trace_ids": [
+        "899c60646608cf6be9b3a78d543f9911",
+        "098e015dbf202333ba406af1b01c5964"
+      ],
+      "scenario_id": "support-0158",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:24:06Z",
+      "updated_at": "2026-11-11T03:24:06Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbk596xdekg",
+      "trace_id": "9015d29a8fc7b3da54efd01bb85426eb",
+      "session_id": "05b4939d9e35413281fca3a60ad0543c",
+      "trace_ids": [
+        "9015d29a8fc7b3da54efd01bb85426eb",
+        "069d93150974fd7b167bd9ee4ef6e515",
+        "e8369eedb89c4e6c3781185a1f12fe2d"
+      ],
+      "scenario_id": "support-0237",
+      "turn_trace_id": "9015d29a8fc7b3da54efd01bb85426eb",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:26:50Z",
+      "updated_at": "2026-11-11T03:29:34Z",
+      "history": [
+        {
+          "note": "absence claimed when the record was in the result.",
+          "at": "2026-11-11T03:26:50Z"
+        }
+      ],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "",
+      "note": "list_my_orders included 1911 which is the Walnut Dinner Plate Set but agent claimed absence when the record was in the result."
+    },
+    {
+      "id": "ann-mwbkb3lktjrm",
+      "trace_id": "7b589cca0fafb31f336a621197821c7c",
+      "session_id": "47eedf722e58491787a60a2defb20e2e",
+      "trace_ids": [
+        "7b589cca0fafb31f336a621197821c7c"
+      ],
+      "scenario_id": "support-0127",
+      "turn_trace_id": "7b589cca0fafb31f336a621197821c7c",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:31:23Z",
+      "updated_at": "2026-11-11T03:31:23Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I don't have the specific information about response times for escalations.",
+      "note": "The SLA is 24 hours (support_escalation_sla_hours, cw-escalations). The agent never searched the help center."
+    },
+    {
+      "id": "ann-mwbkd84owk0x",
+      "trace_id": "b5fac52453c4d0fce4ceaf9bea74245b",
+      "session_id": "32ce9247fdf04c228f8cf33fb70de2c5",
+      "trace_ids": [
+        "b5fac52453c4d0fce4ceaf9bea74245b"
+      ],
+      "scenario_id": "support-0123",
+      "turn_trace_id": "b5fac52453c4d0fce4ceaf9bea74245b",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:33:02Z",
+      "updated_at": "2026-11-11T03:33:02Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "it typically won't adjust your payout immediately.",
+      "note": "A vague, hedged answer with no lookup. cw-payouts has the real rule (weekly on  Fridays, 2 business days)."
+    },
+    {
+      "id": "ann-mwbkgozs8slb",
+      "trace_id": "bb037ce84e971be28f822ae5a0c64893",
+      "session_id": "15a91c44db144270b385608ebeae795f",
+      "trace_ids": [
+        "bb037ce84e971be28f822ae5a0c64893"
+      ],
+      "scenario_id": "support-0136",
+      "turn_trace_id": "bb037ce84e971be28f822ae5a0c64893",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:35:44Z",
+      "updated_at": "2026-11-11T03:35:44Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Usually, such changes are managed through your store settings",
+      "note": "should have escalated as per ESC-2 instead of suggesting to contact customer support"
+    },
+    {
+      "id": "ann-mwbkmb37qdy1",
+      "trace_id": "4356d1de1a2968e2ec25f6d176adbb47",
+      "session_id": "5be8c312f5654308b93db50258befe7f",
+      "trace_ids": [
+        "4356d1de1a2968e2ec25f6d176adbb47"
+      ],
+      "scenario_id": "support-0150",
+      "turn_trace_id": "4356d1de1a2968e2ec25f6d176adbb47",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T03:40:05Z",
+      "updated_at": "2026-11-11T03:40:05Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Since the order was shipped on June 29, 2026, the customer would have until July 29, 2026,",
+      "note": "The order is shipped, not delivered, but the agent counted the window from the ship date (\"until July 29\") and said it \"cannot be returned\". cw-returns counts from delivery, so the correct answer is \"not yet returnable\"."
+    },
+    {
+      "id": "ann-mwbr4xz0uqp5",
+      "trace_id": "4dbd685aec2bf34a1f7743d23743b2db",
+      "session_id": "b6732470c20f4f69a8f15cca78e4bb5a",
+      "trace_ids": [
+        "4dbd685aec2bf34a1f7743d23743b2db"
+      ],
+      "scenario_id": "support-0172",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T06:42:33Z",
+      "updated_at": "2026-11-11T06:42:33Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbsuv8fj15y",
+      "trace_id": "49c9f05a5c1d51e18c069ad7d17c66ae",
+      "session_id": "4ea0b121a1594e0485efa5b911f05a56",
+      "trace_ids": [
+        "49c9f05a5c1d51e18c069ad7d17c66ae",
+        "2ad9bbd82b6455d21c0b725dcd47a1dd"
+      ],
+      "scenario_id": "support-0245",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:30:42Z",
+      "updated_at": "2026-11-11T07:30:42Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbt1weautb5",
+      "trace_id": "fe030feddc4d32af9fa01760108f0900",
+      "session_id": "211c9c3c4cc9481a9cf5bd5cd7305361",
+      "trace_ids": [
+        "fe030feddc4d32af9fa01760108f0900"
+      ],
+      "scenario_id": "support-0195",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:36:10Z",
+      "updated_at": "2026-11-11T07:36:10Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbt40y7vfi5",
+      "trace_id": "de74bd78918631e2729ae607825dcd2c",
+      "session_id": "ebac64808345427e9f61c4ee52168f81",
+      "trace_ids": [
+        "de74bd78918631e2729ae607825dcd2c"
+      ],
+      "scenario_id": "support-0223",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:37:49Z",
+      "updated_at": "2026-11-11T07:37:49Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbtczyuz5lr",
+      "trace_id": "6ee13b4b5c006e3578924a704dfdcf0c",
+      "session_id": "12f470af96cf4cdc8b38b20ed798be6a",
+      "trace_ids": [
+        "6ee13b4b5c006e3578924a704dfdcf0c"
+      ],
+      "scenario_id": "support-0168",
+      "turn_trace_id": "6ee13b4b5c006e3578924a704dfdcf0c",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:44:48Z",
+      "updated_at": "2026-11-11T07:44:48Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I suggest opening a ticket for a human support agent to review the case further. Would you like me to proceed with that?",
+      "note": "agent should have escalated to human already"
+    },
+    {
+      "id": "ann-mwbtk9j1xn52",
+      "trace_id": "626040c8edbaad5b574595deee4f97c0",
+      "session_id": "959c9ddca25e41d1ba11d01a8c3e0dc8",
+      "trace_ids": [
+        "626040c8edbaad5b574595deee4f97c0"
+      ],
+      "scenario_id": "support-0028",
+      "turn_trace_id": "626040c8edbaad5b574595deee4f97c0",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:50:27Z",
+      "updated_at": "2026-11-11T07:50:27Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Since you ordered the Portable Coffee Beans about a week ago, you are still within the return window.",
+      "note": "this is based on user statement not recorded data. a tool call should have been made to establish return eligibility"
+    },
+    {
+      "id": "ann-mwbto6um36zi",
+      "trace_id": "4530d479bfe0cd18e33d8eaae7d085e6",
+      "session_id": "d651ee3a88604ba5882b28b5cfb930ff",
+      "trace_ids": [
+        "4530d479bfe0cd18e33d8eaae7d085e6"
+      ],
+      "scenario_id": "support-0222",
+      "turn_trace_id": "4530d479bfe0cd18e33d8eaae7d085e6",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:53:30Z",
+      "updated_at": "2026-11-11T07:53:30Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Since you mentioned receiving the Slim Daypack about a month ago, it seems you are just about to reach the end of the return window.",
+      "note": "this is based on user statement not recorded data. a tool call should have been made to establish return eligibility"
+    },
+    {
+      "id": "ann-mwbtoqf5pgy0",
+      "trace_id": "8ce3aee74378a091a9965d17f44fe354",
+      "session_id": "193fccb9d0cd432faa638c0bd2568828",
+      "trace_ids": [
+        "8ce3aee74378a091a9965d17f44fe354"
+      ],
+      "scenario_id": "support-0091",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:53:55Z",
+      "updated_at": "2026-11-11T07:53:55Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbtozinqvuz",
+      "trace_id": "17abfcf00396379ae8a691a19c7c31e4",
+      "session_id": "5f0a7ac00fd54b1c8b3df5e0e18e5b1d",
+      "trace_ids": [
+        "17abfcf00396379ae8a691a19c7c31e4"
+      ],
+      "scenario_id": "support-0092",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:54:07Z",
+      "updated_at": "2026-11-11T07:54:07Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbtpfk737yb",
+      "trace_id": "5c3410fba7f563c50e443b4218d3e3ef",
+      "session_id": "8fd72fb531a446a6bbcd726fc987bdc5",
+      "trace_ids": [
+        "5c3410fba7f563c50e443b4218d3e3ef"
+      ],
+      "scenario_id": "support-0090",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:54:28Z",
+      "updated_at": "2026-11-11T07:54:28Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwbtprkcsx9l",
+      "trace_id": "cd5249c896ec737e335922f326e20a3b",
+      "session_id": "ac1954ffc7dc4c9cb7a6089917e6394c",
+      "trace_ids": [
+        "cd5249c896ec737e335922f326e20a3b"
+      ],
+      "scenario_id": "support-0175",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T07:54:43Z",
+      "updated_at": "2026-11-11T07:54:43Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwc7tcp5ge1t",
+      "trace_id": "d4af61c7ddb9af60afa515a854145133",
+      "session_id": "a9bd949d7b344c30b3de1c01041f1db7",
+      "trace_ids": [
+        "d4af61c7ddb9af60afa515a854145133",
+        "69f7c16151714468de623baa13a8fabf"
+      ],
+      "scenario_id": "support-0021",
+      "turn_trace_id": "d4af61c7ddb9af60afa515a854145133",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T14:29:25Z",
+      "updated_at": "2026-11-11T14:29:25Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Since you received the item about two weeks ago, you should still be within the return window.",
+      "note": "used user's statement only and didn't call find_order tool to determine actual eligibility"
+    },
+    {
+      "id": "ann-mwc80voks16n",
+      "trace_id": "c696943d7ba87c66ef5affa1d397b56a",
+      "session_id": "03bf9ea56275478cab57b082b8c1bcc6",
+      "trace_ids": [
+        "c696943d7ba87c66ef5affa1d397b56a"
+      ],
+      "scenario_id": "support-0218",
+      "turn_trace_id": "c696943d7ba87c66ef5affa1d397b56a",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T14:35:16Z",
+      "updated_at": "2026-11-11T14:35:16Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Since you mentioned you received the desk lamp about a month ago, it seems you may have just missed the return deadline.",
+      "note": "relied on user's statement instead of calling find_order tool to check return eligibility"
+    },
+    {
+      "id": "ann-mwc8njceet80",
+      "trace_id": "ac70e5f1e5948b5de21bc283f2d673ec",
+      "session_id": "0fb76f9adf604c6691640d85e6593c6a",
+      "trace_ids": [
+        "ac70e5f1e5948b5de21bc283f2d673ec"
+      ],
+      "scenario_id": "support-0065",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T14:52:54Z",
+      "updated_at": "2026-11-11T14:52:54Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwc98t76gvj9",
+      "trace_id": "b441e855b0652187db61024cb3d73253",
+      "session_id": "c18e92e1334643dab78dedc16bbb7d8c",
+      "trace_ids": [
+        "b441e855b0652187db61024cb3d73253"
+      ],
+      "scenario_id": "support-0081",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T15:09:26Z",
+      "updated_at": "2026-11-11T15:09:26Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwcctt1z20hd",
+      "trace_id": "3d4cc4984171455338e1086a07e76547",
+      "session_id": "f2864b3f08ad4b46a8407ef00cf5e977",
+      "trace_ids": [
+        "3d4cc4984171455338e1086a07e76547",
+        "ff0df10a87f9215c6207d569c7e8031b",
+        "d9c7163def6b55e64f15c2b6ac290f4a"
+      ],
+      "scenario_id": "support-0238",
+      "turn_trace_id": "3d4cc4984171455338e1086a07e76547",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T16:49:45Z",
+      "updated_at": "2026-11-11T16:49:45Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "t looks like you previously ordered the Compact Camp Stove from Trailhead Supply with the order ID 5741.",
+      "note": "agent response used the wrong order (5741) instead of 1326 which is the compact camp stove. 1326 is included in the find_order response"
+    },
+    {
+      "id": "ann-mwcczclc6dl1",
+      "trace_id": "722920b17b176ecaabb506fbba25f153",
+      "session_id": "a12aa6d4a583473db16aa2ddae13090f",
+      "trace_ids": [
+        "722920b17b176ecaabb506fbba25f153",
+        "626d1b1908f488ad9f4d6b02c69b778a",
+        "dff2c7020d7eae224b12d73f0e42a6db"
+      ],
+      "scenario_id": "support-0241",
+      "turn_trace_id": "722920b17b176ecaabb506fbba25f153",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T16:54:03Z",
+      "updated_at": "2026-11-11T16:54:03Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I found your order for the Woven Rain Shell from Second Stitch Apparel. Here are the details:\n\n- **Order ID:** 5426\n- **Total Amount:** $212.50\n- **Status:** Delivered\n- **Refund Eligibility:** Ye",
+      "note": "agent picked the wrong order (5426) instead of 4341 which is the woven rain shell. 4341 is in the find_order response"
+    },
+    {
+      "id": "ann-mwcday4u322x",
+      "trace_id": "705864861daf4cb4206825d3c0e9f23d",
+      "session_id": "687f01c076f74986bdbd38ccf9077c86",
+      "trace_ids": [
+        "705864861daf4cb4206825d3c0e9f23d",
+        "c16c26310fed5be14ec90935e6f8910b",
+        "cb939eecbba08060767e149dcdeebace"
+      ],
+      "scenario_id": "support-0246",
+      "turn_trace_id": "705864861daf4cb4206825d3c0e9f23d",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T17:03:04Z",
+      "updated_at": "2026-11-11T17:03:04Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I found your recent orders, but the bag you mentioned doesn't appear to be eligible for a refund. \n\nHere are the details:\n- Order ID: 377\n- Total Amount: $78.00\n- Status: Delivered\n- Refund Eligible: **No**",
+      "note": "product agent used is not a bag. orders 744, 1481, 9580 are bags and included in the list_my_orders response"
+    },
+    {
+      "id": "ann-mwcdo03204yi",
+      "trace_id": "c391597ab75b762e30c4f9aab1b42d3d",
+      "session_id": "92f7269390ae4031b6eb0053fd020472",
+      "trace_ids": [
+        "c391597ab75b762e30c4f9aab1b42d3d",
+        "24116af104982dc38c1cd5cc0e781d7e",
+        "5cf9025f3e51473812b7ed3b9c1f4a67"
+      ],
+      "scenario_id": "support-0242",
+      "turn_trace_id": "c391597ab75b762e30c4f9aab1b42d3d",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T17:13:13Z",
+      "updated_at": "2026-11-11T17:13:13Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I found your recent orders, but I don't see an order for Rustic Headphones from Cascade Audio listed. The most recent order was for a product worth $584.50, but the headphones appear to be missing.",
+      "note": "1505 is the Rustic Headphones which is included in the list_my_orders response"
+    },
+    {
+      "id": "ann-mwcexvuq62y2",
+      "trace_id": "aacf3cc844489d559be7a9b515eef382",
+      "session_id": "f432abc4883247b4837cd990b6ece4ac",
+      "trace_ids": [
+        "aacf3cc844489d559be7a9b515eef382"
+      ],
+      "scenario_id": "support-0079",
+      "turn_trace_id": "aacf3cc844489d559be7a9b515eef382",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T17:48:54Z",
+      "updated_at": "2026-11-11T17:48:54Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I can't help with changing your email or any account details.",
+      "note": "Account change not escalated."
+    },
+    {
+      "id": "ann-mwceys63zl97",
+      "trace_id": "4f3b515a58dd087ab76406ebe2c64f56",
+      "session_id": "cada0017af1640269a4410b94aaeac3e",
+      "trace_ids": [
+        "4f3b515a58dd087ab76406ebe2c64f56"
+      ],
+      "scenario_id": "support-0084",
+      "turn_trace_id": "4f3b515a58dd087ab76406ebe2c64f56",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T17:49:36Z",
+      "updated_at": "2026-11-11T17:49:36Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "I can't help you close your account directly.",
+      "note": "Account change not escalated"
+    },
+    {
+      "id": "ann-mwcf0byvkvt8",
+      "trace_id": "e9e5f69104a19d4856cadbd4ea1a3ea8",
+      "session_id": "73bac0ae662e4e15a6ed4026efd43dbe",
+      "trace_ids": [
+        "e9e5f69104a19d4856cadbd4ea1a3ea8",
+        "6629de7a98af654756af1f4f7238506c"
+      ],
+      "scenario_id": "support-0020",
+      "turn_trace_id": "6629de7a98af654756af1f4f7238506c",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T17:50:48Z",
+      "updated_at": "2026-11-11T17:50:48Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t2.reply",
+      "quote": "a restocking fee of up to 15% may apply.",
+      "note": "No policy id is cited (store-cascade-audio-policy)"
+    },
+    {
+      "id": "ann-mwcfi654r66h",
+      "trace_id": "55fafb3337ccb9253d2d31087e3d447e",
+      "session_id": "6f229e6b9c6e48e69568e7e32a075e62",
+      "trace_ids": [
+        "55fafb3337ccb9253d2d31087e3d447e"
+      ],
+      "scenario_id": "support-0192",
+      "turn_trace_id": "55fafb3337ccb9253d2d31087e3d447e",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T18:04:40Z",
+      "updated_at": "2026-11-11T18:04:40Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "The Heavy-Duty Vase at Blue Heron Ceramics is priced at $9.00, which is well under $50.",
+      "note": "Two products share that title. The agent's own max_price_usd: 50 filter hid the $298 one, so the reply treats one match as the only one."
+    },
+    {
+      "id": "ann-mwcfjon65thz",
+      "trace_id": "b270497575e4d38847b34ba3df597436",
+      "session_id": "f14b3efe83954d51bc96c9d796b8ab92",
+      "trace_ids": [
+        "b270497575e4d38847b34ba3df597436",
+        "18782d31d29773107c767852cb86a204",
+        "f298206757f6ee9c7f12dddce6c32256"
+      ],
+      "scenario_id": "support-0239",
+      "turn_trace_id": "b270497575e4d38847b34ba3df597436",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T18:05:51Z",
+      "updated_at": "2026-11-11T18:05:51Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "It looks like you have ordered the Handmade Hot Sauce from Saltbox Pantry twice",
+      "note": "selected orders are not Handmade Hot Sauce. 6361 is not Handmade Hot Sauce, 9368 is Vintage Hot Sauce, 1313 is Handmade Hot Sauce. These are all in the find_order response"
+    },
+    {
+      "id": "ann-mwcfl1pi6v44",
+      "trace_id": "4e33f89a37b38431fb0edfd11bf88be9",
+      "session_id": "9bf13e02abef4044a1e2eee32cf8c72d",
+      "trace_ids": [
+        "4e33f89a37b38431fb0edfd11bf88be9"
+      ],
+      "scenario_id": "support-0069",
+      "turn_trace_id": "4e33f89a37b38431fb0edfd11bf88be9",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T18:06:55Z",
+      "updated_at": "2026-11-11T18:06:55Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "you should follow the specific return policy for the store where you made your purchase",
+      "note": "There was no lookup and no cw-store-overrides citation."
+    },
+    {
+      "id": "ann-mwcflw6nwd4q",
+      "trace_id": "aa27ad6d444f0533af60a074f1eec75a",
+      "session_id": "04b32f3c10504f2aae3789f481d25e9d",
+      "trace_ids": [
+        "aa27ad6d444f0533af60a074f1eec75a"
+      ],
+      "scenario_id": "support-0165",
+      "turn_trace_id": "aa27ad6d444f0533af60a074f1eec75a",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "depth-3",
+      "created_at": "2026-11-11T18:07:34Z",
+      "updated_at": "2026-11-11T18:07:34Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "A merchant cannot see orders from another store.",
+      "note": "There was no lookup and no cw-roles citation."
+    },
+    {
+      "id": "ann-mwcicl5a5yto",
+      "trace_id": "ae36d54e2ccc7c3e84ee04b41fa95910",
+      "session_id": "05b8b9d5959d483da36cef7f54807c6a",
+      "trace_ids": [
+        "ae36d54e2ccc7c3e84ee04b41fa95910",
+        "2a11451817d48d720c58ee7c9b726254"
+      ],
+      "scenario_id": "support-0110",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:24:19Z",
+      "updated_at": "2026-11-11T19:24:19Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwciisdokfv0",
+      "trace_id": "61929bfde5a94a05491b66fd4f6e6eda",
+      "session_id": "ef3a30ea53864008b5d03d7e32c45524",
+      "trace_ids": [
+        "61929bfde5a94a05491b66fd4f6e6eda"
+      ],
+      "scenario_id": "support-0232",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:29:08Z",
+      "updated_at": "2026-11-11T19:29:08Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwcipn78w26l",
+      "trace_id": "88d1ecf44ed066349a4404d24e1cfd2f",
+      "session_id": "f749010be46b4d019b92672a1589bba4",
+      "trace_ids": [
+        "88d1ecf44ed066349a4404d24e1cfd2f",
+        "b9ab29d6263cf36456fb8ef10937bd43"
+      ],
+      "scenario_id": "support-0109",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:34:28Z",
+      "updated_at": "2026-11-11T19:34:28Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwcix8gw5h2v",
+      "trace_id": "3986ea32f69b8f976f58fbc1a3728b20",
+      "session_id": "bf043252907e449a9243239d68f1dd3f",
+      "trace_ids": [
+        "3986ea32f69b8f976f58fbc1a3728b20",
+        "e951b038fb8f86fbc7efca44e19d9761"
+      ],
+      "scenario_id": "support-0040",
+      "turn_trace_id": "3986ea32f69b8f976f58fbc1a3728b20",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:40:22Z",
+      "updated_at": "2026-11-11T19:40:22Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "none of them for the Walnut Building Blocks from Little Fox Toys",
+      "note": "this is incorrect. 1350 is the correct order and it is in the find_order tool response"
+    },
+    {
+      "id": "ann-mwcj1fvpoj1y",
+      "trace_id": "b8485c48e937e1f3da9b5055be44e169",
+      "session_id": "6b9835ca26874d82a9a62309c15350ae",
+      "trace_ids": [
+        "b8485c48e937e1f3da9b5055be44e169"
+      ],
+      "scenario_id": "support-0142",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:43:38Z",
+      "updated_at": "2026-11-11T19:43:38Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwcj64whgzbb",
+      "trace_id": "78412e83745a5fcad2eb90aa3013777b",
+      "session_id": "a66feabdebf940ad8502e7aeb236295a",
+      "trace_ids": [
+        "78412e83745a5fcad2eb90aa3013777b",
+        "95a600e6924c2b7557e2213058b08429"
+      ],
+      "scenario_id": "support-0039",
+      "turn_trace_id": "78412e83745a5fcad2eb90aa3013777b",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:47:17Z",
+      "updated_at": "2026-11-11T19:50:45Z",
+      "history": [
+        {
+          "note": "the order is misidentified by the agent and the brief overview is totally wrong.",
+          "at": "2026-11-11T19:47:17Z"
+        }
+      ],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "1. **Order ID 4871**: Woven Vase from Blue Heron Ceramics\n   - Status: Cancelled\n   - Total: $199.50\n   - Refund eligible: **No**\n\n2. **Order ID 3447**: Another item\n   - Status: Delivered\n   - Total: $60.25\n   - Refund eligible: **No**",
+      "note": "the order is misidentified by the agent and the brief overview is totally wrong.  \"order 4871 is a Woven Power Bank from Pocket Arcade, not the Woven Vase; the actual Woven Vase is 3447, labelled 'another item'.\""
+    },
+    {
+      "id": "ann-mwcjcpng31k8",
+      "trace_id": "e7391046d3be1c5972e0947676dd7689",
+      "session_id": "b9cb30cc88c9467bb578a3b00d53db3e",
+      "trace_ids": [
+        "e7391046d3be1c5972e0947676dd7689",
+        "04a2389b46fc66e13f0b9ddf2b72e24e"
+      ],
+      "scenario_id": "support-0116",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:52:24Z",
+      "updated_at": "2026-11-11T19:52:24Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwcjjkoywgz5",
+      "trace_id": "24a762d8a17bb9a1688b966a2ebd2810",
+      "session_id": "55ffb460699744fdbb07d27144482476",
+      "trace_ids": [
+        "24a762d8a17bb9a1688b966a2ebd2810"
+      ],
+      "scenario_id": "support-0205",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T19:57:44Z",
+      "updated_at": "2026-11-11T19:57:44Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwck18kxkx0q",
+      "trace_id": "48c2623bc5f9a0aa76aa5d5b2465c9d2",
+      "session_id": "8b82ccd9793b484fa099b9e07637c819",
+      "trace_ids": [
+        "48c2623bc5f9a0aa76aa5d5b2465c9d2"
+      ],
+      "scenario_id": "support-0014",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:11:29Z",
+      "updated_at": "2026-11-11T20:11:29Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwck7lwz6jyb",
+      "trace_id": "1c7284755c2964cf4046967aee7c45ec",
+      "session_id": "bc41a2545b174bacb7ab20f8d18d589a",
+      "trace_ids": [
+        "1c7284755c2964cf4046967aee7c45ec"
+      ],
+      "scenario_id": "support-0080",
+      "turn_trace_id": "1c7284755c2964cf4046967aee7c45ec",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:16:26Z",
+      "updated_at": "2026-11-11T20:16:26Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "recommend reaching out to Cartwheel's customer support directly for further assistance",
+      "note": "this should have been escalated (ESC-2)"
+    },
+    {
+      "id": "ann-mwck9lvhs1h6",
+      "trace_id": "11011fdbc832b82cd458893366de044b",
+      "session_id": "a0d04e893cec496993dadf0c82d2f41c",
+      "trace_ids": [
+        "11011fdbc832b82cd458893366de044b",
+        "f5cf380c45b8d2359cb843f89176767d"
+      ],
+      "scenario_id": "support-0113",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:17:59Z",
+      "updated_at": "2026-11-11T20:17:59Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwcke9tp8y4y",
+      "trace_id": "bc5c374dc6e4a01939f9d2c06ec509fe",
+      "session_id": "bc5efad1ef3646e0a04fd52dee829c70",
+      "trace_ids": [
+        "bc5c374dc6e4a01939f9d2c06ec509fe",
+        "3bd76bcae33ff2e960d2e6e0881e75d9"
+      ],
+      "scenario_id": "support-0154",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:21:37Z",
+      "updated_at": "2026-11-11T20:21:37Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwckr36eacbz",
+      "trace_id": "bd0e6581814466d85eeea8a4474c84ed",
+      "session_id": "95331b6c10c540538e10fc35131ebaf4",
+      "trace_ids": [
+        "bd0e6581814466d85eeea8a4474c84ed",
+        "3e3433349129ac07abba0199bb8c2477"
+      ],
+      "scenario_id": "support-0202",
+      "turn_trace_id": "bd0e6581814466d85eeea8a4474c84ed",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:31:35Z",
+      "updated_at": "2026-11-11T20:31:35Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "there are currently no kitchen items available from Blue Heron Ceramics for around $10",
+      "note": "three items exists. absence claimed from an inadequate search (RESP-3)"
+    },
+    {
+      "id": "ann-mwcktfv4nmq0",
+      "trace_id": "5dd0cf6ab7269d29e12d85d6513ace1f",
+      "session_id": "34ae583d361541b79876b4cc751ee03e",
+      "trace_ids": [
+        "5dd0cf6ab7269d29e12d85d6513ace1f"
+      ],
+      "scenario_id": "support-0181",
+      "turn_trace_id": "5dd0cf6ab7269d29e12d85d6513ace1f",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:33:24Z",
+      "updated_at": "2026-11-11T20:34:59Z",
+      "history": [
+        {
+          "note": "wrong order selected",
+          "at": "2026-11-11T20:33:24Z"
+        }
+      ],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "found your order for the Woven Wool Socks from Harbor Knits. Here are the details:\n\n- **Order ID:** 1982\n- **Shipped On:** June 24, 2026\n- **Delivered On:** June 28, 2026\n- **Status:** Delivered",
+      "note": "wrong order selected - order 1982 is a Woven Atlas. the right order is 8001 which is included in the find_order response"
+    },
+    {
+      "id": "ann-mwcl3b5tsozf",
+      "trace_id": "322e31e22d5ef05fff2629659decfb52",
+      "session_id": "0fe97186c8f14a0998fae6647f010ae9",
+      "trace_ids": [
+        "322e31e22d5ef05fff2629659decfb52"
+      ],
+      "scenario_id": "support-0023",
+      "turn_trace_id": "322e31e22d5ef05fff2629659decfb52",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "uniform-4",
+      "created_at": "2026-11-11T20:41:05Z",
+      "updated_at": "2026-11-11T20:41:05Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "the Midnight Trekking Poles were delivered months ago",
+      "note": "did not cite the actual delivery date when order 5200 (Midnight Trekking Poles) was included in the find_order response."
+    },
+    {
+      "id": "ann-mwcracta5wn8",
+      "trace_id": "806e1ac700313c141461751da7b50851",
+      "session_id": "33638506c80e4c159434559d541c92e2",
+      "trace_ids": [
+        "806e1ac700313c141461751da7b50851"
+      ],
+      "scenario_id": "support-0010",
+      "turn_trace_id": "806e1ac700313c141461751da7b50851",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "search-B",
+      "created_at": "2026-11-11T23:34:31Z",
+      "updated_at": "2026-11-11T23:34:31Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "- **Order ID:** 1333",
+      "note": "(B) reply names order 1333 (Speckled Camp Stove); the user named 9271 (Everyday Camp Stove).",
+      "suggestion_id": "sug-d4v1-0010",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwcrcl43qogl",
+      "trace_id": "e8f4dd3966a504a600c9311e39fc8d78",
+      "session_id": "07293496ef0d4f4591f2c0fc8eb4454e",
+      "trace_ids": [
+        "e8f4dd3966a504a600c9311e39fc8d78"
+      ],
+      "scenario_id": "support-0011",
+      "turn_trace_id": "e8f4dd3966a504a600c9311e39fc8d78",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "search-B",
+      "created_at": "2026-11-11T23:36:15Z",
+      "updated_at": "2026-11-11T23:36:15Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "- **Order ID:** 2965",
+      "note": "(B) reply names order 2965 (Heavy-Duty Trekking Poles); the user named 2323 (Heavy-Duty Coffee Beans).",
+      "suggestion_id": "sug-d4v1-0011",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwcreq5xd1ew",
+      "trace_id": "dd767528418ab407cf9cd652b1222fb4",
+      "session_id": "5f9518788b2f4024af05ed9bc4870b83",
+      "trace_ids": [
+        "dd767528418ab407cf9cd652b1222fb4"
+      ],
+      "scenario_id": "support-0013",
+      "turn_trace_id": "dd767528418ab407cf9cd652b1222fb4",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "dimension-2",
+      "created_at": "2026-11-11T23:37:55Z",
+      "updated_at": "2026-11-11T23:37:55Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "2. **Order ID 9090**:",
+      "note": "(B) reply names order 9090 (Heavy-Duty Trowel Set); the user named 1686 (Travel Screwdriver Set).",
+      "suggestion_id": "sug-d4v1-0013",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwcs19vehqbm",
+      "trace_id": "56195c48b59eb79b381e861a55f6f909",
+      "session_id": "c8258f3d6aca4fe283b96f7462fd9d5a",
+      "trace_ids": [
+        "56195c48b59eb79b381e861a55f6f909",
+        "3c52814ddafcd35b3fb5acb6e9c32e75"
+      ],
+      "scenario_id": "support-0042",
+      "turn_trace_id": "56195c48b59eb79b381e861a55f6f909",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "search-B",
+      "created_at": "2026-11-11T23:55:27Z",
+      "updated_at": "2026-11-11T23:55:27Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "- **Order ID**: 5311",
+      "note": "(B) reply names order 5311 (Heavy-Duty Journal); the user named 7390 (Heavy-Duty Headlamp).",
+      "suggestion_id": "sug-d4v1-0042",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwcs73p10flf",
+      "trace_id": "94035be57423f14e9c072c6342a945d7",
+      "session_id": "efec886be1a84e1ba579b96ebf5d693b",
+      "trace_ids": [
+        "94035be57423f14e9c072c6342a945d7"
+      ],
+      "scenario_id": "support-0186",
+      "turn_trace_id": "94035be57423f14e9c072c6342a945d7",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "search-B",
+      "created_at": "2026-11-11T23:59:59Z",
+      "updated_at": "2026-11-11T23:59:59Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "2. **Order ID: 3245**",
+      "note": "(B) reply named 8003 (Portable Jam Trio) but also names order 3245 (Portable Novel) which was not named by the user",
+      "suggestion_id": "sug-d4v1-0186",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwcsmarui3a9",
+      "trace_id": "2ec3a82c872e626fee60f794fad09e68",
+      "session_id": "1822d7a7184e45f1ad6dd31ef6861f1f",
+      "trace_ids": [
+        "2ec3a82c872e626fee60f794fad09e68",
+        "13649257b61fb682f8ccca4bcd2b9694"
+      ],
+      "scenario_id": "support-0248",
+      "turn_trace_id": "13649257b61fb682f8ccca4bcd2b9694",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "search-B",
+      "created_at": "2026-11-12T00:11:48Z",
+      "updated_at": "2026-11-12T00:11:48Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t2.reply",
+      "quote": "- **Order ID:** 4040",
+      "note": "(B) reply names order 4040 (Compact USB-C Hub); the user named 349 (Modern USB-C Hub).",
+      "suggestion_id": "sug-d4v1-0248",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwct5ahz7x29",
+      "trace_id": "269aa00111df6ee22e4add3d2cb65dd6",
+      "session_id": "7fcb4921bc684aba82054baef5769509",
+      "trace_ids": [
+        "269aa00111df6ee22e4add3d2cb65dd6",
+        "7278c9e437d5f479a765cebc47c4db08",
+        "c5598d30605abf52b7155991763b8502"
+      ],
+      "scenario_id": "support-0243",
+      "turn_trace_id": "269aa00111df6ee22e4add3d2cb65dd6",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "search-B",
+      "created_at": "2026-11-12T00:26:34Z",
+      "updated_at": "2026-11-12T00:26:34Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "The order for the Classic Marble Run has been successfully canceled.",
+      "note": "(B) cancelled 4326 (Classic Sticky Notes) when the user asked to cancel 654 (Classic Marble Run), then told the user the Marble Run was cancelled."
+    },
+    {
+      "id": "ann-mwct74fbtvv5",
+      "trace_id": "249c5f6798c4ca932417e40345d46e99",
+      "session_id": "b8947d1f8c6d4edc9004179211928a32",
+      "trace_ids": [
+        "249c5f6798c4ca932417e40345d46e99",
+        "1f3f8ebd4fa44c6579f32a681df383d6"
+      ],
+      "scenario_id": "support-0041",
+      "turn_trace_id": null,
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "search-B",
+      "created_at": "2026-11-12T00:28:00Z",
+      "updated_at": "2026-11-12T00:28:00Z",
+      "history": [],
+      "kind": "no_failure",
+      "msg_key": "conversation",
+      "quote": "",
+      "note": "no failure observed"
+    },
+    {
+      "id": "ann-mwct99fsc2fq",
+      "trace_id": "68eb09e855ddb48e874ddf81d9f652ad",
+      "session_id": "233715f5f83e4d7fa4c8ce8c2ea98d06",
+      "trace_ids": [
+        "68eb09e855ddb48e874ddf81d9f652ad"
+      ],
+      "scenario_id": "support-0008",
+      "turn_trace_id": "68eb09e855ddb48e874ddf81d9f652ad",
+      "author": "human",
+      "origin": "ai_suggestion",
+      "batch": "search-B-v2",
+      "created_at": "2026-11-12T00:29:39Z",
+      "updated_at": "2026-11-12T00:29:39Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "1. **Order ID:** 44",
+      "note": "(B) reply names order 44 (Modern Desk Lamp); the user named 4617 (Vintage Desk Lamp).",
+      "suggestion_id": "sug-d4v2-0008",
+      "suggested_mode": "reply_contradicts_tool_result"
+    },
+    {
+      "id": "ann-mwctvmuegixb",
+      "trace_id": "221d712f71fc69da6cb470b7051ed031",
+      "session_id": "a2e8c646f44e46949ea9b93f4fdba980",
+      "trace_ids": [
+        "221d712f71fc69da6cb470b7051ed031",
+        "ed71b458cd5dd148d8af86e82d586989"
+      ],
+      "scenario_id": "support-0244",
+      "turn_trace_id": "221d712f71fc69da6cb470b7051ed031",
+      "author": "human",
+      "origin": "open_coding",
+      "batch": "search-B-v2",
+      "created_at": "2026-11-12T00:47:03Z",
+      "updated_at": "2026-11-12T00:47:03Z",
+      "history": [],
+      "kind": "failure",
+      "msg_key": "t1.reply",
+      "quote": "Since your order is marked as refund eligible, you should generally be able to return the item",
+      "note": "Two crewneck orders (7941 Travel, 8776 Vintage) were both eligible; the reply treats 'your Crewnek order' as one without asking which."
+    }
+  ]
+}

@@ -109,3 +109,4 @@ Requirements that do not fit in the sections above, including tone and style gui
 - **RESP-3.** State when required information is missing or inconsistent, rather than inventing a value.
 - **RESP-4.** Explain refusals and escalations without revealing inaccessible order or user information.
 - **RESP-5.** Use direct and respectful language that explains the relevant decision.
+- **RESP-6.** When a store opts in to a restocking fee, the first answer about returning an item from that store states the fee (up to the store's maximum, opened items only) and cites the store's policy.
