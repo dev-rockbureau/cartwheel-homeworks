@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartwheel Trace Review</title>
+<!--
+  HW4 review app. One conversation (session) per screen, tool call + result in one step box, the reply the user
+  saw marked apart from the model's interim text, free-text margin notes, AI suggestions kept separate, and an
+  explicit Pass/Fail label grid. Data comes from server.py; nothing here talks to Langfuse directly.
+-->
+<style>
+:root {
+  --bg: #fafaf7; --panel: #ffffff; --ink: #1f2328; --muted: #6b7280; --line: #e5e7eb;
+  --user: #2563eb; --reply: #15803d; --interim: #b45309; --call: #0f766e; --result: #475569;
+  --note: #fde68a; --note-ink: #92400e; --sugg: #9333ea; --fail: #dc2626; --pass: #16a34a;
+  --mono: ui-monospace, SFMono-Regular, Menlo, monospace; --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111317; --panel: #1a1d23; --ink: #e5e7eb; --muted: #9ca3af; --line: #2d323b;
+    --user: #60a5fa; --reply: #4ade80; --interim: #f59e0b; --call: #2dd4bf; --result: #94a3b8;
+    --note: #713f12; --note-ink: #fde68a; --sugg: #c084fc; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--sans); }
+header.top { position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 1px solid var(--line);
+  display: flex; gap: 12px; align-items: center; padding: 8px 16px; flex-wrap: wrap; }
+header.top h1 { font-size: 15px; margin: 0 8px 0 0; }
+.tabs button, .btn { border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font: inherit; }
+.tabs button.active { background: var(--ink); color: var(--panel); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.fail { border-color: var(--fail); color: var(--fail); } .btn.pass { border-color: var(--pass); color: var(--pass); }
+.btn.sugg { border-color: var(--sugg); color: var(--sugg); }
+.muted { color: var(--muted); } .small { font-size: 12px; } .mono { font-family: var(--mono); font-size: 12.5px; }
+.view { display: none; padding: 16px; } .view.active { display: block; }
+.banner { background: var(--note); color: var(--note-ink); padding: 6px 12px; border-radius: 6px; margin-bottom: 12px; }
+.badge { display: inline-block; font-size: 11.5px; padding: 1px 7px; border-radius: 10px; border: 1px solid var(--line);
+  margin-right: 4px; white-space: nowrap; }
+.badge.flag { border-color: var(--interim); color: var(--interim); }
+/* conversation */
+.conv-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+.conv-head h2 { font-size: 17px; margin: 0; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; align-items: center; }
+.drawer { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; }
+.drawer table { border-collapse: collapse; } .drawer td, .drawer th { padding: 2px 10px 2px 0; text-align: left; vertical-align: top; }
+.turn-divider { margin: 36px 0 10px; font-weight: 600; color: var(--muted); border-top: 2px solid var(--line); padding-top: 6px; }
+.turn-divider:first-child { margin-top: 4px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; margin: 6px 0; }
+.content { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--line);
+  border-radius: 6px; padding: 6px 10px; position: relative; }
+.content .who { font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; }
+.content .text { white-space: pre-wrap; word-wrap: break-word; }
+.content .addnote { position: absolute; top: 4px; right: 6px; font-size: 11px; display: none; }
+.content:hover .addnote { display: inline-block; }
+.r-user { border-left-color: var(--user); } .r-user .who { color: var(--user); }
+.r-reply { border-left-color: var(--reply); } .r-reply .who { color: var(--reply); }
+.r-interim { border-left-color: var(--interim); } .r-interim .who { color: var(--interim); } .r-interim .text { font-style: italic; }
+.r-call { border-left-color: var(--call); } .r-call .who { color: var(--call); }
+.r-result { border-left-color: var(--result); } .r-result .who { color: var(--result); }
+.step { border: 1px dashed var(--line); border-radius: 8px; padding: 2px 8px 6px; margin: 16px 0; }
+.step-title { font-size: 11.5px; color: var(--muted); margin: 2px 0; }
+.toolname { font-family: var(--mono); font-weight: 700; }
+pre.json { margin: 4px 0 0; font: 12px/1.45 var(--mono); white-space: pre-wrap; word-break: break-word; max-height: 360px; overflow: auto; }
+details summary { cursor: pointer; }
+.summary-line { font-family: var(--mono); font-size: 12.5px; }
+.notes { display: flex; flex-direction: column; gap: 6px; }
+.mnote { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--note-ink); border-radius: 6px;
+  padding: 5px 8px; font-size: 12.5px; }
+.mnote .q { color: var(--muted); font-style: italic; } .mnote .acts { display: none; gap: 6px; margin-top: 3px; }
+.mnote:hover .acts { display: flex; } .mnote.hl { outline: 2px solid var(--note-ink); }
+.mnote.nofail { border-left-color: var(--pass); }
+.msugg { border: 1px dashed var(--sugg); border-left: 4px solid var(--sugg); border-radius: 6px; padding: 5px 8px; font-size: 12.5px; background: var(--panel); }
+.msugg .tag { color: var(--sugg); font-weight: 700; font-size: 11px; } .msugg .acts { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
+mark.ann { background: var(--note); color: inherit; border-radius: 2px; } mark.ann.hl { outline: 2px solid var(--note-ink); }
+mark.sug { background: transparent; border-bottom: 2px dashed var(--sugg); }
+#popover { position: absolute; z-index: 30; display: none; background: var(--panel); border: 1px solid var(--ink);
+  border-radius: 8px; padding: 8px; width: 360px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+#popover textarea { width: 100%; min-height: 64px; font: inherit; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; }
+.keyline { font-family: var(--mono); font-size: 12.5px; }
+/* lists, grid */
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; }
+.card h3 { margin: 0 0 4px; font-size: 15px; font-family: var(--mono); }
+.kv { display: grid; grid-template-columns: 150px 1fr; gap: 2px 10px; font-size: 13px; }
+.kv .k { color: var(--muted); }
+a, .link { color: var(--user); cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+table.grid { border-collapse: collapse; font-size: 13px; } table.grid th, table.grid td { border: 1px solid var(--line); padding: 3px 8px; }
+table.grid th { position: sticky; top: 48px; background: var(--panel); font-family: var(--mono); font-size: 11.5px; }
+td.cell { text-align: center; cursor: pointer; min-width: 64px; font-weight: 700; }
+td.cell.F { color: #fff; background: var(--fail); } td.cell.P { color: #fff; background: var(--pass); } td.cell.empty { color: var(--muted); }
+td.cell.prop { font-weight: 600; background: repeating-linear-gradient(45deg, var(--panel), var(--panel) 4px, var(--line) 4px, var(--line) 5px); }
+td.cell.prop.pF { color: var(--fail); } td.cell.prop.pP { color: var(--pass); } td.cell.prop.unsure { outline: 2px dashed var(--sugg); outline-offset: -3px; }
+.labhead .btn { font-size: 11px; padding: 1px 6px; margin-top: 3px; }
+td.cell.spot { box-shadow: inset 0 0 0 3px #eab308; }
+#labeler { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 40; display: none; width: min(720px, 94vw);
+  background: var(--panel); border: 1px solid var(--ink); border-radius: 10px; padding: 12px 14px; box-shadow: 0 8px 30px rgba(0,0,0,.25); }
+#labeler input { width: 100%; font: inherit; padding: 4px 6px; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; }
+#toast { position: fixed; right: 16px; bottom: 16px; background: var(--ink); color: var(--panel); padding: 8px 12px; border-radius: 8px; display: none; z-index: 50; max-width: 420px; }
+canvas { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; max-width: 100%; }
+#maptip { position: fixed; pointer-events: none; background: var(--ink); color: var(--panel); font-size: 12px; padding: 4px 8px; border-radius: 6px; display: none; }
+@media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Cartwheel trace review</h1>
+  <nav class="tabs" id="tabs">
+    <button data-view="conv" class="active">Conversation</button>
+    <button data-view="tax">Taxonomy</button>
+    <button data-view="labels">Labels</button>
+    <button data-view="progress">Progress</button>
+    <button data-view="sugg">Suggestions <span id="sugg-count" class="badge">0</span></button>
+    <button data-view="map">Map</button>
+  </nav>
+  <span id="pos" class="muted small"></span>
+  <span class="muted small">keys: j / k next / prev</span>
+</header>
+
+<section id="v-conv" class="view active"></section>
+<section id="v-tax" class="view"></section>
+<section id="v-labels" class="view"></section>
+<section id="v-progress" class="view"></section>
+<section id="v-sugg" class="view"></section>
+<section id="v-map" class="view"><canvas id="mapc" width="980" height="620"></canvas><div id="maplegend" class="small muted"></div></section>
+
+<div id="popover">
+  <div class="small muted"><span id="pop-title">Open code for</span> <b id="pop-where"></b></div>
+  <div id="pop-quote" class="small q" style="font-style:italic;margin:4px 0;"></div>
+  <textarea id="pop-text" placeholder="Describe the first failure in your own words, with evidence. Enter saves, Shift+Enter new line, Esc cancels."></textarea>
+</div>
+<div id="labeler"></div>
+<div id="toast"></div>
+<div id="maptip"></div>
+
+<script>
+"use strict";
+const S = { convs: [], byCid: {}, samples: [], anns: [], patterns: { modes: [] }, suggs: [], labels: {}, lprops: [], policy: null,
+  graph: null, cur: 0, view: "conv", showPolicy: false, keyShown: {}, src: "", lf: {}, pendingSel: null, browseAll: false };
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const api = async (path, opts) => { const r = await fetch(path, opts); const j = await r.json().catch(() => ({})); if (!r.ok) throw Object.assign(new Error(j.error || r.status), { status: r.status, body: j }); return j; };
+const post = (path, body) => api(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+const toast = (msg, ms = 2600) => { const t = $("#toast"); t.textContent = msg; t.style.display = "block"; clearTimeout(toast.h); toast.h = setTimeout(() => t.style.display = "none", ms); };
+const uid = p => p + "-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const nowIso = () => new Date().toISOString().replace(/\.\d+Z$/, "Z");
+
+// ------------------------------------------------------------------ loading
+async function loadAll() {
+  const c = await api("/api/conversations");
+  S.convs = c.conversations; S.src = c.source; S.lf = { host: c.langfuse_host, project: c.langfuse_project, fallback: c.fallback_reason };
+  S.byCid = Object.fromEntries(S.convs.map(x => [x.cid, x]));
+  const [samples, anns, pats, suggs, labels, pol, lprops] = await Promise.all([api("/api/samples"), api("/api/annotations"),
+    api("/api/patterns"), api("/api/suggestions"), api("/api/labels"), api("/api/policy"), api("/api/label_proposals")]);
+  S.samples = samples; S.anns = anns.annotations || []; S.patterns = pats.modes ? pats : { modes: [] };
+  S.suggs = suggs; S.labels = labels; S.policy = pol; S.lprops = lprops;
+  const saved = +localStorage.getItem("review.cur"); if (saved >= 0 && saved < list().length) S.cur = saved;
+  render();
+}
+async function poll() {
+  try {
+    const [samples, pats, suggs, labels, lprops] = await Promise.all([api("/api/samples"), api("/api/patterns"), api("/api/suggestions"), api("/api/labels"), api("/api/label_proposals")]);
+    S.lprops = lprops;
+    const newSamples = samples.length > S.samples.length, pend = x => x.filter(s => s.status === "pending").length;
+    const newSuggs = pend(suggs) > pend(S.suggs);
+    S.samples = samples; S.patterns = pats.modes ? pats : { modes: [] }; S.suggs = suggs; S.labels = labels;
+    if (newSamples) toast(`New sample conversations added (${samples.length} in sample)`);
+    if (newSuggs) toast("New AI suggestions to review");
+    if (newSamples || newSuggs) render(); else { renderCounts(); if (S.view !== "conv") render(); }
+  } catch (e) { /* server restarting: keep the current view */ }
+}
+function list() { return (S.samples.length && !S.browseAll) ? S.samples : S.convs.map(c => ({ cid: c.cid, batch: "", reason: "" })); }
+function cur() { const it = list()[S.cur]; return it ? { item: it, conv: S.byCid[it.cid] } : null; }
+async function saveAnns() {
+  try { localStorage.setItem("review.annotations.backup", JSON.stringify(S.anns)); } catch (e) {}
+  try { await post("/api/annotations", { annotations: S.anns }); }
+  catch (e) { toast("Save failed (kept in browser backup): " + e.message, 6000); }
+}
+const saveSuggs = () => post("/api/suggestions", S.suggs).catch(e => toast("Save failed: " + e.message, 6000));
+// Practice notes (batch "practice") are kept but never count as a review of a sampled conversation.
+const humanAnns = cid => S.anns.filter(a => a.trace_id === cid && a.author === "human" && a.batch !== "practice");
+const batchOf = cid => (S.samples.find(s => s.cid === cid) || {}).batch || "";
+
+// ------------------------------------------------------------------ conversation view
+function summarize(r) {
+  if (r == null) return "no result recorded";
+  if (typeof r !== "object") return String(r).slice(0, 200);
+  if (r.ok === false) return `✗ ${r.error || "error"}${r.reason ? ": " + r.reason : ""}`;
+  const parts = [r.ok === true ? "✓ ok" : ""];
+  const keys = ["status", "count", "order_id", "refund_id", "ticket_id", "amount_usd", "days_since_delivery", "days_remaining",
+    "refund_eligible", "eligible", "delivered_at", "sla_hours", "policy_id", "title"];
+  for (const k of keys) if (r[k] !== undefined && typeof r[k] !== "object") parts.push(`${k}=${r[k]}`);
+  if (r.order && typeof r.order === "object") {
+    const o = r.order; parts.push("order{" + ["order_id", "status", "store_name", "delivered_at", "refund_eligible", "total_usd"]
+      .filter(k => o[k] !== undefined).map(k => `${k}=${o[k]}`).join(", ") + "}");
+  }
+  for (const [k, v] of Object.entries(r)) if (Array.isArray(v)) {
+    const brief = v.slice(0, 5).map(x => typeof x === "object" && x ? ["order_id", "store_id", "product_id", "policy_id", "title", "name", "delivered_at", "price_usd", "status"]
+      .filter(f => x[f] !== undefined).map(f => f === "store_id" ? `store=${storeLabel(x[f])}`
+        : f === "product_id" ? `product=${productLabel(x[f])}` : `${f}=${x[f]}`).join(" ") : String(x)).join(" | ");
+    parts.push(`${k}[${v.length}]${brief ? ": " + brief : ""}${v.length > 5 ? " …" : ""}`);
+  }
+  return parts.filter(Boolean).join("  ·  ");
+}
+// store_id -> "4 Copperline Tools" (names from /api/policy; find_order and list_my_orders return ids only)
+const storeLabel = id => { const n = ((S.policy || {}).store_names || {})[String(id)]; return n ? `${id} ${n}` : String(id); };
+// product_id -> "654 Compact Bar Soap" (titles repeat across stores, so the id stays visible)
+const productLabel = id => { const n = ((S.policy || {}).product_names || {})[String(id)]; return n ? `${id} ${n}` : String(id); };
+// Full-result JSON: annotate each "store_id": N / "product_id": N with its name as a trailing comment-like marker.
+const fmtJson = x => {
+  const s = esc(typeof x === "string" ? x : JSON.stringify(x, null, 2));
+  return s.replace(/(&quot;(store_id|product_id)&quot;: )(\d+)(,?)/g, (m, a, field, id, comma) => {
+    const n = ((S.policy || {})[field === "store_id" ? "store_names" : "product_names"] || {})[id];
+    return n ? `${a}${id}${comma}  <span class="muted">← ${esc(n)}</span>` : m;
+  });
+};
+
+function rowHtml(key, cls, who, inner, conv) {
+  const notes = S.anns.filter(a => a.trace_id === conv.cid && a.msg_key === key);
+  const suggs = S.suggs.filter(s => s.cid === conv.cid && s.msg_key === key && s.status === "pending");
+  const notesHtml = notes.map(a => `<div class="mnote" data-ann="${a.id}">${a.quote ? `<div class="q">“${esc(a.quote.slice(0, 140))}”</div>` : ""}
+      <div>${esc(a.note)}</div>${a.origin === "ai_suggestion" ? `<div class="small muted">from accepted AI suggestion</div>` : ""}
+      ${a.history && a.history.length ? `<div class="small muted">edited ${a.history.length}× (original kept)</div>` : ""}
+      <div class="acts"><span class="link small" data-edit="${a.id}">edit</span><span class="link small" data-del="${a.id}">delete</span></div></div>`).join("");
+  return `<div class="row"><div class="content ${cls}" data-key="${key}"><div class="who">${who}</div>${inner}
+      <span class="addnote link" data-add="${key}">+ note</span></div>
+    <div class="notes">${notesHtml}${suggs.map(suggHtml).join("")}</div></div>`;
+}
+function suggHtml(s) {
+  return `<div class="msugg" data-sugg="${s.id}"><div class="tag">AI SUGGESTION${s.mode ? " · " + esc(s.mode) : ""}</div>
+    ${s.quote ? `<div class="q muted">“${esc(s.quote.slice(0, 140))}”</div>` : ""}<div>${esc(s.note || s.rationale || "")}</div>
+    <div class="acts"><button class="btn sugg small" data-acc="${s.id}">Accept</button><button class="btn small" data-rev="${s.id}">Revise</button>
+    <button class="btn small" data-rej="${s.id}">Reject</button></div></div>`;
+}
+
+function renderConv() {
+  const el = $("#v-conv"), c = cur();
+  if (!c || !c.conv) { el.innerHTML = `<div class="banner">No conversations loaded.</div>`; return; }
+  const { item, conv } = c, L = list();
+  const lfLink = id => `${S.lf.host}/project/${S.lf.project}/traces/${id}`;
+  const human = humanAnns(conv.cid);
+  let h = "";
+  if (!S.samples.length) h += `<div class="banner">No sample yet (Part B writes <span class="mono">sample_manifest.json</span>). Browsing all ${S.convs.length} conversations.</div>`;
+  else if (S.browseAll) h += `<div class="banner">Browsing all conversations, outside the sample. <span class="link" id="back-sample">Back to the sample</span></div>`;
+  if (S.src === "export") h += `<div class="banner">Offline fallback: traces from the HW3 export. ${esc(S.lf.fallback || "")}</div>`;
+  h += `<div class="conv-head"><h2>${esc(conv.scenario_id)}</h2><span class="badge">${esc(conv.role)}</span><span class="badge">${esc(conv.group || "")}</span>
+    <span class="badge">${conv.features.turns} turn${conv.features.turns > 1 ? "s" : ""}</span><span class="badge">${conv.features.tool_calls} tool calls</span>
+    ${(conv.flags || []).map(f => `<span class="badge flag">${esc(f)}</span>`).join("")}
+    ${item.batch ? `<span class="badge">batch: ${esc(item.batch)}</span>` : ""}
+    <span class="muted small">${S.cur + 1} / ${L.length}${item.reason ? " · picked: " + esc(item.reason) : ""}</span></div>`;
+  h += `<div class="toolbar"><button class="btn" id="prev">◀ prev</button><button class="btn" id="next">next ▶</button>
+    <select id="jump" class="btn">${L.map((x, i) => `<option value="${i}" ${i === S.cur ? "selected" : ""}>${esc((S.byCid[x.cid] || {}).scenario_id || x.cid)}${humanAnns(x.cid).length ? " ✓" : ""}</option>`).join("")}</select>
+    <button class="btn pass" id="nofail" ${human.some(a => a.kind === "no_failure") ? "disabled" : ""}>No failure observed</button>
+    <button class="btn" id="tog-policy">${S.showPolicy ? "Hide" : "Show"} policy facts</button>
+    <button class="btn" id="reveal" ${human.length ? "" : "disabled title='Write a note or mark no failure first'"}>${S.keyShown[conv.cid] ? "Hide" : "Reveal"} scenario &amp; answer key${human.length ? "" : " 🔒"}</button>
+    <span class="small">Langfuse: ${conv.trace_ids.map((id, i) => `<a href="${lfLink(id)}" target="_blank" rel="noopener">turn ${i + 1}</a>`).join(" · ")}</span></div>`;
+  if (S.showPolicy && S.policy) h += policyHtml();
+  if (S.keyShown[conv.cid]) h += `<div class="drawer" id="keybox">loading…</div>`;
+  conv.turns.forEach((t, ti) => {
+    const T = `t${ti + 1}`;
+    h += `<div class="turn-divider">Turn ${ti + 1} <span class="small muted mono">trace ${esc(t.trace_id)}</span></div>`;
+    h += rowHtml(`${T}.user`, "r-user", "User", `<div class="text">${esc(t.user)}</div>`, conv);
+    t.steps.forEach(s => {
+      h += `<div class="step"><div class="step-title">step ${s.n}</div>`;
+      s.interim.forEach((txt, k) => h += rowHtml(`${T}.s${s.n}.i${k}`, "r-interim", "Model text (not shown to user)", `<div class="text">${esc(txt)}</div>`, conv));
+      h += rowHtml(`${T}.s${s.n}.call`, "r-call", "Tool call", `<div><span class="toolname">${esc(s.name)}</span><span class="mono">(${esc(argLine(s.arguments))})</span></div>
+          <details><summary class="small muted">arguments</summary><pre class="json">${fmtJson(s.arguments)}</pre></details>`, conv);
+      h += rowHtml(`${T}.s${s.n}.result`, "r-result", `Tool result · ${esc(s.name)}`, `<div class="summary-line">${esc(summarize(s.result))}</div>
+          <details><summary class="small muted">full result</summary><pre class="json">${fmtJson(s.result)}</pre></details>`, conv);
+      h += `</div>`;
+    });
+    t.interim_after_steps.forEach((txt, k) => h += rowHtml(`${T}.after.i${k}`, "r-interim", "Model text (not shown to user)", `<div class="text">${esc(txt)}</div>`, conv));
+    h += rowHtml(`${T}.reply`, "r-reply", "Agent → user (reply the user saw)", `<div class="text">${esc(t.reply)}</div>`, conv);
+  });
+  h += `<div class="row"><div></div><div class="notes">${S.anns.filter(a => a.trace_id === conv.cid && a.msg_key === "conversation").map(a =>
+      `<div class="mnote nofail" data-ann="${a.id}"><b>${esc(a.note)}</b><div class="acts"><span class="link small" data-del="${a.id}">delete</span></div></div>`).join("")}</div></div>`;
+  el.innerHTML = h;
+  applyHighlights(conv);
+  if (S.keyShown[conv.cid]) loadKey(conv.cid);
+}
+function argLine(a) { if (!a || typeof a !== "object") return a ?? ""; return Object.entries(a).map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(", ").slice(0, 160); }
+function policyHtml() {
+  const p = S.policy;
+  return `<div class="drawer"><b>Policy facts</b> <span class="muted small">(world date ${p.world_date}; from facts.yaml, seed stores, SPEC.md)</span>
+    <table class="small"><tr><td>${Object.entries(p.facts).map(([k, v]) => `<div><span class="muted">${esc(k)}</span> = <b>${esc(v)}</b></div>`).join("")}</td>
+    <td><div class="muted">Store overrides / restocking opt-in</div>${p.stores.map(s => `<div>${s.id} ${esc(s.name)}: ${s.override ? `<b>${s.return_window_days}-day</b> window` : "30-day"}${s.restocking_fee_opt_in ? ", restocking fee opt-in" : ""}</div>`).join("")}</td></tr></table>
+    <details><summary class="small">SPEC requirement ids</summary>${p.spec.map(r => `<div class="small"><b class="mono">${r.id}</b> ${esc(r.text)}</div>`).join("")}</details></div>`;
+}
+async function loadKey(cid) {
+  const box = $("#keybox"); if (!box) return;
+  try {
+    const k = await api("/api/answer-key?cid=" + encodeURIComponent(cid)), e = k.expected;
+    box.innerHTML = `<b>HW3 scenario &amp; answer key</b> <span class="muted small">(check only, after your own note)</span>
+      <div class="keyline">${esc(Object.entries(k.tuple).map(([a, b]) => `${a}=${b}`).join("  "))}</div>
+      <div class="keyline">${e.evaluation === "objective" ? `outcome: <b>${esc(e.outcome)}</b>` : `criterion: <b>${esc(e.criterion)}</b>`}</div>
+      <div class="small">${esc(e.reason || "")} <span class="muted">source: ${esc(e.source && e.source.type)} ${esc(e.source && e.source.reference)}</span></div>`;
+  } catch (err) { box.textContent = err.message; }
+}
+function applyHighlights(conv) {
+  const mark = (key, quote, cls, id) => {
+    const host = document.querySelector(`.content[data-key="${CSS.escape(key)}"]`); if (!host || !quote) return;
+    const walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      if (n.parentElement.closest(".who,.addnote")) continue;
+      const i = n.data.indexOf(quote); if (i < 0) continue;
+      const r = document.createRange(); r.setStart(n, i); r.setEnd(n, i + quote.length);
+      const m = document.createElement("mark"); m.className = cls; m.dataset.id = id; r.surroundContents(m);
+      const det = m.closest("details"); if (det) det.open = true; return;
+    }
+  };
+  S.anns.filter(a => a.trace_id === conv.cid && a.quote).forEach(a => mark(a.msg_key, a.quote, "ann", a.id));
+  S.suggs.filter(s => s.cid === conv.cid && s.quote && s.status === "pending").forEach(s => mark(s.msg_key, s.quote, "sug", s.id));
+}
+
+// ------------------------------------------------------------------ annotating
+// One in-page text box for every text input (new note, edit, revise, reject reason). No prompt()/confirm():
+// browsers can silently suppress native dialogs, which made "edit" do nothing.
+const PLACEHOLDER = "Describe the first failure in your own words, with evidence. Enter saves, Shift+Enter new line, Esc cancels.";
+function openBox({ title, where, quote, value = "", placeholder = PLACEHOLDER, allowEmpty = false, x, y, onSave }) {
+  S.box = { onSave, allowEmpty }; S.popAt = Date.now();
+  $("#pop-title").textContent = title; $("#pop-where").textContent = where || "";
+  $("#pop-quote").textContent = quote == null ? "" : quote ? `“${quote.slice(0, 300)}”` : "(whole message)";
+  const p = $("#popover"); p.style.display = "block";
+  p.style.left = Math.max(8, Math.min(x, window.innerWidth - 380)) + "px"; p.style.top = (y + 12) + "px";
+  const ta = $("#pop-text"); ta.value = value; ta.placeholder = placeholder; ta.focus({ preventScroll: true });
+  ta.setSelectionRange(value.length, value.length);
+}
+const boxAt = el => { const r = el.getBoundingClientRect(); return { x: r.left + window.scrollX - 300, y: r.bottom + window.scrollY }; };
+function openPopover(key, quote, x, y) {
+  const c = cur(); if (!c) return;
+  S.pendingSel = { key, quote };
+  openBox({ title: "Open code for", where: `${c.conv.scenario_id} · ${key}`, quote, x, y, onSave: async text => {
+    S.anns.push(newAnn(c.conv, { kind: "failure", msg_key: key, quote, note: text }));
+    await saveAnns(); render(); toast("Note saved");
+  } });
+}
+function closePopover() { $("#popover").style.display = "none"; S.pendingSel = null; S.box = null; }
+function newAnn(conv, fields) {
+  const turnIdx = fields.msg_key && fields.msg_key.startsWith("t") ? parseInt(fields.msg_key.slice(1)) - 1 : null;
+  return Object.assign({ id: uid("ann"), trace_id: conv.cid, session_id: conv.session_id, trace_ids: conv.trace_ids,
+    scenario_id: conv.scenario_id, turn_trace_id: turnIdx != null && conv.turns[turnIdx] ? conv.turns[turnIdx].trace_id : null,
+    author: "human", origin: "open_coding", batch: batchOf(conv.cid), created_at: nowIso(), updated_at: nowIso(), history: [] }, fields);
+}
+async function commitPopover() {
+  const text = $("#pop-text").value.trim(), box = S.box;
+  if (!box || (!text && !box.allowEmpty)) return;
+  closePopover(); await box.onSave(text);
+}
+function editAnn(id, el) {
+  const a = S.anns.find(x => x.id === id); if (!a) return;
+  openBox({ title: "Edit note (the original stays in the history)", where: `${a.scenario_id || ""} · ${a.msg_key || ""}`,
+    quote: a.quote || null, value: a.note, ...boxAt(el), onSave: async t => {
+      if (t === a.note) return;
+      a.history = a.history || []; a.history.push({ note: a.note, at: a.updated_at }); a.note = t; a.updated_at = nowIso();
+      await saveAnns(); render(); toast("Note updated");
+    } });
+}
+// Inline confirmation instead of confirm(): the "delete" link turns into "delete? yes / no".
+function askDelete(id, el) {
+  el.parentElement.innerHTML = `<span class="small">delete this note?</span> <span class="link small" data-delyes="${esc(id)}">yes</span>
+    <span class="link small" data-delno="1">no</span>`;
+}
+async function delAnn(id) { S.anns = S.anns.filter(x => x.id !== id); await saveAnns(); render(); toast("Note deleted"); }
+async function noFailure() {
+  const c = cur(); if (!c) return;
+  S.anns.push(newAnn(c.conv, { kind: "no_failure", msg_key: "conversation", quote: "", note: "no failure observed" }));
+  await saveAnns(); render(); toast("Marked: no failure observed");
+}
+async function decideSugg(id, action, el) {
+  const s = S.suggs.find(x => x.id === id); if (!s) return;
+  const conv = S.byCid[s.cid], at = boxAt(el), where = `${(conv || {}).scenario_id || s.cid} · ${s.msg_key || ""}`;
+  // poll() replaces S.suggs every 5 s, so a box left open longer would hold a stale object and its decision would be
+  // silently lost on save (rejection of support-0041). Always write the decision into the CURRENT list, looked up by id.
+  const live = () => S.suggs.find(x => x.id === id) || s;
+  const accept = async (note, reason) => {
+    const a = newAnn(conv, { kind: "failure", msg_key: s.msg_key || "conversation", quote: s.quote || "", note,
+      origin: "ai_suggestion", suggestion_id: s.id, suggested_mode: s.mode || null });
+    S.anns.push(a);
+    Object.assign(live(), { status: action === "revise" ? "revised" : "accepted", decision_reason: reason, annotation_id: a.id, decided_at: nowIso() });
+    await saveAnns(); await saveSuggs(); render();
+  };
+  if (action === "reject") {
+    return openBox({ title: "Why reject? (required, recorded)", where, quote: s.quote || null, placeholder: "Reason for rejecting this suggestion",
+      ...at, onSave: async why => {
+        Object.assign(live(), { status: "rejected", decision_reason: why, decided_at: nowIso() }); await saveSuggs(); render(); toast("Suggestion rejected");
+      } });
+  }
+  if (action === "revise") {
+    return openBox({ title: "Revise the note before accepting", where, quote: s.quote || null, value: s.note || s.rationale || "", ...at,
+      onSave: note => openBox({ title: "What did you change and why? (optional, Enter to skip)", where, quote: null,
+        placeholder: "Optional", allowEmpty: true, ...at, onSave: reason => accept(note, reason) }) });
+  }
+  return accept(s.note || s.rationale || "", "");
+}
+
+// ------------------------------------------------------------------ taxonomy view
+function renderTax() {
+  const modes = S.patterns.modes || [], el = $("#v-tax");
+  const annById = Object.fromEntries(S.anns.map(a => [a.id, a]));
+  const used = new Set(modes.flatMap(m => m.annotation_ids || []));
+  const link = cid => `<span class="link mono" data-open="${cid}">${esc((S.byCid[cid] || {}).scenario_id || cid)}</span>`;
+  let h = `<p class="muted">Taxonomy from <span class="mono">analysis/state/patterns.json</span>. ${modes.length} mode(s). The agent proposes groupings; you decide.</p>`;
+  for (const m of modes) {
+    const anns = (m.annotation_ids || []).map(id => annById[id]).filter(Boolean);
+    h += `<div class="card"><h3>${esc(m.name)} <span class="badge">${esc(m.status || "candidate")}</span>${m.evaluator_type ? `<span class="badge">${esc(m.evaluator_type)}</span>` : ""}</h3>
+      <div class="kv"><div class="k">definition</div><div>${esc(m.definition || "—")}</div>
+      <div class="k">boundary</div><div>${esc(m.boundary || "—")}${m.nearest_mode ? ` <span class="muted">(vs ${esc(m.nearest_mode)})</span>` : ""}</div>
+      <div class="k">requirement</div><div>${esc(m.requirement_source || "—")}</div>
+      <div class="k">positives</div><div>${(m.example_trace_ids || []).map(link).join(", ") || "—"}</div>
+      <div class="k">close negatives</div><div>${(m.close_negative_trace_ids || []).map(link).join(", ") || "—"}</div>
+      <div class="k">product change</div><div>${esc(m.product_change || "—")}</div>
+      <div class="k">revisions</div><div>${(m.revisions || []).map(r => `<div class="small">${esc(r.at || "")} ${esc(r.change || r)}</div>`).join("") || "—"}</div></div>
+      <div class="small muted" style="margin-top:6px">supporting annotations (${anns.length})</div>
+      ${anns.map(a => `<div class="small">• ${link(a.trace_id)} <i>${esc(a.note)}</i>${a.origin === "ai_suggestion" ? " <span class='muted'>(accepted suggestion)</span>" : ""}</div>`).join("")}</div>`;
+  }
+  const loose = S.anns.filter(a => a.kind === "failure" && !used.has(a.id));
+  h += `<div class="card"><h3>not yet grouped (${loose.length})</h3>${loose.map(a => `<div class="small">• ${link(a.trace_id)} <i>${esc(a.note)}</i></div>`).join("") || "<span class='muted'>none</span>"}</div>`;
+  el.innerHTML = h;
+}
+
+// ------------------------------------------------------------------ labels view
+function labelModes() {
+  const ms = S.patterns.modes || [], conf = ms.filter(m => m.status === "confirmed" || m.status === "frozen");
+  return conf.length ? { modes: conf, note: "" } : { modes: ms, note: "No confirmed modes yet; showing candidate modes." };
+}
+function liveLabel(mode, cid) { return (S.labels[mode] || []).find(r => r.trace_id === cid); }
+// Part E proposals (agent-written, label_proposals.json). Group 1 = the student's Part D decisions, group 2 = setup
+// absent by an approved rule, group 3 = agent read (verify each). A proposal becomes a label only on acceptance.
+const PGROUP = { 1: "your Part D decision", 2: "setup absent (approved rule)", 3: "agent read: verify" };
+function proposal(mode, cid) { return S.lprops.find(p => p.mode === mode && p.cid === cid && p.status === "pending"); }
+async function markProposals(decided) {  // decided: [{id, label}] ; look up by id in the CURRENT list (poll replaces it)
+  const lp = await api("/api/label_proposals");
+  for (const d of decided) { const p = lp.find(x => x.id === d.id); if (p) Object.assign(p, { status: d.label === p.label ? "accepted" : "flipped", decided_at: nowIso() }); }
+  await post("/api/label_proposals", lp); S.lprops = lp;
+}
+// Group 3 bulk (option 2, student decision 2026-11-12): only high-confidence PASS proposals, only after the student has
+// labelled a random spot check of 5 of them in that column, and only if none of the spot-check labels disagreed.
+const SPOT_N = 5;
+function g3Pool(mode) {
+  const rows = new Set(reviewedCids());
+  return S.lprops.filter(p => p.mode === mode && p.group === 3 && p.label === "pass" && p.confidence === "high" && p.status === "pending"
+    && !p.spot_check && rows.has(p.cid) && !liveLabel(mode, p.cid));
+}
+function spotState(mode) {
+  const spots = S.lprops.filter(p => p.mode === mode && p.spot_check);
+  return { spots, left: spots.filter(p => !liveLabel(mode, p.cid)).length, disagreed: spots.some(p => p.status === "flipped") };
+}
+async function spotCheck(mode) {
+  const pool = g3Pool(mode).map(p => p.id);
+  for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  const pick = new Set(pool.slice(0, SPOT_N));
+  const lp = await api("/api/label_proposals");
+  for (const p of lp) if (pick.has(p.id)) p.spot_check = true;
+  await post("/api/label_proposals", lp); S.lprops = lp; render();
+  toast(`Spot check: label the ${pick.size} outlined cells in this column yourself`, 5000);
+}
+async function bulkAccept(mode, group) {
+  const rows = new Set(reviewedCids());
+  const ps = group === 3 ? g3Pool(mode)
+    : S.lprops.filter(p => p.mode === mode && p.group === group && p.status === "pending" && rows.has(p.cid) && !liveLabel(mode, p.cid));
+  if (group === 3) { const st = spotState(mode); if (!st.spots.length || st.left || st.disagreed) return toast("Finish an agreeing spot check first"); }
+  const via = { 1: "bulk_group1", 2: "bulk_group2", 3: "bulk_after_spot_check" }[group];
+  if (!ps.length) return toast("Nothing to accept");
+  toast(`Saving ${ps.length} labels…`, 60000);
+  try {
+    const r = await post("/api/labels", { labels: ps.map(p => ({ cid: p.cid, mode, label: p.label, evidence: p.evidence, accepted_via: via })) });
+    await markProposals(ps.map(p => ({ id: p.id, label: p.label })));
+    toast(`Saved ${r.count} labels (${r.langfuse_scores_written} Langfuse scores)`, 5000);
+  } catch (e) { toast("Bulk save failed: " + (e.body && e.body.error || e.message), 8000); }
+  S.labels = await api("/api/labels"); render();
+}
+function reviewedCids() {
+  const base = S.samples.length ? S.samples.map(s => s.cid) : S.convs.map(c => c.cid);
+  return base.filter(cid => humanAnns(cid).length);
+}
+function renderLabels() {
+  const el = $("#v-labels"), { modes, note } = labelModes(), rows = reviewedCids();
+  if (!modes.length) { el.innerHTML = `<p class="muted">No modes yet. Labels come after the taxonomy (Part E).</p>`; return; }
+  let h = `<p class="muted">One Pass/Fail per reviewed conversation × mode. Fail = failure present (stored as 1). Click a cell to label; saving writes a Langfuse score and <span class="mono">labels/&lt;mode&gt;.jsonl</span>. ${esc(note)}</p>
+    <p class="small muted">Hatched cells are proposals, not labels: P?/F? = proposed Pass/Fail; dashed outline = the agent is unsure; yellow outline = spot-check cell (label it yourself). Column buttons accept group 1 (your Part D decisions) or group 2 (setup absent, approved rule) in bulk. Group 3: check every Fail and UNSURE cell yourself; for the high-confidence Passes, run "spot-check g3", label the 5 outlined cells, and if all agree "accept g3 Pass" accepts the rest (recorded as bulk_after_spot_check).</p>
+    <table class="grid"><tr><th>conversation</th><th>batch</th>${modes.map(m => {
+      const n = g => S.lprops.filter(p => p.mode === m.name && p.group === g && p.status === "pending" && rows.includes(p.cid) && !liveLabel(m.name, p.cid)).length;
+      const b = g => n(g) ? `<br><button class="btn" data-bulk="${esc(m.name)}|${g}">accept g${g} (${n(g)})</button>` : "";
+      const st = spotState(m.name), pool = g3Pool(m.name).length;
+      const g3 = st.disagreed ? `<br><span class="small" style="color:var(--fail)">spot check disagreed: check g3 cell by cell</span>`
+        : st.spots.length && st.left ? `<br><span class="small muted">spot check: ${st.left} of ${st.spots.length} left</span>`
+        : st.spots.length && pool ? `<br><button class="btn" data-bulk="${esc(m.name)}|3">accept g3 Pass (${pool})</button>`
+        : pool > SPOT_N ? `<br><button class="btn" data-spot="${esc(m.name)}">spot-check g3 (${SPOT_N})</button>` : "";
+      return `<th class="labhead" title="${esc(m.definition || "")}">${esc(m.name)}${b(1)}${b(2)}${g3}${n(3) ? `<br><span class="small muted">g3 to check: ${n(3)}</span>` : ""}</th>`; }).join("")}</tr>`;
+  for (const cid of rows) {
+    const c = S.byCid[cid];
+    h += `<tr><td><span class="link mono" data-open="${cid}">${esc(c.scenario_id)}</span></td><td class="small">${esc(batchOf(cid))}</td>`;
+    for (const m of modes) {
+      const l = liveLabel(m.name, cid), v = l ? (l.label === 1 ? "F" : "P") : "", pr = !l && proposal(m.name, cid);
+      if (pr) h += `<td class="cell prop p${pr.label === "fail" ? "F" : "P"}${pr.confidence === "unsure" ? " unsure" : ""}${pr.spot_check ? " spot" : ""}" data-cell="${cid}|${esc(m.name)}" title="g${pr.group} ${esc(PGROUP[pr.group])}: ${esc(pr.evidence || "")}">${pr.label === "fail" ? "F?" : "P?"}<span class="small">${pr.group}</span></td>`;
+      else h += `<td class="cell ${v || "empty"}" data-cell="${cid}|${esc(m.name)}" title="${l && l.evidence ? esc(l.evidence) : ""}">${v ? (v === "F" ? "Fail" : "Pass") + (l.langfuse_score ? "" : " *") : "·"}</td>`;
+    }
+    h += `</tr>`;
+  }
+  el.innerHTML = h + `</table><p class="small muted">* saved locally, Langfuse score not written.</p>`;
+}
+function openLabeler(cid, mode) {
+  const m = (S.patterns.modes || []).find(x => x.name === mode), c = S.byCid[cid], l = liveLabel(mode, cid), box = $("#labeler");
+  const pr = !l && proposal(mode, cid), pid = pr && pr.id;
+  box.innerHTML = `<div><b class="mono">${esc(c.scenario_id)}</b> × <b class="mono">${esc(mode)}</b> ${l ? `<span class="muted small">current: ${l.label === 1 ? "Fail" : "Pass"}</span>` : ""}</div>
+    <div class="small muted" style="margin:4px 0">${esc(m && m.definition || "")}</div>
+    ${pr ? `<div class="msugg" style="margin:4px 0"><div class="tag">PROPOSED ${pr.label === "fail" ? "FAIL" : "PASS"} · group ${pr.group}: ${esc(PGROUP[pr.group])}${pr.confidence === "unsure" ? " · UNSURE" : ""}</div><div class="small">${esc(pr.evidence || "")}</div></div>` : ""}
+    <input id="lab-ev" placeholder="evidence (quote or short reason, optional)" value="${esc(l && l.evidence || pr && pr.evidence || "")}">
+    <div class="toolbar" style="margin:8px 0 0"><button class="btn fail" id="lab-fail">Fail (present)</button><button class="btn pass" id="lab-pass">Pass (absent)</button>
+    <button class="btn" id="lab-cancel">Cancel</button><span class="link small" data-open="${cid}">open conversation</span></div>`;
+  box.style.display = "block";
+  const save = async label => {
+    try { const r = await post("/api/labels", { cid, mode, label, evidence: $("#lab-ev").value });
+      if (pid) await markProposals([{ id: pid, label }]);
+      toast(r.langfuse_score_written ? "Saved: Langfuse score + label file" : "Saved locally (Langfuse score not written)"); }
+    catch (e) { toast("Saved locally, Langfuse write failed: " + (e.body && e.body.error || e.message), 7000); }
+    box.style.display = "none"; S.labels = await api("/api/labels"); render();
+  };
+  $("#lab-fail").onclick = () => save("fail"); $("#lab-pass").onclick = () => save("pass"); $("#lab-cancel").onclick = () => box.style.display = "none";
+}
+
+// ------------------------------------------------------------------ progress view
+function renderProgress() {
+  const el = $("#v-progress"), batches = {};
+  for (const s of S.samples) (batches[s.batch] = batches[s.batch] || []).push(s.cid);
+  const reviewed = new Set(S.anns.filter(a => a.author === "human" && a.batch !== "practice").map(a => a.trace_id));
+  let h = `<div class="card"><h3>batches</h3><table class="grid"><tr><th>batch</th><th>in sample</th><th>reviewed</th><th>no failure observed</th><th>not yet reviewed</th></tr>`;
+  let tot = 0, totRev = 0;
+  for (const [b, cids] of Object.entries(batches)) {
+    const rev = cids.filter(c => reviewed.has(c)), nf = cids.filter(c => humanAnns(c).some(a => a.kind === "no_failure"));
+    tot += cids.length; totRev += rev.length;
+    h += `<tr><td class="mono">${esc(b)}</td><td>${cids.length}</td><td>${rev.length}</td><td>${nf.length}</td><td class="small">${cids.filter(c => !reviewed.has(c)).map(c => `<span class="link mono" data-open="${c}">${esc(S.byCid[c] ? S.byCid[c].scenario_id : c)}</span>`).join(" ")}</td></tr>`;
+  }
+  h += `<tr><td><b>total distinct</b></td><td><b>${tot}</b></td><td><b>${totRev}</b></td><td></td><td></td></tr></table>
+    <p class="small muted">Target: at least 100 distinct reviewed conversations across the four batches. Counting conversations (each ≥ 1 trace) is the stricter reading.</p></div>`;
+  const { modes } = labelModes(), rows = reviewedCids();
+  h += `<div class="card"><h3>labels and sample fractions</h3><table class="grid"><tr><th>mode</th><th>status</th><th>Fail</th><th>Pass</th><th>missing</th><th>sample fraction (Fail / labeled)</th></tr>`;
+  for (const m of modes) {
+    const ls = rows.map(c => liveLabel(m.name, c)).filter(Boolean), f = ls.filter(l => l.label === 1).length;
+    h += `<tr><td class="mono">${esc(m.name)}</td><td>${esc(m.status || "")}</td><td>${f}</td><td>${ls.length - f}</td><td>${rows.length - ls.length}</td><td>${ls.length ? `${f}/${ls.length} = ${(f / ls.length).toFixed(2)}` : "—"}</td></tr>`;
+  }
+  h += `</table><p class="small muted">Sample fractions, not prevalence: the sample was built with clusters and focused searches.</p></div>`;
+  const finalName = Object.keys(batches).find(b => /final/.test(b));
+  if (finalName) {
+    const order = Object.keys(batches), idx = cid => order.indexOf(batchOf(cid));
+    const annById = Object.fromEntries(S.anns.map(a => [a.id, a]));
+    const fresh = (S.patterns.modes || []).filter(m => { const b = (m.annotation_ids || []).map(id => annById[id]).filter(Boolean).map(a => idx(a.trace_id)); return b.length && Math.min(...b) === order.indexOf(finalName); });
+    h += `<div class="card"><h3>stability check: ${esc(finalName)}</h3><div>Modes first seen in the final batch: <b>${fresh.length}</b> ${fresh.map(m => `<span class="badge mono">${esc(m.name)}</span>`).join("")}</div></div>`;
+  }
+  el.innerHTML = h;
+}
+
+// ------------------------------------------------------------------ suggestions view
+function renderSugg() {
+  const el = $("#v-sugg"), by = st => S.suggs.filter(s => s.status === st);
+  const row = s => `<div class="card"><div><span class="badge" style="border-color:var(--sugg);color:var(--sugg)">AI suggestion</span>
+      <span class="mono">${esc(s.mode || "")}</span> · <span class="link mono" data-open="${s.cid}">${esc((S.byCid[s.cid] || {}).scenario_id || s.cid)}</span>
+      <span class="muted small">${esc(s.source || "")}</span></div>${s.quote ? `<div class="muted"><i>“${esc(s.quote)}”</i></div>` : ""}
+      <div>${esc(s.note || s.rationale || "")}</div>
+      ${s.status === "pending" ? `<div class="toolbar" style="margin-top:6px"><button class="btn sugg" data-acc="${s.id}">Accept</button><button class="btn" data-rev="${s.id}">Revise</button><button class="btn" data-rej="${s.id}">Reject</button></div>`
+        : `<div class="small"><b>${esc(s.status)}</b> ${esc(s.decision_reason || "")} <span class="muted">${esc(s.decided_at || "")}</span></div>`}</div>`;
+  el.innerHTML = `<p class="muted">AI suggestions are hypotheses, never labels. Each one needs your explicit decision, and every decision is kept in <span class="mono">suggestions.json</span>.</p>
+    <h3>pending (${by("pending").length})</h3>${by("pending").map(row).join("") || "<p class='muted'>none</p>"}
+    <h3>decided (${S.suggs.length - by("pending").length})</h3>${S.suggs.filter(s => s.status !== "pending").map(row).join("") || "<p class='muted'>none</p>"}`;
+}
+
+// ------------------------------------------------------------------ map view
+async function renderMap() {
+  if (!S.graph) S.graph = await api("/api/graph");
+  const cv = $("#mapc"), ctx = cv.getContext("2d"), g = S.graph, W = cv.width, H = cv.height, pad = 30;
+  const xs = g.nodes.map(n => n.x), ys = g.nodes.map(n => n.y), [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const P = n => [pad + (n.x - x0) / (x1 - x0 || 1) * (W - 2 * pad), pad + (n.y - y0) / (y1 - y0 || 1) * (H - 2 * pad)];
+  const colors = ["#2563eb", "#16a34a", "#d97706", "#9333ea", "#dc2626", "#0891b2", "#65a30d", "#db2777", "#475569", "#a16207"];
+  const inSample = new Set(S.samples.map(s => s.cid)), reviewed = new Set(S.anns.filter(a => a.author === "human" && a.batch !== "practice").map(a => a.trace_id));
+  ctx.clearRect(0, 0, W, H);
+  for (const n of g.nodes) {
+    const [x, y] = P(n), big = inSample.has(n.cid);
+    ctx.beginPath(); ctx.arc(x, y, big ? 7 : 4, 0, 7); ctx.fillStyle = reviewed.has(n.cid) ? "#f97316" : colors[n.cluster % colors.length];
+    ctx.globalAlpha = big ? 1 : .55; ctx.fill(); ctx.globalAlpha = 1;
+    if (big) { ctx.lineWidth = 2; ctx.strokeStyle = getComputedStyle(document.body).color; ctx.stroke(); }
+  }
+  $("#maplegend").textContent = `PCA of ${g.features.join(", ")}; colour = cluster (k=${g.clusters.length}), orange = reviewed, large ringed = in sample. Click a sample point to open it.`;
+  const near = e => { const r = cv.getBoundingClientRect(), mx = (e.clientX - r.left) * W / r.width, my = (e.clientY - r.top) * H / r.height;
+    let best = null, bd = 120; for (const n of g.nodes) { const [x, y] = P(n), d = (x - mx) ** 2 + (y - my) ** 2; if (d < bd) { bd = d; best = n; } } return best; };
+  cv.onmousemove = e => { const n = near(e), tip = $("#maptip"); if (!n) { tip.style.display = "none"; return; }
+    tip.style.display = "block"; tip.style.left = e.clientX + 12 + "px"; tip.style.top = e.clientY + 12 + "px";
+    tip.textContent = `${n.scenario_id} · ${n.role} · ${n.group} · cluster ${n.cluster} · notes ${humanAnns(n.cid).length}`; };
+  cv.onmouseleave = () => $("#maptip").style.display = "none";
+  cv.onclick = e => { const n = near(e); if (n && inSample.has(n.cid)) openCid(n.cid); };
+}
+
+// ------------------------------------------------------------------ wiring
+function renderCounts() { $("#sugg-count").textContent = S.suggs.filter(s => s.status === "pending").length;
+  $("#pos").textContent = `source: ${S.src} · ${S.convs.length} conversations · ${S.samples.length} in sample · ${new Set(S.anns.filter(a => a.author === "human" && a.batch !== "practice").map(a => a.trace_id)).size} reviewed`; }
+function render() {
+  renderCounts();
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "v-" + S.view));
+  document.querySelectorAll("#tabs button").forEach(b => b.classList.toggle("active", b.dataset.view === S.view));
+  ({ conv: renderConv, tax: renderTax, labels: renderLabels, progress: renderProgress, sugg: renderSugg, map: renderMap })[S.view]();
+}
+function go(i) { const n = list().length; if (!n) return; S.cur = (i + n) % n; localStorage.setItem("review.cur", S.cur); closePopover(); render(); window.scrollTo(0, 0); }
+function openCid(cid) {
+  let i = list().findIndex(x => x.cid === cid);
+  if (i < 0) { S.browseAll = true; i = list().findIndex(x => x.cid === cid); }
+  S.view = "conv"; $("#labeler").style.display = "none"; go(i);
+}
+document.addEventListener("click", e => {
+  const t = e.target, d = t.dataset || {};
+  if (t.closest("#tabs button")) { S.view = t.closest("button").dataset.view; render(); return; }
+  if (t.id === "prev") return go(S.cur - 1);
+  if (t.id === "next") return go(S.cur + 1);
+  if (t.id === "nofail") return noFailure();
+  if (t.id === "tog-policy") { S.showPolicy = !S.showPolicy; return render(); }
+  if (t.id === "reveal") { const c = cur(); S.keyShown[c.conv.cid] = !S.keyShown[c.conv.cid]; return render(); }
+  if (t.id === "back-sample") { S.browseAll = false; return go(0); }
+  if (d.add) { const r = t.getBoundingClientRect(); return openPopover(d.add, "", r.left + window.scrollX - 300, r.bottom + window.scrollY); }
+  if (d.edit) return editAnn(d.edit, t);
+  if (d.del) return askDelete(d.del, t);
+  if (d.delyes) return delAnn(d.delyes);
+  if (d.delno) return render();
+  if (d.acc) return decideSugg(d.acc, "accept", t);
+  if (d.rev) return decideSugg(d.rev, "revise", t);
+  if (d.rej) return decideSugg(d.rej, "reject", t);
+  if (d.open) return openCid(d.open);
+  if (d.spot) return spotCheck(d.spot);
+  if (d.bulk) { const [mode, g] = d.bulk.split("|"); return bulkAccept(mode, +g); }
+  if (d.cell) { const [cid, mode] = d.cell.split("|"); return openLabeler(cid, mode); }
+  if (!t.closest("#popover") && $("#popover").style.display === "block" && Date.now() - (S.popAt || 0) > 400) closePopover();
+});
+document.addEventListener("mouseup", e => {
+  if (S.view !== "conv" || e.target.closest("#popover,.notes,button,summary")) return;
+  const sel = window.getSelection(), text = sel.toString().trim(); if (!text) return;
+  const host = sel.anchorNode && sel.anchorNode.parentElement && sel.anchorNode.parentElement.closest(".content");
+  const host2 = sel.focusNode && sel.focusNode.parentElement && sel.focusNode.parentElement.closest(".content");
+  if (!host || host !== host2) { toast("Select text inside one message"); return; }
+  openPopover(host.dataset.key, text, e.pageX - 20, e.pageY);
+});
+document.addEventListener("mouseover", e => {
+  const n = e.target.closest(".mnote"), m = e.target.closest("mark.ann");
+  document.querySelectorAll(".hl").forEach(x => x.classList.remove("hl"));
+  const id = n ? n.dataset.ann : m ? m.dataset.id : null; if (!id) return;
+  document.querySelectorAll(`[data-ann="${id}"], mark.ann[data-id="${id}"]`).forEach(x => x.classList.add("hl"));
+});
+$("#pop-text").addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); commitPopover(); }
+  if (e.key === "Escape") closePopover();
+});
+document.addEventListener("keydown", e => {
+  if (e.target.closest("input,textarea,select")) return;
+  if (e.key === "j") go(S.cur + 1); if (e.key === "k") go(S.cur - 1);
+  if (e.key === "Escape") { closePopover(); $("#labeler").style.display = "none"; }
+});
+document.addEventListener("change", e => { if (e.target.id === "jump") go(+e.target.value); });
+loadAll().catch(e => { document.body.insertAdjacentHTML("afterbegin", `<div class="banner">Failed to load: ${esc(e.message)}</div>`); });
+setInterval(poll, 5000);
+</script>
+</body>
+</html>

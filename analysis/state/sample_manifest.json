@@ -1,0 +1,596 @@
+{
+  "population": {
+    "description": "HW3 final run, support-* conversations (sessions)",
+    "source": "langfuse",
+    "conversations": 250,
+    "traces": 346
+  },
+  "unit": "conversation (session); cid = first Langfuse trace id",
+  "batches": [
+    {
+      "name": "uniform-1",
+      "method": "uniform",
+      "n": 15,
+      "seed": 20261110,
+      "selected_at": "2026-11-10T17:16:21+00:00",
+      "picks": [
+        {
+          "cid": "567abe5b448338d192dd31588b3a91ef",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "afad408b632ae13f6405768015c8dc09",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "38533af3e677145ee64f1c82f81990ae",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "9e959c67c887d9f37754590dfc6a8a4a",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "d5468f866ea5dc88270e88dd18550db2",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "bd40408154a62df6c12aff61851a6edb",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "c02fb73be4c04fcc80715264b36a211a",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "7f677823e4a0157a229af994519897f7",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "c0f2ca562260d4af858b136a305991b9",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "b307f7baa4f45fcd68e9e6aab88c5b1f",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "627f628d57b9f9a5ba564346aa5fa4da",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "58a1bbae3a34a634e6c9cdb715f8694b",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "3b1d03b4378b62a2144bef58d6c48a4d",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "9c6259f73c719910e41d90f16d536758",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "5a04ce7e16b5abce1eda3ecd74b8172e",
+          "reason": "uniform random pick"
+        }
+      ]
+    },
+    {
+      "name": "cluster-1",
+      "method": "cluster",
+      "n": 15,
+      "k": 8,
+      "features": [
+        "turns",
+        "tool_calls",
+        "distinct_tools",
+        "tokens",
+        "interim_messages"
+      ],
+      "cluster_sizes": {
+        "0": 43,
+        "1": 20,
+        "2": 14,
+        "3": 4,
+        "4": 18,
+        "5": 13,
+        "6": 51,
+        "7": 87
+      },
+      "selected_at": "2026-11-10T17:16:21+00:00",
+      "picks": [
+        {
+          "cid": "a2d1fd836a5c5d3deb4d23d789c5a934",
+          "reason": "cluster 7 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "e182d558dd92da8d073b3e10ccd4413c",
+          "reason": "cluster 6 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "2858531a2ffa75bb27a35d588352a581",
+          "reason": "cluster 0 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "f7dd89219c7eb9b55c964244d0b853aa",
+          "reason": "cluster 1 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "5234ef109607a29cd4ca6f7a514e2938",
+          "reason": "cluster 4 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "c9a5d7ca58708287d21d6c2387cc06db",
+          "reason": "cluster 2 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "381418093e425d18c986ecaf8aa4b618",
+          "reason": "cluster 5 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "bb9f1c2c99d5e11c17d24d390f270af5",
+          "reason": "cluster 3 representative (#1 nearest centroid)"
+        },
+        {
+          "cid": "8e622c9051d897f4318d2984595ad099",
+          "reason": "cluster 7 representative (#2 nearest centroid)"
+        },
+        {
+          "cid": "fb38af49e13a6a03485c14090d676cef",
+          "reason": "cluster 6 representative (#2 nearest centroid)"
+        },
+        {
+          "cid": "ff0adc0bc77addaabb31346b6c296b33",
+          "reason": "cluster 0 representative (#2 nearest centroid)"
+        },
+        {
+          "cid": "e02f2ab4e47ddfc6ec3e9cd636b1fffe",
+          "reason": "cluster 1 representative (#2 nearest centroid)"
+        },
+        {
+          "cid": "b0c57efb17acd9abf9982ca53551eea9",
+          "reason": "cluster 4 representative (#2 nearest centroid)"
+        },
+        {
+          "cid": "9f34931c527e246d54d5b34d7460b4e8",
+          "reason": "cluster 2 representative (#2 nearest centroid)"
+        },
+        {
+          "cid": "7743cbc3264292f85717d34183c72f9c",
+          "reason": "cluster 5 representative (#2 nearest centroid)"
+        }
+      ]
+    },
+    {
+      "name": "dimension-2",
+      "method": "stratified",
+      "n": 30,
+      "seed": 20261110,
+      "field": "intent",
+      "per_value": {
+        "account_change": 3,
+        "account_info": 3,
+        "cancellation": 3,
+        "dispute": 3,
+        "order_status": 3,
+        "out_of_scope": 3,
+        "policy_question": 3,
+        "product_search": 3,
+        "refund": 3,
+        "return_eligibility": 3
+      },
+      "selected_at": "2026-11-11T00:24:45+00:00",
+      "picks": [
+        {
+          "cid": "64e1694d0b3e8808925bb83c7bd5a7c9",
+          "reason": "intent=account_change (stratified random pick)"
+        },
+        {
+          "cid": "4dbd685aec2bf34a1f7743d23743b2db",
+          "reason": "intent=account_change (stratified random pick)"
+        },
+        {
+          "cid": "bb037ce84e971be28f822ae5a0c64893",
+          "reason": "intent=account_change (stratified random pick)"
+        },
+        {
+          "cid": "a472a05e268320497f925b01efa52ec5",
+          "reason": "intent=account_info (stratified random pick)"
+        },
+        {
+          "cid": "8126c06cc56a7016b199bb432a9daaa2",
+          "reason": "intent=account_info (stratified random pick)"
+        },
+        {
+          "cid": "3b3825405b70afff161ac3155084b7df",
+          "reason": "intent=account_info (stratified random pick)"
+        },
+        {
+          "cid": "29fa46f29c1bdbea0b951baa9e7b2276",
+          "reason": "intent=cancellation (stratified random pick)"
+        },
+        {
+          "cid": "c44b836d249071a80ff4e0369ff08537",
+          "reason": "intent=cancellation (stratified random pick)"
+        },
+        {
+          "cid": "899c60646608cf6be9b3a78d543f9911",
+          "reason": "intent=cancellation (stratified random pick)"
+        },
+        {
+          "cid": "70ad7ddf8d3ad23ee0331349fe8f1e1e",
+          "reason": "intent=dispute (stratified random pick)"
+        },
+        {
+          "cid": "b9d9c1cad4bcbe145ee0ed335f655a29",
+          "reason": "intent=dispute (stratified random pick)"
+        },
+        {
+          "cid": "ca96560963fbe6c54d3169690c7798f0",
+          "reason": "intent=dispute (stratified random pick)"
+        },
+        {
+          "cid": "dd767528418ab407cf9cd652b1222fb4",
+          "reason": "intent=order_status (stratified random pick)"
+        },
+        {
+          "cid": "9015d29a8fc7b3da54efd01bb85426eb",
+          "reason": "intent=order_status (stratified random pick)"
+        },
+        {
+          "cid": "3bd409a56141a79459204d80ea1b2d82",
+          "reason": "intent=order_status (stratified random pick)"
+        },
+        {
+          "cid": "73977a00d461e7ef8928c0d6b750efaf",
+          "reason": "intent=out_of_scope (stratified random pick)"
+        },
+        {
+          "cid": "c3e22e22eb9436ec7e61821c73455355",
+          "reason": "intent=out_of_scope (stratified random pick)"
+        },
+        {
+          "cid": "af01c9d750e2a77039980ad9d890d111",
+          "reason": "intent=out_of_scope (stratified random pick)"
+        },
+        {
+          "cid": "d1d9c6093503aa5822570aeb6698e5c4",
+          "reason": "intent=policy_question (stratified random pick)"
+        },
+        {
+          "cid": "b5fac52453c4d0fce4ceaf9bea74245b",
+          "reason": "intent=policy_question (stratified random pick)"
+        },
+        {
+          "cid": "7b589cca0fafb31f336a621197821c7c",
+          "reason": "intent=policy_question (stratified random pick)"
+        },
+        {
+          "cid": "50c0a14a0a5c62b18cc36027a0bbc2ed",
+          "reason": "intent=product_search (stratified random pick)"
+        },
+        {
+          "cid": "cb08fb8cbdfd2a9a7e3f907754673f91",
+          "reason": "intent=product_search (stratified random pick)"
+        },
+        {
+          "cid": "d456486df3dce06fca57f5a7c5b07be3",
+          "reason": "intent=product_search (stratified random pick)"
+        },
+        {
+          "cid": "ca96e33b90157153ec0c3c217ce9668d",
+          "reason": "intent=refund (stratified random pick)"
+        },
+        {
+          "cid": "d53066a570701448c0ffa7123a4b319b",
+          "reason": "intent=refund (stratified random pick)"
+        },
+        {
+          "cid": "64375c64405172b1ae76be05624ba470",
+          "reason": "intent=refund (stratified random pick)"
+        },
+        {
+          "cid": "3de99ef01220ee6117856fd5e50ce6ce",
+          "reason": "intent=return_eligibility (stratified random pick)"
+        },
+        {
+          "cid": "4356d1de1a2968e2ec25f6d176adbb47",
+          "reason": "intent=return_eligibility (stratified random pick)"
+        },
+        {
+          "cid": "4b91a380f54a21bdc85549a5b5f12c8f",
+          "reason": "intent=return_eligibility (stratified random pick)"
+        }
+      ]
+    },
+    {
+      "name": "depth-3",
+      "method": "depth",
+      "n": 25,
+      "seed": 20261110,
+      "searches": [
+        {
+          "mode": "ambiguous_match_presented_as_unique",
+          "setup": "record state: duplicate product title or two matching orders",
+          "requested": 4,
+          "pool": 6,
+          "picked": 4
+        },
+        {
+          "mode": "policy_rule_misapplied",
+          "setup": "shipped-not-delivered, last day / one day past window, past dispute window, or dispute intent",
+          "requested": 4,
+          "pool": 27,
+          "picked": 4
+        },
+        {
+          "mode": "out_of_scope_request_answered",
+          "setup": "intent: out_of_scope",
+          "requested": 4,
+          "pool": 4,
+          "picked": 4
+        },
+        {
+          "mode": "correction_not_reconciled",
+          "setup": "difficulty: correction_across_turns",
+          "requested": 4,
+          "pool": 5,
+          "picked": 4
+        },
+        {
+          "mode": "omitted_restocking_fee",
+          "setup": "return/refund question about an order at a store with a restocking fee",
+          "requested": 3,
+          "pool": 3,
+          "picked": 3
+        },
+        {
+          "mode": "policy_question_answered_without_lookup / policy_claim_without_citation",
+          "setup": "intent: policy_question",
+          "requested": 3,
+          "pool": 15,
+          "picked": 3
+        },
+        {
+          "mode": "required_escalation_not_made",
+          "setup": "intent: account_change or dispute",
+          "requested": 3,
+          "pool": 14,
+          "picked": 3
+        }
+      ],
+      "rule": "each search selects the setup where a mode could occur, never a predicted failure; random within it",
+      "selected_at": "2026-11-11T07:18:30+00:00",
+      "picks": [
+        {
+          "cid": "55fafb3337ccb9253d2d31087e3d447e",
+          "reason": "depth search for ambiguous_match_presented_as_unique: record state: duplicate product title or two matching orders"
+        },
+        {
+          "cid": "49c9f05a5c1d51e18c069ad7d17c66ae",
+          "reason": "depth search for ambiguous_match_presented_as_unique: record state: duplicate product title or two matching orders"
+        },
+        {
+          "cid": "705864861daf4cb4206825d3c0e9f23d",
+          "reason": "depth search for ambiguous_match_presented_as_unique: record state: duplicate product title or two matching orders"
+        },
+        {
+          "cid": "fe030feddc4d32af9fa01760108f0900",
+          "reason": "depth search for ambiguous_match_presented_as_unique: record state: duplicate product title or two matching orders"
+        },
+        {
+          "cid": "de74bd78918631e2729ae607825dcd2c",
+          "reason": "depth search for policy_rule_misapplied: shipped-not-delivered, last day / one day past window, past dispute window, or dispute intent"
+        },
+        {
+          "cid": "6ee13b4b5c006e3578924a704dfdcf0c",
+          "reason": "depth search for policy_rule_misapplied: shipped-not-delivered, last day / one day past window, past dispute window, or dispute intent"
+        },
+        {
+          "cid": "626040c8edbaad5b574595deee4f97c0",
+          "reason": "depth search for policy_rule_misapplied: shipped-not-delivered, last day / one day past window, past dispute window, or dispute intent"
+        },
+        {
+          "cid": "4530d479bfe0cd18e33d8eaae7d085e6",
+          "reason": "depth search for policy_rule_misapplied: shipped-not-delivered, last day / one day past window, past dispute window, or dispute intent"
+        },
+        {
+          "cid": "8ce3aee74378a091a9965d17f44fe354",
+          "reason": "depth search for out_of_scope_request_answered: intent: out_of_scope"
+        },
+        {
+          "cid": "17abfcf00396379ae8a691a19c7c31e4",
+          "reason": "depth search for out_of_scope_request_answered: intent: out_of_scope"
+        },
+        {
+          "cid": "5c3410fba7f563c50e443b4218d3e3ef",
+          "reason": "depth search for out_of_scope_request_answered: intent: out_of_scope"
+        },
+        {
+          "cid": "cd5249c896ec737e335922f326e20a3b",
+          "reason": "depth search for out_of_scope_request_answered: intent: out_of_scope"
+        },
+        {
+          "cid": "c391597ab75b762e30c4f9aab1b42d3d",
+          "reason": "depth search for correction_not_reconciled: difficulty: correction_across_turns"
+        },
+        {
+          "cid": "3d4cc4984171455338e1086a07e76547",
+          "reason": "depth search for correction_not_reconciled: difficulty: correction_across_turns"
+        },
+        {
+          "cid": "b270497575e4d38847b34ba3df597436",
+          "reason": "depth search for correction_not_reconciled: difficulty: correction_across_turns"
+        },
+        {
+          "cid": "722920b17b176ecaabb506fbba25f153",
+          "reason": "depth search for correction_not_reconciled: difficulty: correction_across_turns"
+        },
+        {
+          "cid": "e9e5f69104a19d4856cadbd4ea1a3ea8",
+          "reason": "depth search for omitted_restocking_fee: return/refund question about an order at a store with a restocking fee"
+        },
+        {
+          "cid": "d4af61c7ddb9af60afa515a854145133",
+          "reason": "depth search for omitted_restocking_fee: return/refund question about an order at a store with a restocking fee"
+        },
+        {
+          "cid": "c696943d7ba87c66ef5affa1d397b56a",
+          "reason": "depth search for omitted_restocking_fee: return/refund question about an order at a store with a restocking fee"
+        },
+        {
+          "cid": "4e33f89a37b38431fb0edfd11bf88be9",
+          "reason": "depth search for policy_question_answered_without_lookup / policy_claim_without_citation: intent: policy_question"
+        },
+        {
+          "cid": "aa27ad6d444f0533af60a074f1eec75a",
+          "reason": "depth search for policy_question_answered_without_lookup / policy_claim_without_citation: intent: policy_question"
+        },
+        {
+          "cid": "ac70e5f1e5948b5de21bc283f2d673ec",
+          "reason": "depth search for policy_question_answered_without_lookup / policy_claim_without_citation: intent: policy_question"
+        },
+        {
+          "cid": "aacf3cc844489d559be7a9b515eef382",
+          "reason": "depth search for required_escalation_not_made: intent: account_change or dispute"
+        },
+        {
+          "cid": "b441e855b0652187db61024cb3d73253",
+          "reason": "depth search for required_escalation_not_made: intent: account_change or dispute"
+        },
+        {
+          "cid": "4f3b515a58dd087ab76406ebe2c64f56",
+          "reason": "depth search for required_escalation_not_made: intent: account_change or dispute"
+        }
+      ]
+    },
+    {
+      "name": "uniform-4",
+      "method": "uniform",
+      "n": 15,
+      "seed": 20261111,
+      "selected_at": "2026-11-11T18:59:05+00:00",
+      "picks": [
+        {
+          "cid": "ae36d54e2ccc7c3e84ee04b41fa95910",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "61929bfde5a94a05491b66fd4f6e6eda",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "88d1ecf44ed066349a4404d24e1cfd2f",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "3986ea32f69b8f976f58fbc1a3728b20",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "b8485c48e937e1f3da9b5055be44e169",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "78412e83745a5fcad2eb90aa3013777b",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "e7391046d3be1c5972e0947676dd7689",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "24a762d8a17bb9a1688b966a2ebd2810",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "48c2623bc5f9a0aa76aa5d5b2465c9d2",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "1c7284755c2964cf4046967aee7c45ec",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "11011fdbc832b82cd458893366de044b",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "bc5c374dc6e4a01939f9d2c06ec509fe",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "bd0e6581814466d85eeea8a4474c84ed",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "5dd0cf6ab7269d29e12d85d6513ace1f",
+          "reason": "uniform random pick"
+        },
+        {
+          "cid": "322e31e22d5ef05fff2629659decfb52",
+          "reason": "uniform random pick"
+        }
+      ]
+    },
+    {
+      "name": "search-B",
+      "method": "search",
+      "n": 7,
+      "mode": "reply_contradicts_tool_result",
+      "source": "D4 search v1",
+      "rule": "deterministic retrieval signals S1-S3 (see search_mode.py); every candidate reviewed by the student, accepted or rejected in suggestions.json",
+      "selected_at": "2026-11-11T23:29:53+00:00",
+      "picks": [
+        {
+          "cid": "806e1ac700313c141461751da7b50851",
+          "reason": "D4 search v1: S1 wrong order (retrieval signal, not a label)"
+        },
+        {
+          "cid": "e8f4dd3966a504a600c9311e39fc8d78",
+          "reason": "D4 search v1: S1 wrong order (retrieval signal, not a label)"
+        },
+        {
+          "cid": "249c5f6798c4ca932417e40345d46e99",
+          "reason": "D4 search v1: S2 false absence (retrieval signal, not a label)"
+        },
+        {
+          "cid": "56195c48b59eb79b381e861a55f6f909",
+          "reason": "D4 search v1: S1 wrong order (retrieval signal, not a label)"
+        },
+        {
+          "cid": "94035be57423f14e9c072c6342a945d7",
+          "reason": "D4 search v1: S1 wrong order (retrieval signal, not a label)"
+        },
+        {
+          "cid": "269aa00111df6ee22e4add3d2cb65dd6",
+          "reason": "D4 search v1: S2 false absence (retrieval signal, not a label)"
+        },
+        {
+          "cid": "2ec3a82c872e626fee60f794fad09e68",
+          "reason": "D4 search v1: S1 wrong order (retrieval signal, not a label)"
+        }
+      ]
+    },
+    {
+      "name": "search-B-v2",
+      "method": "search",
+      "n": 2,
+      "mode": "reply_contradicts_tool_result",
+      "source": "D4 search v2",
+      "rule": "deterministic retrieval signals S1-S4 with typo tolerance (see search_mode.py); every candidate reviewed by the student, accepted or rejected in suggestions.json",
+      "selected_at": "2026-11-12T00:24:04+00:00",
+      "picks": [
+        {
+          "cid": "68eb09e855ddb48e874ddf81d9f652ad",
+          "reason": "D4 search v2: S1 wrong order (retrieval signal, not a label)"
+        },
+        {
+          "cid": "221d712f71fc69da6cb470b7051ed031",
+          "reason": "D4 search v2: S2 false absence (retrieval signal, not a label)"
+        }
+      ]
+    }
+  ]
+}
