@@ -1,0 +1,27 @@
+{
+  "judge_id": "policy_claim_without_citation-v2",
+  "mode": "policy_claim_without_citation",
+  "split": "dev",
+  "model": "gpt-4o-mini-2024-07-18",
+  "prompt_path": "analysis/prompts/policy_claim_without_citation-v2.txt",
+  "tpr": 0.9615,
+  "tnr": 0.9375,
+  "tpr_interval": [
+    0.8111,
+    0.9932
+  ],
+  "tnr_interval": [
+    0.7167,
+    0.9889
+  ],
+  "agreement": 0.9524,
+  "tp": 25,
+  "fn": 1,
+  "tn": 15,
+  "fp": 1,
+  "n": 42,
+  "disagreements": [
+    "3b3825405b70afff161ac3155084b7df",
+    "ca96560963fbe6c54d3169690c7798f0"
+  ]
+}

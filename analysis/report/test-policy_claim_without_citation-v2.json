@@ -1,0 +1,27 @@
+{
+  "judge_id": "policy_claim_without_citation-v2",
+  "mode": "policy_claim_without_citation",
+  "split": "test",
+  "model": "gpt-4o-mini-2024-07-18",
+  "pass_count": 27,
+  "fail_count": 15,
+  "tpr": 0.963,
+  "tnr": 1.0,
+  "tpr_interval": [
+    0.8172,
+    0.9934
+  ],
+  "tnr_interval": [
+    0.7961,
+    1.0
+  ],
+  "agreement": 0.9762,
+  "tp": 26,
+  "fn": 1,
+  "tn": 15,
+  "fp": 0,
+  "n": 42,
+  "disagreements": [
+    "2ec3a82c872e626fee60f794fad09e68"
+  ]
+}
