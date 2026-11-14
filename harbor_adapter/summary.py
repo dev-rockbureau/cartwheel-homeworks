@@ -17,6 +17,27 @@ def _case_id(task_name: str, known_ids: set[str]) -> str | None:
     return max(matches, key=len) if matches else None
 
 
+def load_trial_results(job_dir: Path, result: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return the job's trial results in a reproducible order.
+
+    Older Harbor versions inline ``trial_results`` in the job's result.json.
+    Harbor 0.23.0 leaves that list empty and writes one ``result.json`` per
+    trial directory instead; those are read and ordered by ``started_at``
+    (then trial name), which is the order the trials began.
+    """
+    inline = result.get("trial_results") or []
+    if inline:
+        return list(inline)
+    trials = []
+    for path in sorted(job_dir.glob("*/result.json")):
+        trial = json.loads(path.read_text())
+        if isinstance(trial, dict) and "task_name" in trial:
+            trials.append(trial)
+    return sorted(
+        trials, key=lambda t: (str(t.get("started_at", "")), str(t.get("trial_name", "")))
+    )
+
+
 def _reward(trial: dict[str, Any]) -> float | None:
     verifier = trial.get("verifier_result")
     if not isinstance(verifier, dict):
@@ -49,7 +70,7 @@ def summarize_job(
     result = json.loads(result_path.read_text())
     trials: dict[str, list[dict[str, Any]]] = defaultdict(list)
     unknown: list[str] = []
-    for trial in result.get("trial_results", []):
+    for trial in load_trial_results(job_dir, result):
         case_id = _case_id(str(trial.get("task_name", "")), set(by_id))
         if case_id is None:
             unknown.append(str(trial.get("task_name", "")))

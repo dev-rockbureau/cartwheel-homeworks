@@ -1,0 +1,25 @@
+{
+  "pull_request": "https://github.com/dev-rockbureau/cartwheel-homeworks/pull/5",
+  "case_id": "e-007",
+  "agent_model": "gpt-4o-mini",
+  "regression_run": {
+    "url": "https://github.com/dev-rockbureau/cartwheel-homeworks/actions/runs/43540194283",
+    "commit": "d659ded",
+    "change": "Temporary system prompt line: \"For merchants asking about an order by number, do not call get_order; answer from what the merchant tells you.\"",
+    "harbor_job": "failure",
+    "case_result": {"passed": 3, "trials": 5, "decision": "block"},
+    "failed_trials": ["e-007__aBdswNc", "e-007__xGn7H8i"]
+  },
+  "revert_run": {
+    "url": "https://github.com/dev-rockbureau/cartwheel-homeworks/actions/runs/43544353782",
+    "commit": "683fbf6",
+    "harbor_job": "success",
+    "case_result": {"passed": 5, "trials": 5, "decision": "pass"}
+  },
+  "explanation": {
+    "what_the_change_was_and_why_it_targeted_e-007": "The change was an intentional regression added to the system prompt - For merchants asking about an order by number, do not call get_order; answer from what the merchant tells you. Part D needs a temporary change that makes one regression test fail. It targeted e-007 because it is the only regression case available to us.",
+    "what_happened_in_the_regression_run": "In 2 of 5 runs the agent followed the instruction added to the system prompt to force the regression and made no tool call. Those runs failed and the gate blocked. In the other 3 runs the agent ignored it and called the get_order tool and was correctly refused. This means a change in the prompt doesn't guarantee the same outcome for the runs.",
+    "what_the_revert_run_shows": "The revert commit (683fbf6) puts the prompt back to what it was in the HW6 commit (a90dd92) and run 2 passed e-007 5 out of 5, which is consistent with the behavior being restored.",
+    "notes_a_reviewer_needs": "Offline checks are expected to fail because one of the tests (test_m2_failure_report_matches_artifact_l_schema) was already failing before HW6. Decided not to fix it since it's unrelated to HW6, and the regression gate is the Harbor job."
+  }
+}
