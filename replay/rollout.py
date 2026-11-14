@@ -385,8 +385,21 @@ def retrieved_docs_text(transcript: dict[str, Any]) -> str:
     return "\n\n".join(chunks) if chunks else "(no policy documents were retrieved)"
 
 
-def judge_trace_text(transcript: dict[str, Any]) -> str:
-    """Format a runtime transcript like the normalized traces used in HW5."""
+def judge_trace_text(transcript: dict[str, Any], *, include_tools: bool = True) -> str:
+    """Format a runtime transcript like the normalized traces used in HW5.
+
+    ``include_tools=False`` reproduces a judge whose HW5 inputs held only user
+    turns and assistant replies: tool calls and results are left out, and an
+    empty turn or reply is skipped, as the HW5 flattener skipped empty content.
+    """
+    if not include_tools:
+        lines = []
+        for turn in transcript.get("turns", []):
+            for role, key in (("user", "user"), ("assistant", "reply")):
+                text = str(turn.get(key) or "")
+                if text:
+                    lines.append(f"{role}: {text}")
+        return "\n".join(lines)
     lines: list[str] = []
     for turn in transcript.get("turns", []):
         lines.append(f"user: {turn.get('user', '')}")

@@ -22,6 +22,7 @@ jobs:
     name: Harbor evaluations
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     env:
       CARTWHEEL_MODEL: ${{ vars.CARTWHEEL_MODEL }}
       PYTHONPATH: ${{ github.workspace }}
@@ -36,9 +37,50 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - run: uv sync
 
-      # Homework 6: install Harbor 0.23.0.
-      # Generate the classified tasks in eval_cases/cases.jsonl.
-      # Run five attempts per task in fresh Docker containers.
-      # Pass the agent and judge provider keys to Harbor.
-      # Summarize the job and upload the job files with `if: always()` so a
-      # failed regression keeps its evidence.
+      - name: Install Harbor 0.23.0
+        run: |
+          uv tool install 'harbor==0.23.0'
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Check the agent model and provider keys are configured
+        # Prints only which names are missing, never a value.
+        run: |
+          test -n "$CARTWHEEL_MODEL" || { echo "::error::repository variable CARTWHEEL_MODEL is not set"; exit 1; }
+          test -n "$OPENAI_API_KEY" || { echo "::error::secret OPENAI_API_KEY is not set (agent and judge provider)"; exit 1; }
+
+      - name: Generate the classified Harbor tasks
+        run: uv run python scripts/export_harbor_tasks.py
+
+      # The agent adapter forwards the provider key from this job's
+      # environment into each container; task.toml passes the judge
+      # provider key to the verifier.
+      - name: Run every case five times in fresh Docker containers
+        run: |
+          harbor run \
+            -p .harbor/tasks \
+            -a harbor_adapter.agent:CartwheelAgent \
+            -m "$CARTWHEEL_MODEL" \
+            -e docker \
+            --n-attempts 5 \
+            --n-concurrent 2 \
+            --job-name hw6-evals \
+            --jobs-dir .harbor/jobs \
+            --yes
+
+      # Writes pass count, pass@1, pass@3, pass@5, pass^5 and the CI decision
+      # to the job summary; exits 1 when a regression case fails any run.
+      - name: Summarize and apply the CI gate
+        if: always()
+        run: |
+          uv run python scripts/summarize_harbor_job.py \
+            .harbor/jobs/hw6-evals \
+            --expected-attempts 5
+
+      - name: Upload the Harbor job files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hw6-evals
+          path: .harbor/jobs/hw6-evals
+          if-no-files-found: warn
+          include-hidden-files: true

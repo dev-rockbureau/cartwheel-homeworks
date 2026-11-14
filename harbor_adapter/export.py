@@ -14,7 +14,12 @@ from replay.rollout import EVAL_CASES_PATH, load_frozen_judge
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = REPO_ROOT / ".harbor" / "tasks"
 SAFE_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
-SOURCE_PACKAGES = ("agent", "observability", "seed", "replay", "harbor_adapter")
+# Accepted HW5 judges validated on user turns and assistant replies only
+# (no tool calls or results). HW6 sends them the same input.
+# policy_claim_without_citation: tool results list policy_ids, which the judge
+# could mistake for citations (student decision, HW5 Part B).
+CONVERSATION_ONLY_JUDGES = frozenset({"policy_claim_without_citation"})
+SOURCE_PACKAGES =("agent", "observability", "seed", "replay", "harbor_adapter")
 STUB_PACKAGES = ("scenarios", "server", "analysis", "optimize")
 
 MODEL_IDS = {
@@ -231,7 +236,7 @@ def cartwheel_code_checks(workspace: Path) -> bool:
 
 def _judge_py(mode: str, expected: str, judge: dict[str, Any]) -> str:
     """Run one frozen judge through the DocETL contract used in HW5."""
-    del mode
+    include_tools = mode not in CONVERSATION_ONLY_JUDGES
     template = '''from __future__ import annotations
 
 import json
@@ -246,24 +251,25 @@ from replay.rollout import judge_trace_text
 PROMPT = __PROMPT__
 MODEL = __MODEL__
 EXPECTED = __EXPECTED__
+INCLUDE_TOOLS = __INCLUDE_TOOLS__
 
 
 def _decode(row: dict) -> str:
+    # Same contract as the HW5 parser: exactly Pass or Fail, else an error,
+    # so a malformed judge reply is an infrastructure problem, not a Fail.
     critique = row.get("critique")
     if not isinstance(critique, str) or not critique.strip():
         raise ValueError("judge result needs a critique")
-    raw = str(row.get("result", "")).strip().lower().rstrip(".")
-    if raw in {"pass", "passed"}:
-        return "pass"
-    if raw in {"fail", "failed"}:
-        return "fail"
-    return "fail"
+    verdict = row.get("result")
+    if verdict not in ("Pass", "Fail"):
+        raise ValueError(f"judge result must be Pass or Fail, got {verdict!r}")
+    return verdict.lower()
 
 
 @criterion
 def cartwheel_judge(workspace: Path) -> bool:
     evidence = json.loads((workspace / "cartwheel-result.json").read_text())
-    content = judge_trace_text(evidence["transcript"])
+    content = judge_trace_text(evidence["transcript"], include_tools=INCLUDE_TOOLS)
     with tempfile.TemporaryDirectory(prefix="cartwheel-judge-") as directory:
         root = Path(directory)
         input_path = root / "input.json"
@@ -312,6 +318,7 @@ def cartwheel_judge(workspace: Path) -> bool:
         template.replace("__PROMPT__", repr(judge["prompt_text"]))
         .replace("__MODEL__", repr(_judge_model(judge["model"])))
         .replace("__EXPECTED__", repr(expected))
+        .replace("__INCLUDE_TOOLS__", repr(include_tools))
     )
 
 
