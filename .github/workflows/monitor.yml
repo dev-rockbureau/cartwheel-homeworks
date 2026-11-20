@@ -1,0 +1,71 @@
+name: monitor
+
+# HW7 Part D: monitor policy_claim_without_citation once a day.
+# Reads the last 24 hours of Cartwheel traces from Langfuse, groups them by
+# session into conversations, samples (20% random + risk groups), runs the
+# frozen HW5 judge, corrects the random-sample rate, and writes Langfuse scores.
+#
+# Runs on a self-hosted runner on the student's Mac (label cartwheel-monitor)
+# because Langfuse runs there in Docker and a GitHub-hosted runner cannot reach
+# it. GitHub only runs `schedule` for workflows on the default branch, and a
+# scheduled run is skipped while the Mac or the runner is off.
+
+on:
+  schedule:
+    - cron: "17 6 * * *" # every day at 06:17 UTC
+  workflow_dispatch:
+    inputs:
+      last_hours:
+        description: Hours of traces to monitor
+        default: "24"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    name: monitor last 24 hours
+    runs-on: [self-hosted, cartwheel-monitor]
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+      LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+      LANGFUSE_HOST: ${{ vars.LANGFUSE_HOST }}
+      # The frozen judge is gpt-4o-mini-2024-07-18. No Cartwheel model key is
+      # needed: the job reads existing traces.
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      LAST_HOURS: ${{ inputs.last_hours || '24' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+
+      - name: Check Langfuse and judge settings are configured
+        # Prints only which names are missing, never a value.
+        run: |
+          missing=0
+          for name in LANGFUSE_PUBLIC_KEY LANGFUSE_SECRET_KEY LANGFUSE_HOST OPENAI_API_KEY; do
+            if [ -z "${!name}" ]; then echo "::error::$name is not set"; missing=1; fi
+          done
+          exit $missing
+
+      - name: Sample, judge, correct, and write scores
+        # With no eligible conversations it records a zero count and exits 0
+        # without calling the judge.
+        run: uv run python -m monitoring.run --last-hours "$LAST_HOURS" --yes
+
+      - name: Upload the monitoring output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitor-${{ github.run_id }}
+          path: monitoring/output/
+          if-no-files-found: warn
+          retention-days: 30
