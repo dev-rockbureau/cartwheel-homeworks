@@ -386,7 +386,8 @@ def main(argv: list[str] | None = None) -> int:
     else:
         end = datetime.now(timezone.utc).replace(microsecond=0)
         start = end - timedelta(hours=args.last_hours)
-        label, expected = f"last{args.last_hours:g}h-{_iso(end)}", None
+        # No colons: the label names the output folder, and artifact upload rejects ":" in paths.
+        label, expected = f"last{args.last_hours:g}h-{end:%Y%m%dT%H%M%SZ}", None
 
     record = run(label, start, end, config, expected, dry_run=args.dry_run, assume_yes=args.yes)
     if record is not None:
