@@ -1,0 +1,5 @@
+candidate,layer,predicted_effect,dev_score,write_pass_5,cost_per_100_conversations_usd,decision,git_commit,result_file
+starting_version,none,baseline,0.244444,0,0.04598,keep,ccc2426,optimize/results/development-starting-gpt-4o-mini-20261121-000958.json
+prompt_change,prompt,"e-011 passes, score +0.11",0.377778,0,0.049074,keep,606a1e1,optimize/results/development-prompt_change-gpt-4o-mini-20261121-004017.json
+tool_change,tool,"e-011 passes, score +0.11",0.511111,0,0.045647,keep,b622f1e,optimize/results/development-tool_change-gpt-4o-mini-20261121-010001.json
+harness_change,harness,"e-011 and e-012 stay passing, score unchanged",0.266667,0,0.049125,revert,7fa863e,optimize/results/development-harness_change-gpt-4o-mini-20261121-085618.json
