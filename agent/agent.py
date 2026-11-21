@@ -212,6 +212,14 @@ def get_order_logic(ctx: AuthContext, order_id: int) -> dict[str, Any]:
         store = db.get_store(conn, order.store_id)
         payload = order.to_public_dict()
         payload["store_name"] = store.name if store else None
+        # HW8 tool change: state the cancellation rule's outcome and the
+        # policy ids to cite, so rule claims built on this result can cite them.
+        payload["cancellable"] = order.status == "placed"
+        payload["policy_ids"] = {
+            "cancellation": "cw-cancellations",
+            "returns": "cw-returns",
+            "refunds": "cw-refunds",
+        }
         return {"ok": True, "order": payload}
 
 
@@ -360,7 +368,8 @@ def search_help_center(
 
 @function_tool
 def get_order(wrapper: RunContextWrapper[AuthContext], order_id: int) -> dict[str, Any]:
-    """Look up one order by id, including its refund eligibility."""
+    """Look up one order by id, including its refund eligibility, whether it
+    can still be cancelled, and the policy ids to cite."""
     return _call(wrapper, get_order_logic, order_id)
 
 
