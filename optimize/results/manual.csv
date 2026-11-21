@@ -3,3 +3,5 @@ starting_version,none,baseline,0.244444,0,0.04598,keep,ccc2426,optimize/results/
 prompt_change,prompt,"e-011 passes, score +0.11",0.377778,0,0.049074,keep,606a1e1,optimize/results/development-prompt_change-gpt-4o-mini-20261121-004017.json
 tool_change,tool,"e-011 passes, score +0.11",0.511111,0,0.045647,keep,b622f1e,optimize/results/development-tool_change-gpt-4o-mini-20261121-010001.json
 harness_change,harness,"e-011 and e-012 stay passing, score unchanged",0.266667,0,0.049125,revert,7fa863e,optimize/results/development-harness_change-gpt-4o-mini-20261121-085618.json
+gepa_best,prompt,"GEPA candidate 3 (search 0.85)",0.622222,0,0.078417,revert,d4fe635,optimize/results/development-gepa_best-gpt-4o-mini-20261121-101242.json
+gepa_edit,prompt,"e-011, e-012 and e-006 pass, score up",0.888889,1,0.072518,keep,36f863a,optimize/results/development-gepa_edit-gpt-4o-mini-20261121-103337.json
