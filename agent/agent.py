@@ -18,7 +18,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import weakref
 from typing import Any
 
 from agents import Agent, ModelSettings, RunContextWrapper, function_tool
@@ -356,69 +355,7 @@ def _call(
     except NotImplementedError as exc:
         result = {"ok": False, "error": "not_implemented", "reason": str(exc)}
     record_tool_result(wrapper.context, result)
-    _remember_policy_ids(wrapper.context, result)
     return result
-
-
-# ---------------------------------------------------------------------------
-# Harness: policy ids seen in this session. HW8 Part C (context construction).
-# Every tool result passes through ``_call``; any policy id it carries is kept
-# for the session, and ``_instructions_with_policy_ids`` lists them under the
-# system prompt before each model call, so the reply is written with the ids
-# in view. Keyed by the identity of the AuthContext object (frozen, so equal
-# sessions would otherwise share an entry) and dropped when it is collected.
-# ---------------------------------------------------------------------------
-
-_POLICY_IDS_SEEN: dict[int, list[str]] = {}
-
-
-def _policy_ids_in(value: Any) -> list[str]:
-    found: list[str] = []
-    if isinstance(value, dict):
-        for key, item in value.items():
-            if key in ("policy_id", "store_policy_id") and isinstance(item, str):
-                found.append(item)
-            elif key == "policy_ids":
-                items = item.values() if isinstance(item, dict) else item
-                found.extend(i for i in items or [] if isinstance(i, str))
-            else:
-                found.extend(_policy_ids_in(item))
-    elif isinstance(value, list):
-        for item in value:
-            found.extend(_policy_ids_in(item))
-    return found
-
-
-def _remember_policy_ids(ctx: AuthContext, result: Any) -> None:
-    seen = _POLICY_IDS_SEEN.get(id(ctx))
-    if seen is None:
-        return
-    for policy_id in _policy_ids_in(result):
-        if policy_id not in seen:
-            seen.append(policy_id)
-
-
-def _start_policy_id_log(ctx: AuthContext) -> None:
-    key = id(ctx)
-    if key not in _POLICY_IDS_SEEN:
-        weakref.finalize(ctx, _POLICY_IDS_SEEN.pop, key, None)
-    _POLICY_IDS_SEEN[key] = []
-
-
-def _instructions_with_policy_ids(base: str):
-    def instructions(wrapper: RunContextWrapper[AuthContext], _agent: Any) -> str:
-        seen = _POLICY_IDS_SEEN.get(id(wrapper.context)) or []
-        if not seen:
-            return base
-        listed = "\n".join(f"- {policy_id}" for policy_id in seen)
-        return (
-            f"{base}\n## Policy ids returned by tools in this conversation\n"
-            "When your reply states a rule covered by one of these policies, "
-            "end that sentence with its id in parentheses.\n"
-            f"{listed}\n"
-        )
-
-    return instructions
 
 
 @function_tool
@@ -624,12 +561,10 @@ def build_agent(
     """
     resolved = resolve_model(model)
     configure_model_tracing(openai_model=isinstance(resolved, str))
-    _start_policy_id_log(ctx)
-    instructions = _instructions_with_policy_ids(render_system_prompt(ctx, prompt_template))
     if not defenses:
         return Agent[AuthContext](
             name="cartwheel-support",
-            instructions=instructions,
+            instructions=render_system_prompt(ctx, prompt_template),
             tools=TOOLS_BY_ROLE[ctx.role],
             model=resolved,
             model_settings=model_settings_for(resolved),
@@ -640,7 +575,7 @@ def build_agent(
 
     return Agent[AuthContext](
         name="cartwheel-support",
-        instructions=instructions,
+        instructions=render_system_prompt(ctx, prompt_template),
         tools=_tools_with_defenses(ctx.role),
         model=resolved,
         model_settings=model_settings_for(resolved),
