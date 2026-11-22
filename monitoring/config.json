@@ -1,0 +1,20 @@
+{
+  "judge_id": "policy_claim_without_citation-v2",
+  "judge_mode": "policy_claim_without_citation",
+  "model": "gpt-4o-mini",
+  "random_rate": 0.2,
+  "risk_groups": ["policy_lookup", "multi_turn"],
+  "threshold": 0.15,
+  "periods": [
+    {
+      "label": "before",
+      "from": "2026-11-07T18:35:26Z",
+      "to": "2026-11-07T18:57:13Z"
+    },
+    {
+      "label": "after",
+      "from": "2026-11-20T00:52:13Z",
+      "to": "2026-11-20T00:56:18Z"
+    }
+  ]
+}

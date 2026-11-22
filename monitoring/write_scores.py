@@ -70,8 +70,35 @@ def build_score_records(
         A list of score record dicts with keys: score_id, name, value,
         data_type, trace_id, comment (comment is None for verdicts).
     """
-    ### YOUR CODE HERE (hw7)
-    raise NotImplementedError("hw7: implement build_score_records")
+    def verdict_records(kind: str, verdicts: dict[str, int]) -> list[dict[str, Any]]:
+        return [
+            {
+                "score_id": _stable_id(mode, kind, trace_id),
+                "name": f"{mode}_{kind}",
+                "value": float(value),
+                "data_type": "NUMERIC",
+                "trace_id": trace_id,
+                "comment": None,
+            }
+            for trace_id, value in verdicts.items()
+        ]
+
+    prevalence = {
+        "score_id": _stable_id(mode, "prevalence", batch_label),
+        "name": f"{mode}_corrected_prevalence",
+        "value": estimate["corrected"],
+        "data_type": "NUMERIC",
+        "trace_id": None,
+        "comment": (
+            f"95% CI {estimate['ci_low']}-{estimate['ci_high']}, "
+            f"raw {estimate['raw']}, n={estimate['n_sample']}"
+        ),
+    }
+    return [
+        *verdict_records("verdict", random_verdicts),
+        *verdict_records("risk_verdict", risk_verdicts),
+        prevalence,
+    ]
 
 
 # ---------------------------------------------------------------------------
@@ -107,6 +134,9 @@ def post_scores(records: list[dict[str, Any]]) -> int:
             kwargs["trace_id"] = record["trace_id"]
         if record.get("comment"):
             kwargs["comment"] = record["comment"]
+        if record.get("timestamp") is not None:
+            # HW7: date the score at the monitored behavior (set by monitoring/run.py).
+            kwargs["timestamp"] = record["timestamp"]
         client.create_score(**kwargs)
     client.flush()
     return len(records)
