@@ -1,0 +1,34 @@
+{
+  "configurations": [
+    {
+      "configuration": 1,
+      "git_commit": "ccc242693fa1b1abcb5f3101d7577301bba98769",
+      "model": "gpt-5.5",
+      "name": "starting-version-model-1",
+      "parent": ""
+    },
+    {
+      "configuration": 2,
+      "git_commit": "ccc242693fa1b1abcb5f3101d7577301bba98769",
+      "model": "claude-opus-4-6",
+      "name": "starting-version-model-2",
+      "parent": ""
+    },
+    {
+      "configuration": 3,
+      "git_commit": "ccc242693fa1b1abcb5f3101d7577301bba98769",
+      "model": "gpt-4o-mini",
+      "name": "starting-version-model-3",
+      "parent": ""
+    },
+    {
+      "configuration": 4,
+      "git_commit": "36f863a18842bdeeaa8213617e64516219914972",
+      "model": "gpt-4o-mini",
+      "name": "final-version-model-3",
+      "parent": "starting-version-model-3"
+    }
+  ],
+  "created_at": "2026-11-22T01:34:15.027192+00:00",
+  "plan_sha256": "d7668819003cc3df471240f1f1b2bf4209271397da38c5564a7c0933cfea504f"
+}

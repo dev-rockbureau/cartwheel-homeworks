@@ -1,0 +1,12 @@
+{
+  "failure_mode": "policy_claim_without_citation",
+  "source": "Homework 7 monitor: corrected prevalence on the random sample (judge policy_claim_without_citation-v2, frozen in Homework 5), period 'before' = the HW3 final run",
+  "prevalence": 0.5846,
+  "requirement": "RESP-1",
+  "example_trace_ids": [
+    "9f34931c527e246d54d5b34d7460b4e8",
+    "e182d558dd92da8d073b3e10ccd4413c",
+    "ca96e33b90157153ec0c3c217ce9668d"
+  ],
+  "why_agent_can_change_it": "In all three the agent states a policy rule without its id: support-0017 'Atlas Stationery has a return window of 30 days', support-0217 '30 days for returns' and 'up to 15% ... as per Second Stitch Apparel's policy', support-0156 'queued for approval because it exceeds the $100 auto-approval threshold'. The tools it called already return the ids to cite (get_store_info and check_refund_eligibility return policy_ids), and the system prompt already says 'Cite the policy id for every policy claim', yet the agent drops them and never calls get_policy. So the fix lies in how the prompt, the tool results or the harness carry the id into the reply, not in the data."
+}

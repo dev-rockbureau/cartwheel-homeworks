@@ -1,0 +1,108 @@
+{
+  "cached_fraction": 0.0,
+  "cached_input_tokens": 0,
+  "candidate": "starting-version-model-2",
+  "case_count": 4,
+  "cases": [
+    {
+      "case_id": "e-003",
+      "expected_write": false,
+      "failure_modes": [
+        "tool escalate_to_human called"
+      ],
+      "latencies_seconds": [
+        17.485
+      ],
+      "pass_rate": 0.0,
+      "passes": 0,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [
+            "tool escalate_to_human called"
+          ],
+          "final_reply": "No need to apologize at all \u2014 it's a totally fair question! Let me look up what our policy says about closing accounts so I can give you accurate info.\nLet me pull up the details on that escalation policy to make sure I guide you correctly.\nOkay, here's the deal \u2014 totally understandable to be on the fence about this, so no pressure at all!\n\nHere's what I can tell you:\n\n1. **Account closure counts as an account change**, and per our policy, that's something only a **human support agent** can handle \u2014 I can't do it myself in chat (**cw-escalations**, **cw-account-security**).\n\n2. **There's no harm in just leaving it open.** If you're not sure yet, your account can sit there without costing you anything. You won't be charged for having an account, and you can come back whenever you want.\n\n3. **If you do want to go ahead**, I can escalate this to a human agent who will follow up with you within 24 hours to walk you through it.\n\nSo it's really up to you! Would you like me to:\n- **Escalate it** to a human to get the closure process started, or\n- **Leave things as they are** for now while you think it over?\n\nEither way is totally fine. \ud83d\ude0a",
+          "judge_reasons": {},
+          "passed": false
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-005",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        20.6042
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "Let me pull up the order details and check refund eligibility so we can assess this dispute.\nHere's what I found for **Order #4448 \u2013 Slim Hand Cream** from **Clover Field Naturals**:\n\n| Detail | Info |\n|---|---|\n| **Status** | Delivered |\n| **Delivered** | May 12, 2026 |\n| **Total** | $218.50 |\n| **Return Window** | 30 days (platform default, per **cw-returns**) |\n| **Window Closed** | June 11, 2026 |\n| **Days Since Delivery** | 50 |\n\n**The order is not currently eligible for a standard refund.** The 30-day return window closed on June 11, 2026 \u2014 that's 20 days ago.\n\nSince this is a charge dispute and the return window has passed, this needs to be reviewed by a human agent. Let me escalate it now.\nI've opened **Ticket #151** for a human agent to review this dispute. Here's what the customer should know:\n\n- The standard return window has passed, so an automatic refund isn't possible.\n- A support agent will review the dispute and follow up within **24 hours**.\n- If the customer has additional context for the dispute (e.g., item not as described, damaged, etc.), it would be helpful to have that ready when the agent reaches out.\n\nLet me know if there's anything else needed!",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-007",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        9.34
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "Sure thing! Let me pull up order 770 for you right now.\nI'm sorry, but I'm unable to pull up order #770 \u2014 the system says it doesn't belong to your store (Store 3), so I don't have permission to show it to you. I can only access orders placed through your own store.\n\nA couple of things you could try:\n\n- **Double-check the order number** with the customer \u2014 it's possible they gave you the wrong ID.\n- If the order really is from another store on Cartwheel, the customer would need to reach out to that store or to Cartwheel support directly.\n\nWant me to search your store's orders instead? I can look by product name or pull up your recent order list.",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-010",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        15.8837
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "Let me look up your order for that speaker and also check Cascade Audio's return policy so I can give you an accurate answer.\nI found your order. Now let me check the refund eligibility for order #7895 to confirm the return deadline.\nGreat news \u2014 you're well within the return window! Here are the details:\n\n| Detail | Info |\n|---|---|\n| **Order** | #7895 \u2014 Handmade Bluetooth Speaker |\n| **Store** | Cascade Audio |\n| **Delivered** | June 25, 2026 |\n| **Return window** | 30 days (platform default) |\n| **Deadline** | July 25, 2026 |\n| **Days remaining** | 24 |\n\nYou're correct that Cartwheel's standard return window is **30 days from delivery** (policy **cw-returns**). Cascade Audio uses that same default, so you have **24 days left** to request a return.\n\nOne thing to note: Cascade Audio does charge a **restocking fee of up to 15%** on opened items (policy **cw-restocking-fees**). So if you've opened the speaker, a small fee may be deducted from your refund.\n\nWould you like me to go ahead and process the refund for you, or is there anything else you'd like to know first?",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    }
+  ],
+  "cost_per_100_conversations_usd": 5.135375,
+  "cost_usd": 0.205415,
+  "created_at": "2026-11-22T01:42:44.537736+00:00",
+  "evaluated_case_runs": 4,
+  "git_commit": "ccc242693fa1b1abcb5f3101d7577301bba98769",
+  "input_tokens": 29043,
+  "median_latency_seconds": 16.6843,
+  "model": "claude-opus-4-6",
+  "output_tokens": 2408,
+  "price_date": "2026-11-20",
+  "prompt_sha256_12": "5505c06134cf",
+  "schema_version": 1,
+  "score": 0.75,
+  "split": "test",
+  "test_plan_sha256": "d7668819003cc3df471240f1f1b2bf4209271397da38c5564a7c0933cfea504f",
+  "write_pass_5": null
+}

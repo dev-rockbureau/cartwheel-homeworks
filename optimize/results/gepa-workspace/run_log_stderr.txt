@@ -1,0 +1,4 @@
+/Users/albertpb/Workspace/cartwheel-homeworks/.venv/lib/python3.12/site-packages/gepa/core/engine.py:742: UserWarning: cloudpickle is not installed; falling back to standard pickle. Install it with: pip install gepa[full]  or  pip install cloudpickle
+  state.save(self.run_dir, use_cloudpickle=self.use_cloudpickle)
+/Users/albertpb/Workspace/cartwheel-homeworks/.venv/lib/python3.12/site-packages/gepa/core/engine.py:889: UserWarning: cloudpickle is not installed; falling back to standard pickle. Install it with: pip install gepa[full]  or  pip install cloudpickle
+  state.save(self.run_dir, use_cloudpickle=self.use_cloudpickle)

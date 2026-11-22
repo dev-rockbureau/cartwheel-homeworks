@@ -1,0 +1,262 @@
+{
+  "cached_fraction": 0.625135,
+  "cached_input_tokens": 27264,
+  "candidate": "tool_change",
+  "case_count": 9,
+  "cases": [
+    {
+      "case_id": "e-001",
+      "expected_write": false,
+      "failure_modes": [
+        "tool escalate_to_human called"
+      ],
+      "latencies_seconds": [
+        2.7967
+      ],
+      "pass_rate": 0.0,
+      "passes": 0,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [
+            "tool escalate_to_human called"
+          ],
+          "final_reply": "I'm unable to assist with changing your email address. However, you can typically do this by accessing your account settings on the Cartwheel platform. If you need further guidance, I recommend reaching out to customer support directly.",
+          "judge_reasons": {},
+          "passed": false
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-002",
+      "expected_write": false,
+      "failure_modes": [
+        "tool escalate_to_human called"
+      ],
+      "latencies_seconds": [
+        3.7053
+      ],
+      "pass_rate": 0.0,
+      "passes": 0,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [
+            "tool escalate_to_human called"
+          ],
+          "final_reply": "I can't assist with changing the store name directly. However, I recommend reaching out to Cartwheel's support team for help with this request. They will guide you through the process. If you need assistance with anything else related to your store, feel free to ask!",
+          "judge_reasons": {},
+          "passed": false
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-004",
+      "expected_write": false,
+      "failure_modes": [
+        "tool escalate_to_human called"
+      ],
+      "latencies_seconds": [
+        5.0754
+      ],
+      "pass_rate": 0.0,
+      "passes": 0,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [
+            "tool escalate_to_human called"
+          ],
+          "final_reply": "To assist with disputing the charge for the Walnut Scarf, I will check the details of your order, including its refund eligibility and status. Please hold on for a moment.\nI found two orders, but neither is eligible for a refund. The order for the Walnut Scarf was delivered on May 27, 2026, and its refund eligibility is marked as false, meaning it cannot be refunded through the platform.\n\nSince the store hasn\u2019t responded, I recommend reaching out to them directly for this issue. If you'd like, I can help escalate this to a human support agent for further assistance. Would you like me to do that?",
+          "judge_reasons": {},
+          "passed": false
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-006",
+      "expected_write": true,
+      "failure_modes": [
+        "refund for #3452 is queued_for_approval (saw [])"
+      ],
+      "latencies_seconds": [
+        5.2335,
+        9.7234,
+        4.3111,
+        10.1391,
+        7.7714
+      ],
+      "pass_rate": 0.6,
+      "passes": 3,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [
+            "refund for #3452 is queued_for_approval (saw [])"
+          ],
+          "final_reply": "First, I'll need to check your order details to see if it's eligible for a refund and any relevant deadlines. I'll look up your order to find out the status and refund eligibility for the Signature Power Bank from Pocket Arcade. One moment, please.\nI've located your order for the Signature Power Bank with order ID 3452. It was delivered on June 15, 2026, and is eligible for a refund. \n\nNext, I'll proceed to process the refund for you. Could you please confirm if you would like the full amount of $291.00 to be refunded? Additionally, can you specify the reason you'd like to mention for this refund?",
+          "judge_reasons": {},
+          "passed": false
+        },
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "Before I can assist you with the refund for your Signature Power Bank, I'll need to check the details of your order, including its refund eligibility. This will help me understand the timeline and any specific requirements for processing your request.\n\nI'll look up your order now.\nYour order for the Signature Power Bank is indeed eligible for a refund, as it was delivered on June 15, 2026, and you are still within the 30-day return window (it ends on July 15, 2026) (cw-returns). However, since the refund amount is over $100, it requires human approval for processing (cw-refunds).\n\nI will proceed to initiate this refund request for you now and escalate it for human approval. This may take some time, but you'll be updated on the status as soon as possible.\nI've submitted your refund request for the Signature Power Bank. The amount of $291 is currently queued for human approval since it exceeds the $100 auto-approval threshold. You will be notified once the review is complete.\n\nThank you for your patience, and let me know if there's anything else I can assist you with in the meantime!",
+          "judge_reasons": {},
+          "passed": true
+        },
+        {
+          "error": null,
+          "failure_modes": [
+            "refund for #3452 is queued_for_approval (saw [])"
+          ],
+          "final_reply": "I can help you check the refund eligibility for your order of the Signature Power Bank from Pocket Arcade. First, I'll look up your order to see if it can be refunded and gather the necessary details.\nI found your order for the Signature Power Bank from Pocket Arcade. It was delivered on June 15, 2026, and is eligible for a refund. \n\nNow, I will proceed to issue the refund for you. What amount would you like me to process, and can you please specify the reason for the refund?",
+          "judge_reasons": {},
+          "passed": false
+        },
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I can help you with that. First, I need to check the details of your order for the Signature Power Bank to see if it is eligible for a refund. Please hold on while I look that up.\nYour order for the Signature Power Bank is eligible for a refund since it was delivered on June 15, 2026, and you are still within the 30-day return window, which ends on July 15, 2026 (cw-returns). However, since the refund amount is over the auto-approval threshold of $100, it will need human approval before processing (cw-refunds).\n\nI'll go ahead and initiate the refund request for you, but please be aware that it might take some time for the approval to go through. Let me handle that for you now.\nI've submitted your refund request for the Signature Power Bank for $291. The request is now queued for human approval because it exceeds the $100 auto-approval threshold. \n\nA support agent will review it, and you'll be notified once it's processed. If you have any further questions or need assistance, feel free to ask!",
+          "judge_reasons": {},
+          "passed": true
+        },
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "Before I can assist you with processing a refund, I need to check your order details to see if you're eligible for a refund and to determine the amount. I\u2019ll look up your order for the Signature Power Bank from Pocket Arcade now.\nI found your order for the Signature Power Bank from Pocket Arcade. It was delivered on June 15, 2026, and it is eligible for a refund. The total amount for this order is $291. \n\nNow, I will proceed to initiate the refund process for this amount. Please hold on a moment.\nI've initiated the refund for your Signature Power Bank for the full amount of $291. However, since this amount is above the $100 auto-approval threshold, it is currently queued for human review. \n\nA support agent will process this soon, and you should receive an update regarding the approval. Thank you for your patience! If you have any more questions or need assistance with anything else, feel free to ask.",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 5
+    },
+    {
+      "case_id": "e-008",
+      "expected_write": false,
+      "failure_modes": [
+        "reply contains 'restocking'"
+      ],
+      "latencies_seconds": [
+        3.3084
+      ],
+      "pass_rate": 0.0,
+      "passes": 0,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [
+            "reply contains 'restocking'"
+          ],
+          "final_reply": "I need to check the details of order 1564 to determine if it is still eligible for return. I'll look that up now.\nThe order for the Sturdy USB-C Hub (order ID 1564) has been delivered as of June 7, 2026. Since it is within the return window and is eligible for a refund, the customer can still return it (cw-returns). \n\nIf you need assistance with the return process or any further questions, let me know!",
+          "judge_reasons": {},
+          "passed": false
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-009",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        6.0455
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I will first check the order details for order 89 to determine its return eligibility and assess whether the item \"Midnight Crewneck\" can be returned. This will help me find out the return window and any other relevant policies. \n\nLet's start by looking up the order details.\nThe order with ID 89 has been delivered, and the item \"Midnight Crewneck\" is eligible for a return. Here are the relevant details:\n\n- **Order Status**: Delivered on June 6, 2026\n- **Refund Eligibility**: Yes\n\nSince the order is eligible for a return, I will check the return policy for the store \"Second Stitch Apparel\" to determine the specific return window.\nThe return policy for \"Second Stitch Apparel\" states that you can return items within **30 days of delivery**. Since your item was delivered on June 6, 2026, the return window is still open. \n\nPlease keep in mind that if you open the item, there may be a restocking fee of up to 15% (for opened items only), as per their policy (cw-restocking-fees).\n\nIf you have any further questions or need assistance with the return process, feel free to ask!",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-011",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        3.5562
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I will first check if Order 6031 can still be canceled. If it hasn't shipped yet, we'll be able to proceed with the cancellation. Let me look that up now.\nOrder 6031 has already been shipped and is no longer eligible for cancellation (cw-cancellations). If the customer wishes to return the item instead, I can provide information on that process. Would you like to proceed with a return instead?",
+          "judge_reasons": {
+            "policy_claim_without_citation": "Critique: The assistant makes a policy claim stating that \"Order 6031 has already been shipped and is no longer eligible for cancellation.\" This claim is a rule about the cancellation process. However, the citation \"cw-cancellations\" is included in the same reply, which covers this claim. The assistant also offers to provide information on the return process, but does not make any specific policy claims about returns in this reply. Since there is a policy claim and it is covered by the citation, there are no uncovered claims.\n\nVerdict: Pass"
+          },
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-012",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        3.8955
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I need to look up the policy regarding disputes and refunds to provide accurate information. This will clarify whether opening a dispute impacts a pending refund on the same order. I'll check the help center now.\nAccording to the Cartwheel dispute policy, opening a dispute will pause any pending refund on the same order (cw-disputes). This means that while the dispute is being processed, the refund cannot be completed. If you have any other questions about this process or need assistance with it, feel free to ask!",
+          "judge_reasons": {
+            "policy_claim_without_citation": "Critique: The assistant makes a policy claim regarding disputes and refunds: \"opening a dispute will pause any pending refund on the same order.\" This claim is covered by the citation \"cw-disputes,\" which is provided in the same reply. There are no other policy claims made in the assistant's response. Therefore, every policy claim is covered by a citation.\n\nVerdict: Pass"
+          },
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-013",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        9.6442
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I understand your urgency for a refund. However, the order I've checked is not eligible for a refund based on the current policy. \n\nSince your request is beyond my authority to process, I will escalate this matter to a human support agent who can assist you further. Please hold on.\nI've escalated your request to a human support agent for further assistance. They will follow up with you shortly. The response time is typically within 24 hours.\n\nThank you for your patience! If you have any other questions or concerns in the meantime, feel free to ask.",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    }
+  ],
+  "cost_per_100_conversations_usd": 0.045647,
+  "cost_usd": 0.005934,
+  "created_at": "2026-11-21T09:01:22.697776+00:00",
+  "evaluated_case_runs": 13,
+  "git_commit": "b622f1e5160c3a2a530fa44d994132caf4b12cb2",
+  "input_tokens": 43613,
+  "median_latency_seconds": 5.0754,
+  "model": "gpt-4o-mini",
+  "output_tokens": 2395,
+  "price_date": "2026-11-20",
+  "prompt_sha256_12": "86cdb937af6a",
+  "schema_version": 1,
+  "score": 0.511111,
+  "split": "development",
+  "test_plan_sha256": null,
+  "write_pass_5": 0
+}

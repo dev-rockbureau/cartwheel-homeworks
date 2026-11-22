@@ -1,0 +1,24 @@
+{
+  "cases_sha256": "bedcc449f0cae2786744aabf41e6f16488ff1d28184b4379f1efd1d1c72a9a4d",
+  "created_at": "2026-11-20T18:04:10.853914+00:00",
+  "development_case_ids": [
+    "e-001",
+    "e-002",
+    "e-004",
+    "e-006",
+    "e-008",
+    "e-009",
+    "e-011",
+    "e-012",
+    "e-013"
+  ],
+  "grader_sha256": "debaa579e4399ab8cf45fb70414e547d87690d4bb561ad8e6dda11bccf5a8eff",
+  "membership_sha256": "c4450738a65fb4280bab6d892d961c0c0239afdd272cba6f26f11c058af5af44",
+  "seed": "cartwheel-hw8-v1",
+  "test_case_ids": [
+    "e-003",
+    "e-005",
+    "e-007",
+    "e-010"
+  ]
+}

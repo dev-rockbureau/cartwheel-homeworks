@@ -1,0 +1,104 @@
+{
+  "cached_fraction": 0.467089,
+  "cached_input_tokens": 6784,
+  "candidate": "final-version-model-3",
+  "case_count": 4,
+  "cases": [
+    {
+      "case_id": "e-003",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        3.7741
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I understand your uncertainty about closing your Cartwheel account. While I can't assist with account changes, I can help answer questions about other options, like how to manage your account or what to consider before closing it. \n\nSince this involves account management details, I'll escalate your request to a human support agent who can provide the help you need. Please hold on for a moment.\nI've escalated your request to a human support agent for assistance with closing your Cartwheel account. A representative will follow up with you within the next 24 hours (cw-escalations). If you have any other questions in the meantime, feel free to ask!",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-005",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        5.1191
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I need to escalate this request because handling disputes and chargebacks requires human assistance. I'll now open a ticket for a human support agent to follow up with the customer regarding the dispute on order 4448 for the Slim Hand Cream.\nI've escalated the dispute request to a human support agent. They will follow up with the customer within 24 hours regarding the dispute on order 4448 for the Slim Hand Cream.",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-007",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        4.0162
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "I'll look up the details for order 770, including its status and refund eligibility, so you have the information you need to assist your customer. One moment, please.\nIt seems that I can't access the details for order 770 due to permission restrictions. However, I can help with general order inquiries or issues. If you need specific order details, you may want to check directly in your merchant account. If there's something else I can assist you with, please let me know!",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    },
+    {
+      "case_id": "e-010",
+      "expected_write": false,
+      "failure_modes": [],
+      "latencies_seconds": [
+        3.767
+      ],
+      "pass_rate": 1.0,
+      "passes": 1,
+      "run_details": [
+        {
+          "error": null,
+          "failure_modes": [],
+          "final_reply": "To confirm whether you can return your Handmade Bluetooth Speaker from Cascade Audio, I first need to check if that store has its own specific return policies. I'll look this up now.\nYou can return items from Cascade Audio within 30 days of delivery, which aligns with the Cartwheel policy (cw-returns). However, keep in mind that if the item has been opened, there will be a restocking fee of up to 15% of the purchase price (cw-restocking-fees).\n\nSince your speaker arrived about a week ago and is within the return window, you can indeed return it if you choose to do so.",
+          "judge_reasons": {},
+          "passed": true
+        }
+      ],
+      "runs": 1
+    }
+  ],
+  "cost_per_100_conversations_usd": 0.050355,
+  "cost_usd": 0.002014,
+  "created_at": "2026-11-22T01:43:21.408921+00:00",
+  "evaluated_case_runs": 4,
+  "git_commit": "36f863a18842bdeeaa8213617e64516219914972",
+  "input_tokens": 14524,
+  "median_latency_seconds": 3.8952,
+  "model": "gpt-4o-mini",
+  "output_tokens": 574,
+  "price_date": "2026-11-20",
+  "prompt_sha256_12": "7ad8d3a3a0e7",
+  "schema_version": 1,
+  "score": 1.0,
+  "split": "test",
+  "test_plan_sha256": "d7668819003cc3df471240f1f1b2bf4209271397da38c5564a7c0933cfea504f",
+  "write_pass_5": null
+}

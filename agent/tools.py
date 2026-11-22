@@ -247,8 +247,9 @@ def cancel_order(ctx: AuthContext, order_id: int, reason: str) -> dict[str, Any]
                 "error": "not_eligible",
                 "reason": (
                     f"order #{order_id} has status '{order.status}'; "
-                    f"orders can be cancelled only before shipment"
+                    f"orders can be cancelled only before shipment (cw-cancellations)"
                 ),
+                "policy_id": "cw-cancellations",
             }
         db.set_order_status(conn, order_id, "cancelled")
     return {"ok": True, "order_id": order_id, "status": "cancelled"}

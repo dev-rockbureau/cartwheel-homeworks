@@ -1,0 +1,5 @@
+configuration,name,parent,git_commit,model,score,write_pass_5,cost_per_100_conversations_usd,median_latency_seconds,dominated
+1,starting-version-model-1,,ccc242693fa1b1abcb5f3101d7577301bba98769,gpt-5.5,0.75,,4.74495,19.9351,True
+2,starting-version-model-2,,ccc242693fa1b1abcb5f3101d7577301bba98769,claude-opus-4-6,0.75,,5.135375,16.6843,True
+3,starting-version-model-3,,ccc242693fa1b1abcb5f3101d7577301bba98769,gpt-4o-mini,0.25,,0.03801,4.1555,False
+4,final-version-model-3,starting-version-model-3,36f863a18842bdeeaa8213617e64516219914972,gpt-4o-mini,1.0,,0.050355,3.8952,False
